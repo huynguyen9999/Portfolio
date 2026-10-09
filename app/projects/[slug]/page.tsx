@@ -1,0 +1,30 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { projects } from "@/lib/content";
+import { ProjectVisual } from "@/components/project-visual";
+import { Arrow, Download } from "@/components/icons";
+
+export const dynamicParams = false;
+export function generateStaticParams() { return projects.map(({ slug }) => ({ slug })); }
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find(item => item.slug === slug);
+  if (!project) return {};
+  return { title: project.title, description: project.summary, alternates: { canonical: `/projects/${slug}` }, openGraph: { title: `${project.title} — Huy Nguyen`, description: project.summary, images: ["/opengraph-image"] } };
+}
+
+export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = projects.find(item => item.slug === slug);
+  if (!project) notFound();
+  const next = projects[(projects.indexOf(project) + 1) % projects.length];
+  return <main id="main" className="wrap case-study">
+    <Link href="/#work" className="back-link"><span aria-hidden="true">←</span> All selected work</Link>
+    <header className="case-header"><p className="eyebrow">{project.category} <span aria-hidden="true">/</span> {project.year}</p><h1>{project.title}</h1><p>{project.summary}</p><ul className="tags" aria-label="Technologies">{project.tags.map(tag => <li key={tag}>{tag}</li>)}</ul><div className="case-actions">{project.liveUrl && <a className="button-primary" href={project.liveUrl} target="_blank" rel="noreferrer">Visit live project <Arrow diagonal /></a>}<a className="button-text" href="/resume.pdf" download="Huy-Nguyen-Resume.pdf">View résumé <Download /></a></div></header>
+    <div className="case-visual"><ProjectVisual slug={project.slug} /></div>
+    <div className="case-body"><aside className="case-facts"><span className="eyebrow">At a glance</span><p className="case-metric">{project.metric}</p><p>{project.metricLabel}</p><div><span className="eyebrow">Documented in my résumé</span><ul>{project.evidence.map(item => <li key={item}>{item}</li>)}</ul></div></aside><div className="case-narrative">{[["01", "The problem", project.problem], ["02", "What I built", project.contribution], ["03", "The engineering challenge", project.tradeoff], ["04", "The result", project.result]].map(([number, heading, text]) => <section key={number}><span className="eyebrow">{number}</span><h2>{heading}</h2><p>{text}</p></section>)}{project.slug === "guitar-tuner" && <p className="case-disclosure">The interactive illustration above uses a synthesized A4 signal. The original project is a Python application that processes live microphone audio; this browser demonstration does not run that application or measure its accuracy.</p>}</div></div>
+    <div className="next-project"><span className="eyebrow">Keep exploring</span><Link href={`/projects/${next.slug}`}>{next.title}<Arrow /></Link></div>
+  </main>;
+}
