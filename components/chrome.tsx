@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Arrow, Download } from "./icons";
+import { Arrow } from "./icons";
 
 export function Header() {
   return <header className="site-header wrap">
     <Link className="monogram" href="/" aria-label="hn. — Huy Nguyen home">hn<span>.</span></Link>
     <nav aria-label="Main navigation">
       <Link href="/#work">Work</Link><Link href="/#experience">Experience</Link><Link href="/#about">About</Link>
-      <a className="nav-resume" href="/resume.pdf" download="Huy-Nguyen-Resume.pdf">Résumé <Download /></a>
+      <a className="nav-resume" href="/resume.pdf" target="_blank" rel="noreferrer">Résumé <Arrow diagonal /></a>
     </nav>
   </header>;
 }

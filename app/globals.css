@@ -35,7 +35,7 @@ svg { display: block; flex-shrink: 0; }
 .site-header nav .nav-resume { margin-left: 4px; }
 .eyebrow { color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .16em; font-weight: 600; line-height: 1.6; }
 .hero { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 74px 0 65px; gap: 48px; }
-.hero-copy { max-width: 740px; }
+.hero-copy { max-width: 620px; min-width: 0; }
 .hero .eyebrow { display: flex; align-items: center; gap: 9px; color: var(--accent); }
 .small-cross { font-size: 19px; line-height: 1; font-weight: 400; }
 .hero h1 { font-size: clamp(64px, 7vw, 88px); letter-spacing: -.05em; line-height: 1.05; margin: 21px 0 20px; }
@@ -51,8 +51,8 @@ svg { display: block; flex-shrink: 0; }
 .social-links a { display: inline-flex; gap: 5px; align-items: center; min-height: 36px; font-size: 11px; color: var(--muted); }
 .social-links a:hover { color: var(--accent); }
 .social-links svg { width: 12px; height: 12px; }
-.hero-note { color: #526e81; font-size: 10px; line-height: 1.6; text-align: center; transform: rotate(-7deg); align-self: center; width: 140px; flex-shrink: 0; padding-top: 6px; }
-.hero-note svg { width: 116px; margin: 0 auto 12px; }
+.hero-portrait { width: 340px; aspect-ratio: 4 / 5; flex-shrink: 0; overflow: hidden; border-radius: 8px; background: #d9dce0; }
+.hero-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 70% 43%; transform: scale(2); transform-origin: 90% 43%; }
 .work-section, .experience-section { border-top: 1px solid var(--line); padding: 39px 0 68px; }
 .section-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 30px; }
 .section-heading h2 { margin-top: 9px; font-size: 34px; letter-spacing: -.035em; line-height: 1.2; }
@@ -76,7 +76,7 @@ svg { display: block; flex-shrink: 0; }
 .project-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 7px; }
 .project-metric { font-size: 11px; color: var(--muted); }
 .project-metric strong { font-size: 14px; font-weight: 500; color: var(--ink); padding-right: 5px; }
-.project-more { width: 44px; height: 44px; display: flex; align-items: center; justify-content: flex-end; }
+.project-more { min-height: 44px; display: inline-flex; align-items: center; justify-content: flex-end; gap: 8px; font-size: 11px; white-space: nowrap; }
 .project-more svg { width: 17px; }
 .tags { display: flex; flex-wrap: wrap; list-style: none; color: var(--muted); gap: 8px 14px; font-size: 10px; margin-top: 10px; }
 .tags li { display: flex; align-items: center; gap: 14px; }
@@ -167,7 +167,8 @@ svg { display: block; flex-shrink: 0; }
 @media (min-width: 1450px) { .wrap { width: 1120px; } .hero { padding-block: 84px 75px; } }
 @media (max-width: 900px) {
   .wrap { width: calc(100% - 64px); }
-  .hero-note { display: none; }
+  .hero-portrait { width: 260px; }
+  .hero { gap: 32px; }
   .hero { padding-block: 55px; }
   .hero-statement { font-size: 23px; }
   .project-grid { gap: 36px 24px; }
@@ -190,7 +191,8 @@ svg { display: block; flex-shrink: 0; }
   .site-header nav .nav-resume { margin: 0; gap: 5px; }
   .nav-resume svg { width: 12px; }
   .monogram { font-size: 31px; }
-  .hero { padding: 46px 0 40px; }
+  .hero { padding: 46px 0 40px; flex-direction: column; align-items: flex-start; gap: 30px; }
+  .hero-portrait { width: min(280px, 100%); align-self: center; }
   .hero h1 { font-size: 64px; margin: 19px 0 17px; }
   .hero-statement { font-size: 22px; max-width: 430px; }
   .hero-context { font-size: 11px; max-width: 275px; line-height: 1.9; }

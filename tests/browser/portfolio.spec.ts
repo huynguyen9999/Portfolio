@@ -52,7 +52,7 @@ for (const path of ["/", ...slugs.map(slug => `/projects/${slug}`)]) {
 
 test("project navigation, metadata, not-found, and reduced motion work", async ({ page, request }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "iGauchoBack", exact: true }).click();
+  await page.getByRole("link", { name: "Read iGauchoBack case study" }).click();
   await expect(page).toHaveURL(/\/projects\/igauchoback$/);
   await expect(page).toHaveTitle("iGauchoBack — Huy Nguyen");
   await expect(page.getByRole("link", { name: "Visit live project" })).toHaveAttribute("href", "https://igauchoback.vercel.app/");

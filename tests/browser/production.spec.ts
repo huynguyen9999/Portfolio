@@ -30,7 +30,7 @@ test("navigation has no failed assets, runtime errors, or CSP violations", async
     document.addEventListener("securitypolicyviolation", event => console.error(`CSP: ${event.violatedDirective}`));
   });
   await page.goto("/");
-  await page.getByRole("link", { name: "iGauchoBack", exact: true }).click();
+  await page.getByRole("link", { name: "Read iGauchoBack case study" }).click();
   for (const title of ["LiDAR Security System", "Orbit AFE", "Chromatic Guitar Tuner", "iGauchoBack"]) {
     await page.locator(".next-project").getByRole("link", { name: title }).click();
     await expect(page.locator("h1")).toHaveText(title);
@@ -49,22 +49,48 @@ test("content and navigation survive JavaScript being unavailable", async ({ bro
   // Playwright text selectors deliberately exclude noscript content.
   await expect(page.locator("noscript p")).toBeVisible();
   await expect(page.locator("noscript p")).toContainText("JavaScript is unavailable.");
-  await page.getByRole("link", { name: "iGauchoBack", exact: true }).click();
+  await page.getByRole("link", { name: "Read iGauchoBack case study" }).click();
   await expect(page.locator("h1")).toHaveText("iGauchoBack");
   await expect(page.getByRole("link", { name: "View résumé" })).toHaveAttribute("href", "/resume.pdf");
   await context.close();
 });
 
-test("résumé download contains the exact published document", async ({ page, request }) => {
-  await page.goto("/");
-  const downloadPromise = page.waitForEvent("download");
-  await page.locator(".hero-actions").getByRole("link", { name: "Résumé", exact: true }).click();
-  const download = await downloadPromise;
-  expect(download.suggestedFilename()).toBe("Huy-Nguyen-Resume.pdf");
-  expect(await download.failure()).toBeNull();
+test("résumé opens a separate tab and preserves the published PDF", async ({ page, request }) => {
   const pdf = await request.get("/resume.pdf");
+  expect(pdf.headers()["content-disposition"]).toContain("inline;");
+  expect(pdf.headers()["content-type"]).toContain("application/pdf");
   const hash = (value: Buffer) => createHash("sha256").update(value).digest("hex");
   expect(hash(await pdf.body())).toBe(hash(readFileSync("public/resume.pdf")));
+  await page.goto("/");
+  const links = page.locator('a[href="/resume.pdf"]');
+  for (const link of await links.all()) {
+    await expect(link).toHaveAttribute("target", "_blank");
+    expect(await link.getAttribute("download")).toBeNull();
+  }
+  // Native PDF viewers differ across engines; separately verify tab navigation.
+  await page.context().route("**/resume.pdf", route => route.fulfill({ contentType: "text/html", body: "PDF navigation" }));
+  const popupPromise = page.waitForEvent("popup");
+  await page.locator(".hero-actions").getByRole("link", { name: "Résumé", exact: true }).click();
+  const popup = await popupPromise;
+  await expect(popup).toHaveURL(/resume\.pdf$/);
+  await popup.close();
+});
+
+test("project titles open live evidence and the portrait loads", async ({ page, request }) => {
+  await page.goto("/");
+  for (const [name, href] of [["iGauchoBack", "https://igauchoback.vercel.app/"], ["Orbit AFE", "https://orbitafe.vercel.app/"], ["LiDAR Security System", "/lidar-poster.pdf"]]) {
+    const link = page.getByRole("link", { name, exact: true });
+    await expect(link).toHaveAttribute("href", href);
+    await expect(link).toHaveAttribute("target", "_blank");
+  }
+  const poster = await request.get("/lidar-poster.pdf");
+  expect(poster.status()).toBe(200);
+  expect(poster.headers()["content-disposition"]).toContain("inline;");
+  expect((await poster.body()).equals(readFileSync("public/lidar-poster.pdf"))).toBe(true);
+  const portrait = page.locator(".hero-portrait img");
+  await expect(portrait).toBeVisible();
+  await expect.poll(() => portrait.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
+  await expect(page.locator("#work .section-heading .eyebrow, #experience .section-heading .eyebrow, #about > div > .eyebrow")).toHaveText(["Projects", "Experience", "About me"]);
 });
 
 test("unknown and hostile-looking URLs stay 404 and do not execute input", async ({ page }) => {
@@ -135,5 +161,5 @@ test("failed script downloads leave readable content and inert tuner controls", 
   await expect(page.getByRole("slider")).toBeDisabled();
   await expect(page.getByRole("button", { name: "Reset" })).toBeDisabled();
   await expect(page.locator(".frequency")).toHaveText("440.0 Hz");
-  await expect(page.getByRole("link", { name: "iGauchoBack", exact: true })).toHaveAttribute("href", "/projects/igauchoback");
+  await expect(page.getByRole("link", { name: "iGauchoBack", exact: true })).toHaveAttribute("href", "https://igauchoback.vercel.app/");
 });

@@ -10,20 +10,22 @@ Static Next.js hydration requires inline scripts. The current CSP permits inline
 
 `SITE_URL`, when supplied, must be a valid HTTPS origin without credentials, path, query, or fragment. Invalid values fail the build instead of publishing broken canonical and sitemap URLs.
 
-## Dependency finding (2026-10-09)
+## Dependency remediation (2026-10-10)
 
-The full development dependency audit reports **GHSA-vfj7-8cjw-p6xm / CVE-2026-93687**, a high-severity stack-exhaustion issue in `braces@3.0.3`. The installed chain is:
+The full audit previously reported **GHSA-vfj7-8cjw-p6xm / CVE-2026-93687**, a high-severity stack-exhaustion issue in `braces@3.0.3`, through:
 
 `eslint-config-next → @next/eslint-plugin-next → fast-glob → micromatch → braces`.
 
-The advisory and registry list no published patched version. This dependency processes repository lint patterns during development/builds; it is absent from the production dependency tree. The portfolio does not accept glob patterns from visitors. Do not run lint on untrusted configurations with credentials present. CI has read-only repository permission and checkout does not persist credentials.
+There is no published fixed `braces` release. This repository instead removes that dependency chain. A version-scoped pnpm override replaces only `@next/eslint-plugin-next@16.4.0`'s `fast-glob` dependency with the existing toolchain package `tinyglobby@0.2.17`. The plugin's only use of fast-glob is `globSync` with `onlyDirectories` in root-directory discovery. A tracked pnpm patch adds `expandDirectories: false`, preserving the meaning of literal project roots when using tinyglobby. Relative versus absolute strings and trailing slashes may differ, but they resolve to the same directories; tests check resolved paths and a real lint rule against custom roots.
 
-This finding is **open**, not fixed or audit-ignored. `pnpm audit --prod --audit-level=low` passes; `pnpm audit --audit-level=low` remains a failing check until the dependency can be safely replaced or updated. Do not disable the Next.js lint rules or suppress the advisory just to turn the check green. Dependabot checks dependency and action updates weekly.
+No lint rules, audit thresholds, or security advisories are disabled. Both production and full dependency audits pass. Regression tests cover literal/glob/brace/array roots, missing directories, file exclusion, backslash normalization, a real Next.js lint error, and 4,000-level nested patterns in a child process with a timeout. A lockfile assertion prevents the removed packages from silently returning.
 
-References: [advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), [upstream issue](https://github.com/micromatch/braces/issues/70), [Next.js CSP guidance](https://nextjs.org/docs/app/guides/content-security-policy).
+This is a local compatibility adaptation, not an upstream fix. When upgrading `eslint-config-next` or its plugin, review and remove the scoped override and patch if upstream has removed the vulnerable chain. Otherwise update the adaptation and rerun the compatibility tests before merging. Both the override and patch are pinned to version 16.4.0 so they cannot silently affect an unreviewed plugin version. Dependabot checks dependency and action updates weekly.
+
+References: [advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), [tinyglobby migration guide](https://superchupu.dev/tinyglobby/migration), [Next.js CSP guidance](https://nextjs.org/docs/app/guides/content-security-policy).
 
 ## Verification boundaries
 
-Automated coverage includes all published routes, keyboard tuning, download integrity, missing and malformed paths, metadata, browser security headers, asset/console/CSP errors, JavaScript-disabled browsing, narrow layouts, reduced motion, axe accessibility checks, and a small local concurrent request burst. Unit tests cover every pitch step, numerical symmetry, invalid input, URL configuration, and content/route invariants.
+Automated coverage includes all published routes, keyboard tuning, PDF integrity and new-tab navigation, missing and malformed paths, metadata, browser security headers, asset/console/CSP errors, JavaScript-disabled browsing, narrow layouts, reduced motion, axe accessibility checks, and a small local concurrent request burst. Unit tests cover every pitch step, numerical symmetry, invalid input, URL configuration, and content/route invariants.
 
 These checks are not a penetration test, real-device accessibility review, uptime guarantee, or proof of real-traffic capacity. Vercel platform firewalls and quotas remain account configuration, and laboratory performance is distinct from field measurements. Review Vercel request/error metrics after publication and after traffic changes. Avoid adding telemetry that collects visitor data without a concrete need.

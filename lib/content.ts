@@ -13,6 +13,7 @@ export type Project = {
   result: string;
   evidence: string[];
   liveUrl?: string;
+  posterUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -43,6 +44,7 @@ export const projects: Project[] = [
   },
   {
     slug: "lidar",
+    posterUrl: "/lidar-poster.pdf",
     title: "LiDAR Security System",
     category: "Embedded",
     year: "2024",

@@ -32,7 +32,10 @@ const nextConfig: NextConfig = {
       ],
     }, {
       source: "/resume.pdf",
-      headers: [{ key: "Content-Disposition", value: 'attachment; filename="Huy-Nguyen-Resume.pdf"' }],
+      headers: [{ key: "Content-Disposition", value: 'inline; filename="Huy-Nguyen-Resume.pdf"' }],
+    }, {
+      source: "/lidar-poster.pdf",
+      headers: [{ key: "Content-Disposition", value: 'inline; filename="Huy-Nguyen-LiDAR-Poster.pdf"' }],
     }];
   },
 };
