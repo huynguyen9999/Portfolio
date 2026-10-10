@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { projects, experience } from "../lib/content.ts";
 
-test("project content supports unique static routes and complete case studies", () => {
+test("project content supports unique static routes and complete breakdowns", () => {
   assert.equal(projects.length, 4);
   assert.equal(new Set(projects.map(project => project.slug)).size, projects.length);
   for (const project of projects) {

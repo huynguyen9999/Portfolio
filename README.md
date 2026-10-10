@@ -23,7 +23,7 @@ pnpm build
 pnpm test:browser
 ```
 
-The browser suite uses installed Google Chrome and starts the production build on port 3001 if needed. It checks desktop/mobile layouts, all case-study routes, PDF integrity and new-tab navigation, keyboard tuning, reset behavior, reduced motion, metadata, missing pages, and axe accessibility rules. Install Chrome before running it. Production performance can be checked with `pnpm audit:performance` while `pnpm start` is serving on port 3000. Lighthouse scores are laboratory measurements, not real-user Core Web Vitals.
+The browser suite uses installed Google Chrome and starts the production build on port 3001 if needed. It checks desktop/mobile layouts, all project-breakdown routes, PDF integrity and new-tab navigation, keyboard tuning, reset behavior, reduced motion, metadata, missing pages, and axe accessibility rules. Install Chrome before running it. Production performance can be checked with `pnpm audit:performance` while `pnpm start` is serving on port 3000. Lighthouse scores are laboratory measurements, not real-user Core Web Vitals.
 
 ## Content and assets
 
@@ -35,7 +35,7 @@ The browser suite uses installed Google Chrome and starts the production build o
 - `public/lidar-poster.pdf`: supplied LiDAR team poster, available through View poster links.
 - `app/globals.css`: the editorial design and responsive layouts.
 
-Project titles and Explore project links open portfolio details. Separate Live project and View poster links open the two verified demos and the supplied LiDAR poster; the same evidence links are also available within the case studies. There are no guessed source repository links. Real hardware photos and product recordings can replace the conceptual diagrams when available.
+Project titles and How it was built links open the portfolio breakdown. Separate Live project and View poster links open the two verified demos and the supplied LiDAR poster; the same evidence links are also available on each breakdown page. There are no guessed source repository links. Real hardware photos and product recordings can replace the conceptual diagrams when available.
 
 ## Deploy to Vercel
 
@@ -63,4 +63,4 @@ The small local concurrent-request smoke test is skipped against a public URL. I
 
 See [SECURITY.md](SECURITY.md) for the threat model, browser policy tradeoffs, and the scoped lint-dependency replacement that removes the unpatched `braces` chain. Both dependency audits run without advisory exceptions. The pinned compatibility patch and regression tests must be reviewed when upgrading the Next.js lint plugin.
 
-If a release breaks the site, use the Vercel project's Deployments page to promote the last known-good production deployment, then revert the faulty commit through a reviewed Git change. After any deployment or rollback, check the public homepage, all four case studies, keyboard tuner controls, and résumé without logging in. Field Core Web Vitals and long-term uptime need actual visitor measurements; local laboratory results do not establish them.
+If a release breaks the site, use the Vercel project's Deployments page to promote the last known-good production deployment, then revert the faulty commit through a reviewed Git change. After any deployment or rollback, check the public homepage, all four project breakdowns, keyboard tuner controls, and résumé without logging in. Field Core Web Vitals and long-term uptime need actual visitor measurements; local laboratory results do not establish them.

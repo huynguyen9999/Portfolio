@@ -17,7 +17,7 @@ export function Footer() {
 
 export function Contact() {
   return <section className="contact" id="contact" aria-labelledby="contact-heading">
-    <div><p className="eyebrow">Let’s connect</p><h2 id="contact-heading">Good things start<br />with a conversation.</h2></div>
+    <div><h2 id="contact-heading">Let’s connect</h2></div>
     <div className="contact-links"><a className="contact-email" href="mailto:dominichuyn@gmail.com">dominichuyn@gmail.com <Arrow diagonal /></a><a href="https://www.linkedin.com/in/huynguyen06/" target="_blank" rel="noreferrer">Find me on LinkedIn <Arrow diagonal /></a></div>
   </section>;
 }

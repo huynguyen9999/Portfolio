@@ -30,12 +30,12 @@ test("navigation has no failed assets, runtime errors, or CSP violations", async
     document.addEventListener("securitypolicyviolation", event => console.error(`CSP: ${event.violatedDirective}`));
   });
   await page.goto("/");
-  await page.getByRole("link", { name: "Explore project: iGauchoBack" }).click();
+  await page.getByRole("link", { name: "Project breakdown: iGauchoBack" }).click();
   for (const title of ["LiDAR Security System", "Orbit AFE", "Chromatic Guitar Tuner", "iGauchoBack"]) {
     await page.locator(".next-project").getByRole("link", { name: title }).click();
     await expect(page.locator("h1")).toHaveText(title);
   }
-  await page.getByRole("link", { name: "All selected work" }).click();
+  await page.getByRole("link", { name: "All projects" }).click();
   await page.getByRole("slider").fill("-25");
   await expect(page.locator(".tuner-status")).toContainText("Flat");
   expect(failures).toEqual([]);
@@ -49,7 +49,7 @@ test("content and navigation survive JavaScript being unavailable", async ({ bro
   // Playwright text selectors deliberately exclude noscript content.
   await expect(page.locator("noscript p")).toBeVisible();
   await expect(page.locator("noscript p")).toContainText("JavaScript is unavailable.");
-  await page.getByRole("link", { name: "Explore project: iGauchoBack" }).click();
+  await page.getByRole("link", { name: "Project breakdown: iGauchoBack" }).click();
   await expect(page.locator("h1")).toHaveText("iGauchoBack");
   await expect(page.getByRole("link", { name: "View résumé" })).toHaveAttribute("href", "/resume.pdf");
   await context.close();
@@ -99,7 +99,7 @@ test("project details and separate live evidence remain accessible", async ({ pa
   const portrait = page.locator(".hero-portrait img");
   await expect(portrait).toBeVisible();
   await expect.poll(() => portrait.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
-  await expect(page.locator("#work .section-heading .eyebrow, #experience .section-heading .eyebrow, #about > div > .eyebrow")).toHaveText(["Projects", "Experience", "About me"]);
+  await expect(page.locator("#work-heading, #experience-heading, #about-heading")).toHaveText(["Projects", "Experience", "About me"]);
 });
 
 test("unknown and hostile-looking URLs stay 404 and do not execute input", async ({ page }) => {
