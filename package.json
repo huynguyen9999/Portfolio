@@ -7,11 +7,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "node --test tests/tuner.test.mjs",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "test:browser": "playwright test",
-    "audit:performance": "lighthouse http://localhost:3000 --chrome-flags=\"--headless\" --only-categories=performance,accessibility,best-practices,seo --output=html --output-path=./test-results/lighthouse.html"
+    "audit:performance": "lighthouse http://localhost:3000 --chrome-flags=\"--headless\" --only-categories=performance,accessibility,best-practices,seo --output=html --output-path=./test-results/lighthouse.html",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm test:browser",
+    "audit:security": "pnpm audit --audit-level=low",
+    "build:verified": "pnpm lint && pnpm typecheck && pnpm test && pnpm audit --prod --audit-level=low && pnpm build"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.2.8",
@@ -32,5 +35,9 @@
     "lighthouse": "^13.5.0",
     "tailwindcss": "^4.1.0",
     "typescript": "^5.9.0"
-  }
+  },
+  "engines": {
+    "node": ">=22.13.0 <25"
+  },
+  "type": "module"
 }

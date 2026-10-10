@@ -44,3 +44,21 @@ For a fresh import: choose **New Project → Import Git Repository → huynguyen
 Metadata uses Vercel's automatically supplied production hostname, falling back to `https://portfolio-peach-two-97.vercel.app`. When using a custom domain, set the optional `SITE_URL` to its full HTTPS origin and redeploy so canonical URLs, robots, and sitemap use it.
 
 Before sharing, verify the production URL opens without a Vercel login and that all project routes and the résumé work.
+
+## Production quality gates
+
+`pnpm check` runs lint (zero warnings), strict TypeScript, unit/content/configuration tests, the production build, and browser integration tests. Use Node 24 for the CI-equivalent runtime. For all engines, install browsers with `pnpm exec playwright install chromium firefox webkit` and run `CROSS_BROWSER=1 pnpm test:browser`. Without `CI`, the desktop/mobile projects use local Chrome; CI uses Playwright Chromium. Tests always start a fresh production server, preventing accidental validation of a stale dev server.
+
+GitHub Actions runs the full suite on pushes and pull requests, including Firefox and WebKit, and retains failure traces for seven days. Vercel's build command also requires lint, types, unit tests and the production dependency audit to pass before building. Browser checks run in GitHub Actions separately; this does not configure a GitHub branch-protection rule or make Vercel wait for Actions. Run `pnpm check` before pushing directly to `main`.
+
+For read-only post-deployment checks:
+
+```sh
+PLAYWRIGHT_BASE_URL=https://portfolio-peach-two-97.vercel.app pnpm test:browser
+```
+
+The small local concurrent-request smoke test is skipped against a public URL. It is not a load-capacity benchmark.
+
+See [SECURITY.md](SECURITY.md) for the threat model, browser policy tradeoffs, and the currently unresolved development-tool advisory. The complete dependency audit intentionally reports that advisory instead of suppressing it.
+
+If a release breaks the site, use the Vercel project's Deployments page to promote the last known-good production deployment, then revert the faulty commit through a reviewed Git change. After any deployment or rollback, check the public homepage, all four case studies, keyboard tuner controls, and résumé without logging in. Field Core Web Vitals and long-term uptime need actual visitor measurements; local laboratory results do not establish them.
