@@ -32,10 +32,10 @@ The browser suite uses installed Google Chrome and starts the production build o
 - `components/tuner.tsx`: a silent synthesized A4 demo, not the original Python microphone tuner. The range is −50 to +50 cents; zero alone is labeled Target pitch.
 - `public/resume.pdf`: résumé preview, opened in a new tab.
 - `public/huy-nguyen.jpg`: supplied portrait, responsively optimized by Next.js.
-- `public/lidar-poster.pdf`: supplied LiDAR team poster, linked from the project title.
+- `public/lidar-poster.pdf`: supplied LiDAR team poster, available through View poster links.
 - `app/globals.css`: the editorial design and responsive layouts.
 
-The two verified public project demos and the supplied LiDAR poster are linked from project titles; case studies remain separately accessible. There are no guessed source repository links. Real hardware photos and product recordings can replace the conceptual diagrams when available.
+Project titles and Explore project links open portfolio details. Separate Live project and View poster links open the two verified demos and the supplied LiDAR poster; the same evidence links are also available within the case studies. There are no guessed source repository links. Real hardware photos and product recordings can replace the conceptual diagrams when available.
 
 ## Deploy to Vercel
 

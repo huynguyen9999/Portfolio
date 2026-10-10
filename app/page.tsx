@@ -23,11 +23,9 @@ export default function Home() {
       <div className="project-grid">{projects.map(project => <article className="project-card" key={project.slug}>
         <div className="project-visual"><ProjectVisual slug={project.slug} /></div>
         <div className="project-meta"><span>{project.category}</span><span>{project.year}</span></div>
-        <h3>{project.liveUrl || project.posterUrl
-          ? <a href={project.liveUrl ?? project.posterUrl} target="_blank" rel="noreferrer">{project.title}<Arrow diagonal /></a>
-          : <Link href={`/projects/${project.slug}`}>{project.title}<Arrow diagonal /></Link>}</h3>
+        <h3><Link href={`/projects/${project.slug}`}>{project.title}<Arrow /></Link></h3>
         <p className="project-summary">{project.summary}</p>
-        <div className="project-bottom"><p className="project-metric"><strong>{project.metric}</strong> {project.metricLabel}</p><Link className="project-more" href={`/projects/${project.slug}`} aria-label={`Read ${project.title} case study`}>Case study <Arrow /></Link></div>
+        <div className="project-bottom"><p className="project-metric"><strong>{project.metric}</strong> {project.metricLabel}</p><div className="project-links"><Link className="project-more" href={`/projects/${project.slug}`} aria-label={`Explore project: ${project.title}`}>Explore project <Arrow /></Link>{(project.liveUrl || project.posterUrl) && <a className="project-more" href={project.liveUrl ?? project.posterUrl} target="_blank" rel="noreferrer" aria-label={`${project.liveUrl ? "Open live project" : "View poster"}: ${project.title}`}>{project.liveUrl ? "Live project" : "View poster"} <Arrow diagonal /></a>}</div></div>
         <ul className="tags" aria-label={`${project.title} technologies`}>{project.tags.slice(0, 3).map(tag => <li key={tag}>{tag}</li>)}</ul>
       </article>)}</div>
     </section>

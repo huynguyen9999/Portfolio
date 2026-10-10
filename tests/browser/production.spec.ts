@@ -30,7 +30,7 @@ test("navigation has no failed assets, runtime errors, or CSP violations", async
     document.addEventListener("securitypolicyviolation", event => console.error(`CSP: ${event.violatedDirective}`));
   });
   await page.goto("/");
-  await page.getByRole("link", { name: "Read iGauchoBack case study" }).click();
+  await page.getByRole("link", { name: "Explore project: iGauchoBack" }).click();
   for (const title of ["LiDAR Security System", "Orbit AFE", "Chromatic Guitar Tuner", "iGauchoBack"]) {
     await page.locator(".next-project").getByRole("link", { name: title }).click();
     await expect(page.locator("h1")).toHaveText(title);
@@ -49,7 +49,7 @@ test("content and navigation survive JavaScript being unavailable", async ({ bro
   // Playwright text selectors deliberately exclude noscript content.
   await expect(page.locator("noscript p")).toBeVisible();
   await expect(page.locator("noscript p")).toContainText("JavaScript is unavailable.");
-  await page.getByRole("link", { name: "Read iGauchoBack case study" }).click();
+  await page.getByRole("link", { name: "Explore project: iGauchoBack" }).click();
   await expect(page.locator("h1")).toHaveText("iGauchoBack");
   await expect(page.getByRole("link", { name: "View résumé" })).toHaveAttribute("href", "/resume.pdf");
   await context.close();
@@ -76,13 +76,22 @@ test("résumé opens a separate tab and preserves the published PDF", async ({ p
   await popup.close();
 });
 
-test("project titles open live evidence and the portrait loads", async ({ page, request }) => {
+test("project details and separate live evidence remain accessible", async ({ page, request }) => {
   await page.goto("/");
-  for (const [name, href] of [["iGauchoBack", "https://igauchoback.vercel.app/"], ["Orbit AFE", "https://orbitafe.vercel.app/"], ["LiDAR Security System", "/lidar-poster.pdf"]]) {
+  for (const [name, href] of [["Open live project: iGauchoBack", "https://igauchoback.vercel.app/"], ["Open live project: Orbit AFE", "https://orbitafe.vercel.app/"], ["View poster: LiDAR Security System", "/lidar-poster.pdf"]]) {
     const link = page.getByRole("link", { name, exact: true });
     await expect(link).toHaveAttribute("href", href);
     await expect(link).toHaveAttribute("target", "_blank");
   }
+  for (const [name, slug] of [["iGauchoBack", "igauchoback"], ["Orbit AFE", "orbit"], ["LiDAR Security System", "lidar"], ["Chromatic Guitar Tuner", "guitar-tuner"]]) {
+    await page.goto("/");
+    await page.getByRole("link", { name, exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`/projects/${slug}$`));
+    await expect(page.getByRole("heading", { name: "What I built", exact: true })).toBeVisible();
+    if (slug === "igauchoback" || slug === "orbit") await expect(page.getByRole("link", { name: "Visit live project" })).toHaveAttribute("target", "_blank");
+    if (slug === "lidar") await expect(page.getByRole("link", { name: "View project poster" })).toHaveAttribute("href", "/lidar-poster.pdf");
+  }
+  await page.goto("/");
   const poster = await request.get("/lidar-poster.pdf");
   expect(poster.status()).toBe(200);
   expect(poster.headers()["content-disposition"]).toContain("inline;");
@@ -161,5 +170,5 @@ test("failed script downloads leave readable content and inert tuner controls", 
   await expect(page.getByRole("slider")).toBeDisabled();
   await expect(page.getByRole("button", { name: "Reset" })).toBeDisabled();
   await expect(page.locator(".frequency")).toHaveText("440.0 Hz");
-  await expect(page.getByRole("link", { name: "iGauchoBack", exact: true })).toHaveAttribute("href", "https://igauchoback.vercel.app/");
+  await expect(page.getByRole("link", { name: "iGauchoBack", exact: true })).toHaveAttribute("href", "/projects/igauchoback");
 });
