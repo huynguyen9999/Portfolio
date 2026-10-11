@@ -135,9 +135,8 @@ svg { display: block; flex-shrink: 0; }
 .range-labels { display: flex; justify-content: space-between; font-size: 11px; margin-top: -1px; margin-bottom: 13px; }
 .experience-section { padding-bottom: 56px; }
 .experience-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 32px; }
-.experience-item { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px 14px; align-items: start; }
-.experience-mark { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 8px; color: var(--accent); font-size: 13px; font-weight: 600; }
-.experience-item h3 { font-family: "DM Sans Variable", sans-serif; font-size: 15px; font-weight: 600; letter-spacing: -.02em; }
+.experience-item h3 { display: flex; align-items: center; gap: 8px; font-family: "DM Sans Variable", sans-serif; font-size: 15px; font-weight: 600; letter-spacing: -.02em; }
+.experience-logo { width: 22px; height: 22px; flex: none; }
 .experience-item h3 span { font-weight: 450; color: var(--muted); }
 .experience-role { font-size: 12px; margin-top: 3px; }
 .experience-period { color: var(--muted); font-size: 11px; margin-top: 2px; }

@@ -143,7 +143,7 @@ export const projects: Project[] = [
 export const experience: {
   company: string;
   team?: string;
-  mark: string;
+  logo: "amazon" | "polymarket";
   role: string;
   period: string;
   impact: string;
@@ -151,14 +151,14 @@ export const experience: {
   {
     company: "Amazon",
     team: "Alexa",
-    mark: "A",
+    logo: "amazon",
     role: "Software Development Engineer Intern",
     period: "Jun – Sep 2026",
     impact: "Built a WebRTC character-calling system with interruption handling and lip-synced avatars, keeping conversational latency under 1.5 seconds.",
   },
   {
     company: "Polymarket",
-    mark: "P",
+    logo: "polymarket",
     role: "Software Engineer Intern · Mobile & Product",
     period: "Apr – Jun 2026",
     impact: "Synthesized 300+ user interviews and shipped a real-time trading heat map with distinct Analyst and Casual experiences.",
@@ -166,7 +166,7 @@ export const experience: {
   {
     company: "Amazon",
     team: "Alexa",
-    mark: "A",
+    logo: "amazon",
     role: "Software Development Engineer Intern",
     period: "Jun – Sep 2025",
     impact: "Unified three backend services for voice access to call history and deployed an AWS proof of concept with 50+ evaluation scenarios.",
