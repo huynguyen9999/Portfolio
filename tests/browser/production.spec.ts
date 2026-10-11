@@ -100,7 +100,7 @@ test("project details and separate live evidence remain accessible", async ({ pa
   const portrait = page.locator(".hero-portrait img");
   await expect(portrait).toBeVisible();
   await expect.poll(() => portrait.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
-  await expect(page.locator("#work-heading, #experience-heading, #about-heading")).toHaveText(["Featured work", "Experience", "About me"]);
+  await expect(page.locator("#work-heading, #experience-heading, #about-heading")).toHaveText(["Projects", "Experience", "About me"]);
 });
 
 test("unknown and hostile-looking URLs stay 404 and do not execute input", async ({ page }) => {

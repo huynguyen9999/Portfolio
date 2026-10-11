@@ -33,10 +33,7 @@ export function FeaturedWork() {
   const supporting = SUPPORTING.map(projectBySlug);
   return <section id="work" className="work-section" aria-labelledby="work-heading">
     <div className="section-heading">
-      <div>
-        <h2 id="work-heading">Featured work</h2>
-        <p className="section-kicker">Selected projects that span software, signals, and embedded systems.</p>
-      </div>
+      <h2 id="work-heading">Projects</h2>
       <a className="inline-link" href="#work">View all projects <Arrow /></a>
     </div>
     <article className="featured-card featured-flagship">
