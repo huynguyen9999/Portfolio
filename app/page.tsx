@@ -1,10 +1,9 @@
-import Link from "next/link";
 import Image from "next/image";
 import { Arrow } from "@/components/icons";
 import { Contact } from "@/components/chrome";
-import { ProjectVisual } from "@/components/project-visual";
+import { ExperienceStrip } from "@/components/experience-strip";
+import { FeaturedWork } from "@/components/featured-work";
 import { SignatureSystem } from "@/components/signature-system/signature-system";
-import { projects, experience } from "@/lib/content";
 
 export const metadata = { alternates: { canonical: "/" } };
 
@@ -21,20 +20,8 @@ export default function Home() {
     </section>
     <SignatureSystem />
 
-    <section id="work" className="work-section" aria-labelledby="work-heading"><div className="section-heading"><h2 id="work-heading">Projects</h2></div>
-      <div className="project-grid">{projects.map(project => <article className="project-card" key={project.slug}>
-        <div className="project-visual"><ProjectVisual slug={project.slug} /></div>
-        <div className="project-meta"><span>{project.category}</span><span>{project.year}</span></div>
-        <h3><Link href={`/projects/${project.slug}`}>{project.title}<Arrow /></Link></h3>
-        <p className="project-summary">{project.summary}</p>
-        <div className="project-bottom"><p className="project-metric"><strong>{project.metric}</strong> {project.metricLabel}</p><div className="project-links"><Link className="project-more" href={`/projects/${project.slug}`} aria-label={`Project breakdown: ${project.title}`}>How it was built <Arrow /></Link>{(project.liveUrl || project.posterUrl) && <a className="project-more" href={project.liveUrl ?? project.posterUrl} target="_blank" rel="noreferrer" aria-label={`${project.liveUrl ? "Open live project" : "View poster"}: ${project.title}`}>{project.liveUrl ? "Live project" : "View poster"} <Arrow diagonal /></a>}</div></div>
-        <ul className="tags" aria-label={`${project.title} technologies`}>{project.tags.slice(0, 3).map(tag => <li key={tag}>{tag}</li>)}</ul>
-      </article>)}</div>
-    </section>
-
-    <section id="experience" className="experience-section" aria-labelledby="experience-heading"><div className="section-heading"><h2 id="experience-heading">Experience</h2><a className="inline-link" href="/Huy%20Nguyen%27s%20Resume.pdf" target="_blank" rel="noreferrer">Full résumé <Arrow diagonal /></a></div>
-      <div className="experience-list">{experience.map(job => <article className="experience-row" key={`${job.company}-${job.period}`}><div className="experience-company"><h3>{job.company}</h3><p>{job.period}</p></div><div className="experience-detail"><h4>{job.role}</h4><p>{job.summary}</p></div></article>)}</div>
-    </section>
+    <FeaturedWork />
+    <ExperienceStrip />
 
     <section id="about" className="about-section" aria-labelledby="about-heading"><div><h2 id="about-heading">About me</h2><p>I’m studying Electrical Engineering at UC Santa Barbara, graduating in June 2028. I like projects that make me think across disciplines: the code, the signal, and the person on the other end.</p><p>Outside of engineering, you’ll find me speed cubing, rock crawling, or behind a camera shooting sports.</p></div><aside className="about-notes" aria-label="Education and leadership"><div><span className="eyebrow">Education</span><h3>University of California,<br />Santa Barbara</h3><p>B.S. Electrical Engineering · 2028</p></div><div><span className="eyebrow">Beyond the classroom</span><p>Amazon Future Engineer scholar<br />UCSB Promise Scholar<br />Autodesk Design & Make Ambassador<br />Former Vice President, Sigma Eta Pi</p></div><span className="location"><span aria-hidden="true">↗</span> Based in Santa Barbara, CA</span></aside></section>
     <Contact />

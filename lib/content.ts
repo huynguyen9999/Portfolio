@@ -4,6 +4,8 @@ export type Project = {
   category: string;
   year: string;
   summary: string;
+  cardSummary: string;
+  categoryTags: string[];
   tags: string[];
   metric: string;
   metricLabel: string;
@@ -14,6 +16,9 @@ export type Project = {
   evidence: string[];
   liveUrl?: string;
   posterUrl?: string;
+  sourceUrl?: string;
+  image?: string;
+  imageAlt?: string;
 };
 
 export const projects: Project[] = [
@@ -25,9 +30,14 @@ export const projects: Project[] = [
     year: "2026",
     summary:
       "An interactive degree planner that turns UC course catalogs into prerequisite maps, helping students see how their classes connect.",
+    cardSummary: "Interactive prerequisite graph and personalized roadmaps for 70+ degree programs.",
+    categoryTags: ["Software", "Graphs", "Education"],
     tags: ["Next.js", "TypeScript", "Supabase", "React Flow"],
     metric: "70+",
     metricLabel: "degree roadmaps",
+    sourceUrl: "https://github.com/huynguyen9999/iGauchoBack",
+    image: "/work/igauchoback-graph.jpg",
+    imageAlt: "iGauchoBack prerequisite graph for the UCSB Electrical Engineering roadmap",
     problem:
       "Planning a degree means connecting requirements spread across course catalogs. Inconsistent catalog formats make it difficult to translate those requirements into a clear, navigable prerequisite map.",
     contribution:
@@ -50,7 +60,11 @@ export const projects: Project[] = [
     year: "2024",
     summary:
       "A scanning Arduino system that turns noisy distance readings into movement detection, with adaptive baselines and recovery from failed readings.",
+    cardSummary: "An Arduino scan that turns noisy distance readings into movement detection.",
+    categoryTags: ["Embedded", "Sensors", "Real-time"],
     tags: ["Arduino Uno R3", "C++", "I2C", "LiDAR"],
+    image: "/work/lidar-board.jpg",
+    imageAlt: "Arduino Uno wired to a LiDAR sensor on a breadboard",
     metric: "Top 5",
     metricLabel: "Northrop Grumman expo",
     problem:
@@ -75,7 +89,12 @@ export const projects: Project[] = [
     year: "2026",
     summary:
       "A community platform for interns, combining opt-in presence maps, real-time conversations, and profile-based connection matching.",
+    cardSummary: "Opt-in presence maps and matching that help interns find each other, launched in 24 hours.",
+    categoryTags: ["Software", "Real-time", "Product"],
     tags: ["JavaScript", "Supabase", "Leaflet", "Globe.gl"],
+    sourceUrl: "https://github.com/huynguyen9999/AFE-2026-Hackathon",
+    image: "/work/orbit.jpg",
+    imageAlt: "Orbit homepage inviting interns to find nearby people",
     metric: "24h",
     metricLabel: "from build to launch",
     problem:
@@ -99,7 +118,10 @@ export const projects: Project[] = [
     year: "2026",
     summary:
       "A real-time guitar tuner that listens through a microphone, identifies a note, and shows whether the pitch is sharp, flat, or in tune.",
+    cardSummary: "FFT pitch detection that identifies a note and shows whether it is sharp, flat, or in tune.",
+    categoryTags: ["Signal processing", "Audio", "DSP"],
     tags: ["Python", "NumPy", "SoundDevice", "FFT"],
+    sourceUrl: "https://github.com/huynguyen9999/Chromatic-guitar-tuner",
     metric: "FFT",
     metricLabel: "pitch detection",
     problem:
@@ -120,29 +142,33 @@ export const projects: Project[] = [
 
 export const experience: {
   company: string;
+  team?: string;
+  mark: string;
   role: string;
   period: string;
-  summary: string;
+  impact: string;
 }[] = [
   {
-    company: "Amazon · Alexa",
+    company: "Amazon",
+    team: "Alexa",
+    mark: "A",
     role: "Software Development Engineer Intern",
     period: "Jun – Sep 2026",
-    summary:
-      "Built a WebRTC character-calling system for Alexa+ with live interruption handling and lip-synced avatars. Resolved audio backpressure to keep conversational latency under 1.5 seconds and shipped the system to pre-production infrastructure.",
+    impact: "Built a WebRTC character-calling system with interruption handling and lip-synced avatars, keeping conversational latency under 1.5 seconds.",
   },
   {
     company: "Polymarket",
+    mark: "P",
     role: "Software Engineer Intern · Mobile & Product",
     period: "Apr – Jun 2026",
-    summary:
-      "Synthesized more than 300 user interviews to identify mobile onboarding barriers. Developed a real-time trading heat map and distinct Analyst and Casual experiences for users with different levels of trading expertise.",
+    impact: "Synthesized 300+ user interviews and shipped a real-time trading heat map with distinct Analyst and Casual experiences.",
   },
   {
-    company: "Amazon · Alexa",
+    company: "Amazon",
+    team: "Alexa",
+    mark: "A",
     role: "Software Development Engineer Intern",
     period: "Jun – Sep 2025",
-    summary:
-      "Unified three backend services for voice access to call history. Built an LLM evaluation framework with more than 50 test scenarios and deployed an end-to-end AWS proof of concept.",
+    impact: "Unified three backend services for voice access to call history and deployed an AWS proof of concept with 50+ evaluation scenarios.",
   },
 ];

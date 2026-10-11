@@ -30,7 +30,7 @@ test("navigation has no failed assets, runtime errors, or CSP violations", async
     document.addEventListener("securitypolicyviolation", event => console.error(`CSP: ${event.violatedDirective}`));
   });
   await page.goto("/");
-  await page.getByRole("link", { name: "Project breakdown: iGauchoBack" }).click();
+  await page.getByRole("link", { name: "Case study: iGauchoBack" }).click();
   for (const title of ["LiDAR Security System", "Orbit AFE", "Chromatic Guitar Tuner", "iGauchoBack"]) {
     await page.locator(".next-project").getByRole("link", { name: title }).click();
     await expect(page.locator("h1")).toHaveText(title);
@@ -49,7 +49,7 @@ test("content and navigation survive JavaScript being unavailable", async ({ bro
   // Playwright text selectors deliberately exclude noscript content.
   await expect(page.locator("noscript p")).toBeVisible();
   await expect(page.locator("noscript p")).toContainText("JavaScript is unavailable.");
-  await page.getByRole("link", { name: "Project breakdown: iGauchoBack" }).click();
+  await page.getByRole("link", { name: "Case study: iGauchoBack" }).click();
   await expect(page.locator("h1")).toHaveText("iGauchoBack");
   await expect(page.getByRole("link", { name: "View résumé" })).toHaveAttribute("href", "/Huy%20Nguyen%27s%20Resume.pdf");
   await context.close();
@@ -79,7 +79,7 @@ test("résumé opens a separate tab and preserves the published PDF", async ({ p
 
 test("project details and separate live evidence remain accessible", async ({ page, request }) => {
   await page.goto("/");
-  for (const [name, href] of [["Open live project: iGauchoBack", "https://igauchoback.vercel.app/"], ["Open live project: Orbit AFE", "https://orbitafe.vercel.app/"], ["View poster: LiDAR Security System", "/lidar-poster.pdf"]]) {
+  for (const [name, href] of [["Live site: iGauchoBack", "https://igauchoback.vercel.app/"], ["Live site: Orbit AFE", "https://orbitafe.vercel.app/"], ["View poster: LiDAR Security System", "/lidar-poster.pdf"]]) {
     const link = page.getByRole("link", { name, exact: true });
     await expect(link).toHaveAttribute("href", href);
     await expect(link).toHaveAttribute("target", "_blank");
@@ -100,7 +100,7 @@ test("project details and separate live evidence remain accessible", async ({ pa
   const portrait = page.locator(".hero-portrait img");
   await expect(portrait).toBeVisible();
   await expect.poll(() => portrait.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
-  await expect(page.locator("#work-heading, #experience-heading, #about-heading")).toHaveText(["Projects", "Experience", "About me"]);
+  await expect(page.locator("#work-heading, #experience-heading, #about-heading")).toHaveText(["Featured work", "Experience", "About me"]);
 });
 
 test("unknown and hostile-looking URLs stay 404 and do not execute input", async ({ page }) => {

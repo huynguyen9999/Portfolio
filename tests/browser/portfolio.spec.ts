@@ -8,7 +8,7 @@ test("homepage exposes work, contact, and a working résumé", async ({ page, re
   page.on("pageerror", error => errors.push(error.message));
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Huy Nguyen.");
-  await expect(page.locator(".project-card")).toHaveCount(4);
+  await expect(page.locator(".featured-card")).toHaveCount(4);
   await page.getByRole("link", { name: "View work", exact: true }).click();
   await expect(page).toHaveURL(/#work$/);
   await expect(page.getByRole("link", { name: "Email", exact: true })).toHaveAttribute("href", "mailto:dominichuyn@gmail.com");
@@ -52,7 +52,7 @@ for (const path of ["/", ...slugs.map(slug => `/projects/${slug}`)]) {
 
 test("project navigation, metadata, not-found, and reduced motion work", async ({ page, request }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Project breakdown: iGauchoBack" }).click();
+  await page.getByRole("link", { name: "Case study: iGauchoBack" }).click();
   await expect(page).toHaveURL(/\/projects\/igauchoback$/);
   await expect(page).toHaveTitle("iGauchoBack — Huy Nguyen");
   await expect(page.getByRole("link", { name: "Visit live project" })).toHaveAttribute("href", "https://igauchoback.vercel.app/");
