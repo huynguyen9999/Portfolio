@@ -30,7 +30,7 @@ The browser suite uses installed Google Chrome and starts the production build o
 - `lib/content.ts`: project descriptions and experience. Keep outcomes factual and distinguish architecture capacity from observed traffic.
 - `components/project-visual.tsx`: labeled conceptual diagrams, not project screenshots or recorded measurements.
 - `components/tuner.tsx`: a silent synthesized A4 demo, not the original Python microphone tuner. The range is −50 to +50 cents; zero alone is labeled Target pitch.
-- `public/resume.pdf`: résumé preview, opened in a new tab.
+- `public/Huy Nguyen's Resume.pdf`: résumé preview, opened in a new tab.
 - `public/huy-nguyen.jpg`: supplied portrait, responsively optimized by Next.js.
 - `public/lidar-poster.pdf`: supplied LiDAR team poster, available through View poster links.
 - `app/globals.css`: the editorial design and responsive layouts.

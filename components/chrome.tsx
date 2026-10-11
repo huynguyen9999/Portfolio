@@ -6,7 +6,7 @@ export function Header() {
     <Link className="monogram" href="/" aria-label="hn. — Huy Nguyen home">hn<span>.</span></Link>
     <nav aria-label="Main navigation">
       <Link href="/#work">Work</Link><Link href="/#experience">Experience</Link><Link href="/#about">About</Link>
-      <a className="nav-resume" href="/resume.pdf" target="_blank" rel="noreferrer">Résumé <Arrow diagonal /></a>
+      <a className="nav-resume" href="/Huy%20Nguyen%27s%20Resume.pdf" target="_blank" rel="noreferrer">Résumé <Arrow diagonal /></a>
     </nav>
   </header>;
 }

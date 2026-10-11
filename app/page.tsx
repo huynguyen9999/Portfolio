@@ -14,7 +14,7 @@ export default function Home() {
       <h1 id="hero-title">Huy Nguyen<span>.</span></h1>
       <p className="hero-statement">I build software and embedded systems—from real-time applications to sensing hardware.</p>
       <p className="hero-context">Electrical Engineering at UCSB ’28 <span aria-hidden="true">/</span> Previously Amazon Alexa</p>
-      <div className="hero-actions"><a className="button-primary" href="#work">View work <Arrow /></a><a className="button-text" href="/resume.pdf" target="_blank" rel="noreferrer">Résumé <Arrow diagonal /></a></div>
+      <div className="hero-actions"><a className="button-primary" href="#work">View work <Arrow /></a><a className="button-text" href="/Huy%20Nguyen%27s%20Resume.pdf" target="_blank" rel="noreferrer">Résumé <Arrow diagonal /></a></div>
       <div className="social-links"><a href="mailto:dominichuyn@gmail.com">Email <Arrow diagonal /></a><a href="https://github.com/huynguyen9999" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a><a href="https://www.linkedin.com/in/huynguyen06/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a></div></div>
       <div className="hero-portrait"><Image src="/huy-nguyen.jpg" alt="Huy Nguyen at the beach in Santa Barbara" width={2844} height={3793} sizes="(max-width: 640px) 560px, 720px" preload /></div>
     </section>
@@ -30,7 +30,7 @@ export default function Home() {
       </article>)}</div>
     </section>
 
-    <section id="experience" className="experience-section" aria-labelledby="experience-heading"><div className="section-heading"><h2 id="experience-heading">Experience</h2><a className="inline-link" href="/resume.pdf" target="_blank" rel="noreferrer">Full résumé <Arrow diagonal /></a></div>
+    <section id="experience" className="experience-section" aria-labelledby="experience-heading"><div className="section-heading"><h2 id="experience-heading">Experience</h2><a className="inline-link" href="/Huy%20Nguyen%27s%20Resume.pdf" target="_blank" rel="noreferrer">Full résumé <Arrow diagonal /></a></div>
       <div className="experience-list">{experience.map(job => <article className="experience-row" key={`${job.company}-${job.period}`}><div className="experience-company"><h3>{job.company}</h3><p>{job.period}</p></div><div className="experience-detail"><h4>{job.role}</h4><p>{job.summary}</p></div></article>)}</div>
     </section>
 

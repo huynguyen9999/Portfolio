@@ -12,7 +12,7 @@ test("homepage exposes work, contact, and a working résumé", async ({ page, re
   await page.getByRole("link", { name: "View work", exact: true }).click();
   await expect(page).toHaveURL(/#work$/);
   await expect(page.getByRole("link", { name: "Email", exact: true })).toHaveAttribute("href", "mailto:dominichuyn@gmail.com");
-  const resume = await request.get("/resume.pdf");
+  const resume = await request.get("/Huy%20Nguyen%27s%20Resume.pdf");
   expect(resume.status()).toBe(200);
   expect(resume.headers()["content-type"]).toContain("application/pdf");
   expect((await resume.body()).subarray(0, 5).toString()).toBe("%PDF-");

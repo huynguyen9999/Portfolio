@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 const routes = ["/", "/projects/igauchoback", "/projects/lidar", "/projects/orbit", "/projects/guitar-tuner"];
 
 test("all responses enforce browser restrictions without leaking framework headers", async ({ request }) => {
-  for (const path of [...routes, "/resume.pdf", "/robots.txt", "/sitemap.xml", "/opengraph-image", "/missing-page"]) {
+  for (const path of [...routes, "/Huy%20Nguyen%27s%20Resume.pdf", "/robots.txt", "/sitemap.xml", "/opengraph-image", "/missing-page"]) {
     const response = await request.get(path);
     expect(response.status()).toBe(path === "/missing-page" ? 404 : 200);
     const headers = response.headers();
@@ -51,28 +51,29 @@ test("content and navigation survive JavaScript being unavailable", async ({ bro
   await expect(page.locator("noscript p")).toContainText("JavaScript is unavailable.");
   await page.getByRole("link", { name: "Project breakdown: iGauchoBack" }).click();
   await expect(page.locator("h1")).toHaveText("iGauchoBack");
-  await expect(page.getByRole("link", { name: "View résumé" })).toHaveAttribute("href", "/resume.pdf");
+  await expect(page.getByRole("link", { name: "View résumé" })).toHaveAttribute("href", "/Huy%20Nguyen%27s%20Resume.pdf");
   await context.close();
 });
 
 test("résumé opens a separate tab and preserves the published PDF", async ({ page, request }) => {
-  const pdf = await request.get("/resume.pdf");
+  const pdf = await request.get("/Huy%20Nguyen%27s%20Resume.pdf");
   expect(pdf.headers()["content-disposition"]).toContain("inline;");
+  expect(pdf.headers()["content-disposition"]).toContain("Huy Nguyen's Resume.pdf");
   expect(pdf.headers()["content-type"]).toContain("application/pdf");
   const hash = (value: Buffer) => createHash("sha256").update(value).digest("hex");
-  expect(hash(await pdf.body())).toBe(hash(readFileSync("public/resume.pdf")));
+  expect(hash(await pdf.body())).toBe(hash(readFileSync("public/Huy Nguyen's Resume.pdf")));
   await page.goto("/");
-  const links = page.locator('a[href="/resume.pdf"]');
+  const links = page.locator('a[href="/Huy%20Nguyen%27s%20Resume.pdf"]');
   for (const link of await links.all()) {
     await expect(link).toHaveAttribute("target", "_blank");
     expect(await link.getAttribute("download")).toBeNull();
   }
   // Native PDF viewers differ across engines; separately verify tab navigation.
-  await page.context().route("**/resume.pdf", route => route.fulfill({ contentType: "text/html", body: "PDF navigation" }));
+  await page.context().route("**/Huy%20Nguyen%27s%20Resume.pdf", route => route.fulfill({ contentType: "text/html", body: "PDF navigation" }));
   const popupPromise = page.waitForEvent("popup");
   await page.locator(".hero-actions").getByRole("link", { name: "Résumé", exact: true }).click();
   const popup = await popupPromise;
-  await expect(popup).toHaveURL(/resume\.pdf$/);
+  await expect(popup).toHaveURL(/Huy%20Nguyen%27s%20Resume\.pdf$/);
   await popup.close();
 });
 
