@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Arrow } from "@/components/icons";
 import { Contact } from "@/components/chrome";
 import { ProjectVisual } from "@/components/project-visual";
+import { SignatureSystem } from "@/components/signature-system/signature-system";
 import { projects, experience } from "@/lib/content";
 
 export const metadata = { alternates: { canonical: "/" } };
@@ -10,14 +11,15 @@ export const metadata = { alternates: { canonical: "/" } };
 export default function Home() {
   return <main id="main" className="wrap">
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-copy"><p className="eyebrow"><span className="small-cross" aria-hidden="true">✳</span> Software + embedded systems</p>
+      <div className="hero-copy"><p className="eyebrow"><span className="hero-mark" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M3.2 1.6H1.6V3.2M12.8 1.6h1.6V3.2M3.2 14.4H1.6V12.8M12.8 14.4h1.6V12.8" /><circle cx="8" cy="8" r="1.25" fill="currentColor" stroke="none" /></svg></span><span>Embedded software systems</span><span className="eyebrow-sep" aria-hidden="true">·</span><span>RFIC</span><span className="eyebrow-sep" aria-hidden="true">·</span><span>IC design</span></p>
       <h1 id="hero-title">Huy Nguyen<span>.</span></h1>
-      <p className="hero-statement">I build software and embedded systems—from real-time applications to sensing hardware.</p>
+      <p className="hero-statement">I build systems across software, signals, and the physical world.</p>
       <p className="hero-context">Electrical Engineering at UCSB ’28 <span aria-hidden="true">/</span> Previously Amazon Alexa</p>
       <div className="hero-actions"><a className="button-primary" href="#work">View work <Arrow /></a><a className="button-text" href="/Huy%20Nguyen%27s%20Resume.pdf" target="_blank" rel="noreferrer">Résumé <Arrow diagonal /></a></div>
       <div className="social-links"><a href="mailto:dominichuyn@gmail.com">Email <Arrow diagonal /></a><a href="https://github.com/huynguyen9999" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a><a href="https://www.linkedin.com/in/huynguyen06/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a></div></div>
       <div className="hero-portrait"><Image src="/huy-nguyen.jpg" alt="Huy Nguyen at the beach in Santa Barbara" width={2844} height={3793} sizes="(max-width: 640px) 560px, 720px" preload /></div>
     </section>
+    <SignatureSystem />
 
     <section id="work" className="work-section" aria-labelledby="work-heading"><div className="section-heading"><h2 id="work-heading">Projects</h2></div>
       <div className="project-grid">{projects.map(project => <article className="project-card" key={project.slug}>
