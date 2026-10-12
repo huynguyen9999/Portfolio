@@ -2,6 +2,9 @@ import type { Vec2 } from "./interpolation.ts";
 
 export type LidarSample = Vec2 & { angle: number; cm: number; movement: boolean };
 
+/** One complete left-to-right-and-back pass. Kept deliberately slow to read as a physical scan. */
+export const SENSOR_SWEEP_CYCLE_MS = 17_600;
+
 /** Normalized semicircle of synthetic returns. Distances are illustrative, not measurements. */
 export function lidarLayout(count: number): LidarSample[] {
   return Array.from({ length: count }, (_, index) => {
@@ -24,7 +27,7 @@ export function scanAngle(pointerX: number): number {
 }
 
 /** Sweeps left to right through the illustrative 180° field, then reverses. */
-export function sweepAngle(elapsedMs: number, cycleMs = 4400): number {
+export function sweepAngle(elapsedMs: number, cycleMs = SENSOR_SWEEP_CYCLE_MS): number {
   const cycle = ((elapsedMs % cycleMs) + cycleMs) % cycleMs;
   const progress = cycle / cycleMs;
   return scanAngle(progress <= 0.5 ? progress * 2 : (1 - progress) * 2);
