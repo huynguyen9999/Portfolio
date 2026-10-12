@@ -12,7 +12,7 @@ export function Header() {
 }
 
 export function Footer() {
-  return <footer className="site-footer wrap"><p>© {new Date().getFullYear()} Huy Nguyen</p><p>Made with intention, in Santa Barbara.</p><a href="https://github.com/huynguyen9999/Portfolio" target="_blank" rel="noreferrer">View source <Arrow diagonal /></a></footer>;
+  return <footer className="site-footer wrap"><p>© {new Date().getFullYear()} Huy Nguyen</p><p>Made with intention, in Santa Barbara.</p><div className="footer-links"><a href="https://www.linkedin.com/in/huynguyen06/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a><a href="https://github.com/huynguyen9999" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a></div></footer>;
 }
 
 export function Contact() {

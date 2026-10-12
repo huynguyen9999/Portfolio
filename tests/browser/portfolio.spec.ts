@@ -8,7 +8,17 @@ test("homepage exposes work, contact, and a working résumé", async ({ page, re
   page.on("pageerror", error => errors.push(error.message));
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Huy Nguyen.");
-  await expect(page.locator(".featured-card")).toHaveCount(4);
+  await expect(page.locator(".featured-card")).toHaveCount(5);
+  await expect(page.getByRole("button", { name: "Show previous projects" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Show more projects" })).toBeVisible();
+  const carousel = page.locator(".carousel-track");
+  const initialScroll = await carousel.evaluate(element => element.scrollLeft);
+  await page.getByRole("button", { name: "Show more projects" }).click();
+  await expect.poll(() => carousel.evaluate(element => element.scrollLeft)).toBeGreaterThan(initialScroll);
+  await page.getByRole("button", { name: "Show previous projects" }).click();
+  await expect.poll(() => carousel.evaluate(element => element.scrollLeft)).toBeLessThanOrEqual(initialScroll + 1);
+  await expect(page.getByRole("contentinfo").getByRole("link", { name: "LinkedIn" })).toHaveAttribute("href", "https://www.linkedin.com/in/huynguyen06/");
+  await expect(page.getByRole("contentinfo").getByRole("link", { name: "GitHub" })).toHaveAttribute("href", "https://github.com/huynguyen9999");
   await page.getByRole("link", { name: "View work", exact: true }).click();
   await expect(page).toHaveURL(/#work$/);
   await expect(page.getByRole("link", { name: "Email", exact: true })).toHaveAttribute("href", "mailto:dominichuyn@gmail.com");
@@ -79,9 +89,7 @@ test("narrow screens remain usable", async ({ page }) => {
 });
 
 test("project library links every project and preserves live/source access", async ({ page }) => {
-  await page.goto("/");
-  await page.getByRole("link", { name: "View all projects" }).click();
-  await expect(page).toHaveURL(/\/projects$/);
+  await page.goto("/projects");
   await expect(page).toHaveTitle("Projects — Huy Nguyen");
   await expect(page.locator(".library-grid article")).toHaveCount(5);
   const card = page.locator(".library-grid article").filter({ has: page.getByRole("heading", { name: "The Hobbiest", exact: true }) });

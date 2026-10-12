@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { projects } from "@/lib/content";
-import { ProjectActions, ProjectShot } from "@/components/featured-work";
+import { ProjectActions, ProjectShot } from "@/components/project-card";
 
 export const metadata: Metadata = {
   title: "Projects",
