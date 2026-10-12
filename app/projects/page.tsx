@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return <main id="main" className="wrap project-library">
     <Link className="back-link" href="/">← Back to home</Link>
-    <header className="library-header"><p className="eyebrow">The project library · {projects.length} projects</p><h1>Things I’ve built.</h1><p>Software, signals, and physical systems. Explore the work, how it came together, and where you can try it.</p></header>
+    <header className="library-header"><p className="eyebrow">The project library · {projects.length} projects</p><h1>Things I’ve built.</h1></header>
     <div className="library-grid">{projects.map(project => <article className="featured-card" key={project.slug}>
       <ProjectShot project={project} />
       <div className="featured-copy"><ul className="featured-tags" aria-label={`${project.title} categories`}>{project.categoryTags.map(tag => <li key={tag}>{tag}</li>)}</ul><h2><Link href={`/projects/${project.slug}`}>{project.title}</Link></h2><p>{project.cardSummary}</p><ProjectActions project={project} /></div>
