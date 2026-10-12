@@ -88,17 +88,20 @@ test("narrow screens remain usable", async ({ page }) => {
   await expect(page.locator(".tuner-status")).toContainText("Sharp");
 });
 
-test("project library links every project and preserves live/source access", async ({ page }) => {
+test("project library links every project and preserves live access", async ({ page }) => {
   await page.goto("/projects");
   await expect(page).toHaveTitle("Projects — Huy Nguyen");
   await expect(page.locator(".library-grid article")).toHaveCount(5);
   const card = page.locator(".library-grid article").filter({ has: page.getByRole("heading", { name: "The Hobbiest", exact: true }) });
   await expect(card.getByRole("link", { name: "Live site: The Hobbiest" })).toHaveAttribute("href", "https://thehobbiest.vercel.app/");
-  await expect(card.getByRole("link", { name: "Source: The Hobbiest" })).toHaveAttribute("href", "https://github.com/huynguyen9999/Personal-Website");
+  await expect(card.getByRole("link", { name: /Source/ })).toHaveCount(0);
   await card.getByRole("link", { name: "Explore project: The Hobbiest" }).click();
   await expect(page).toHaveURL(/\/projects\/the-hobbiest$/);
   await expect(page.getByRole("heading", { name: "What I built" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Visit live project" })).toHaveAttribute("target", "_blank");
+  await expect(page.getByRole("link", { name: /View source/ })).toHaveCount(0);
+  await page.goto("/projects/lidar");
+  await expect(page.getByRole("link", { name: "View project poster" })).toHaveAttribute("href", "/lidar-poster.pdf");
   await page.getByRole("link", { name: "All projects" }).click();
   await expect(page).toHaveURL(/\/projects$/);
   await page.setViewportSize({ width: 320, height: 740 });

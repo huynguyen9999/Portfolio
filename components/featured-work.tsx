@@ -11,7 +11,7 @@ function projectBySlug(slug: string) {
 
 export function FeaturedWork() {
   const flagship = projectBySlug("igauchoback");
-  const supporting = projects.filter(project => project.slug !== flagship.slug).map(({ slug, title, categoryTags, cardSummary, liveUrl, posterUrl, sourceUrl, image, imageAlt }) => ({ slug, title, categoryTags, cardSummary, liveUrl, posterUrl, sourceUrl, image, imageAlt }));
+  const supporting = projects.filter(project => project.slug !== flagship.slug).map(({ slug, title, categoryTags, cardSummary, liveUrl, posterUrl, image, imageAlt }) => ({ slug, title, categoryTags, cardSummary, liveUrl, posterUrl, image, imageAlt }));
   return <section id="work" className="work-section" aria-labelledby="work-heading">
     <div className="section-heading">
       <h2 id="work-heading">Projects</h2>

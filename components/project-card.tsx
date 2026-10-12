@@ -4,15 +4,13 @@ import { Arrow } from "@/components/icons";
 import { ProjectVisual } from "@/components/project-visual";
 import type { Project } from "@/lib/content";
 
-type ProjectActionData = Pick<Project, "slug" | "title" | "liveUrl" | "posterUrl" | "sourceUrl">;
+type ProjectActionData = Pick<Project, "slug" | "title" | "liveUrl" | "posterUrl">;
 type ProjectShotData = Pick<Project, "slug" | "image" | "imageAlt">;
 
-export function ProjectActions({ project, compact = false }: { project: ProjectActionData; compact?: boolean }) {
-  const sourceUrl = compact && (project.liveUrl || project.posterUrl) ? undefined : project.sourceUrl;
+export function ProjectActions({ project }: { project: ProjectActionData }) {
   return <div className="featured-actions">
     {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noreferrer" aria-label={`Live site: ${project.title}`}>Live site <Arrow diagonal /></a>}
     {project.posterUrl && <a href={project.posterUrl} target="_blank" rel="noreferrer" aria-label={`View poster: ${project.title}`}>Poster <Arrow diagonal /></a>}
-    {sourceUrl && <a href={sourceUrl} target="_blank" rel="noreferrer" aria-label={`Source: ${project.title}`}>Source <Arrow diagonal /></a>}
     <Link href={`/projects/${project.slug}`} aria-label={`Explore project: ${project.title}`}>Explore project <Arrow /></Link>
   </div>;
 }

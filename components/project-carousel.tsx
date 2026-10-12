@@ -6,7 +6,7 @@ import { Arrow } from "@/components/icons";
 import { ProjectActions, ProjectShot } from "@/components/project-card";
 import type { Project } from "@/lib/content";
 
-type CarouselProject = Pick<Project, "slug" | "title" | "categoryTags" | "cardSummary" | "liveUrl" | "posterUrl" | "sourceUrl" | "image" | "imageAlt">;
+type CarouselProject = Pick<Project, "slug" | "title" | "categoryTags" | "cardSummary" | "liveUrl" | "posterUrl" | "image" | "imageAlt">;
 
 export function ProjectCarousel({ projects }: { projects: CarouselProject[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -34,7 +34,7 @@ export function ProjectCarousel({ projects }: { projects: CarouselProject[] }) {
           <ul className="featured-tags" aria-label={`${project.title} categories`}>{project.categoryTags.map(tag => <li key={tag}>{tag}</li>)}</ul>
           <h3><Link href={`/projects/${project.slug}`}>{project.title}</Link></h3>
           <p>{project.cardSummary}</p>
-          <ProjectActions project={project} compact />
+          <ProjectActions project={project} />
         </div>
       </article>)}
     </div>
