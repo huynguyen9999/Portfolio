@@ -26,7 +26,7 @@ Recruiters should be able to understand what I build without digging through a h
 
 The guitar-tuner card includes a silent, keyboard-accessible interactive concept demo. It visualizes a synthesized A4 signal from −50 to +50 cents; it does not claim to run the original Python microphone application.
 
-## Built with care
+## Tech Stack
 
 - **Next.js App Router + TypeScript** for static, typed pages and project routes
 - **React + Tailwind CSS** for a responsive editorial interface
