@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
-const slugs = ["igauchoback", "lidar", "orbit", "guitar-tuner"];
+const slugs = ["igauchoback", "lidar", "orbit", "guitar-tuner", "the-hobbiest"];
 
 test("homepage exposes work, contact, and a working résumé", async ({ page, request }) => {
   const errors: string[] = [];
@@ -38,7 +38,7 @@ test("tuner responds to keyboard input, endpoints, and reset", async ({ page }) 
   await expect(page.locator(".tuner-status")).toContainText("Target pitch");
 });
 
-for (const path of ["/", ...slugs.map(slug => `/projects/${slug}`)]) {
+for (const path of ["/", "/projects", ...slugs.map(slug => `/projects/${slug}`)]) {
   test(`${path} is accessible and fits the viewport`, async ({ page }) => {
     const response = await page.goto(path);
     expect(response?.status()).toBe(200);
@@ -52,12 +52,12 @@ for (const path of ["/", ...slugs.map(slug => `/projects/${slug}`)]) {
 
 test("project navigation, metadata, not-found, and reduced motion work", async ({ page, request }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: "Case study: iGauchoBack" }).click();
+  await page.getByRole("link", { name: "Explore project: iGauchoBack" }).click();
   await expect(page).toHaveURL(/\/projects\/igauchoback$/);
   await expect(page).toHaveTitle("iGauchoBack — Huy Nguyen");
   await expect(page.getByRole("link", { name: "Visit live project" })).toHaveAttribute("href", "https://igauchoback.vercel.app/");
   await page.getByRole("link", { name: "All projects" }).click();
-  await expect(page).toHaveURL(/\/#work$/);
+  await expect(page).toHaveURL(/\/projects$/);
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe("auto");
   const image = await request.get("/opengraph-image");
@@ -76,4 +76,26 @@ test("narrow screens remain usable", async ({ page }) => {
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.getByRole("slider", { name: "Adjust pitch" }).fill("25");
   await expect(page.locator(".tuner-status")).toContainText("Sharp");
+});
+
+test("project library links every project and preserves live/source access", async ({ page, request }) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "View all projects" }).click();
+  await expect(page).toHaveURL(/\/projects$/);
+  await expect(page).toHaveTitle("Projects — Huy Nguyen");
+  await expect(page.locator(".library-grid article")).toHaveCount(5);
+  const card = page.locator(".library-grid article").filter({ has: page.getByRole("heading", { name: "The Hobbiest", exact: true }) });
+  await expect(card.getByRole("link", { name: "Live site: The Hobbiest" })).toHaveAttribute("href", "https://thehobbiest.vercel.app/");
+  await expect(card.getByRole("link", { name: "Source: The Hobbiest" })).toHaveAttribute("href", "https://github.com/huynguyen9999/Personal-Website");
+  await card.getByRole("link", { name: "Explore project: The Hobbiest" }).click();
+  await expect(page).toHaveURL(/\/projects\/the-hobbiest$/);
+  await expect(page.getByRole("heading", { name: "What I built" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Visit live project" })).toHaveAttribute("target", "_blank");
+  await page.getByRole("link", { name: "All projects" }).click();
+  await expect(page).toHaveURL(/\/projects$/);
+  await page.setViewportSize({ width: 320, height: 740 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  const redirect = await request.get("/project", { maxRedirects: 0 });
+  expect(redirect.status()).toBe(308);
+  expect(redirect.headers().location).toBe("/projects");
 });

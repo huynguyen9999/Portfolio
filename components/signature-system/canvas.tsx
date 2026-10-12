@@ -139,7 +139,8 @@ export function SignatureCanvas({
         onRelease();
       }
       let stage = pinRef.current ?? sample.stage;
-      if (!reducedMotion) stage *= 1 - scrollBias();
+      // An explicit control selection must keep its matching project link.
+      if (!reducedMotion && pinRef.current === null) stage *= 1 - scrollBias();
       const weights = stageWeights(stage);
       const mode = dominantStage(weights);
       if (mode !== seenStage) {

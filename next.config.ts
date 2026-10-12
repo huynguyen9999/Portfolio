@@ -19,6 +19,9 @@ const contentSecurityPolicy = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    return [{ source: "/Huy%20Nguyen%27s%20Resume.pdf", destination: "/Huy%20Nguyen's%20Resume.pdf", permanent: true }];
+  },
   async headers() {
     return [{
       source: "/:path*",
@@ -31,7 +34,7 @@ const nextConfig: NextConfig = {
         { key: "Strict-Transport-Security", value: "max-age=31536000" },
       ],
     }, {
-      source: "/Huy%20Nguyen%27s%20Resume.pdf",
+      source: "/Huy%20Nguyen's%20Resume.pdf",
       headers: [{ key: "Content-Disposition", value: "inline; filename=\"Huy Nguyen's Resume.pdf\"; filename*=UTF-8''Huy%20Nguyen%27s%20Resume.pdf" }],
     }, {
       source: "/lidar-poster.pdf",

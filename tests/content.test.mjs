@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { projects, experience } from "../lib/content.ts";
 
 test("project content supports unique static routes and complete breakdowns", () => {
-  assert.equal(projects.length, 4);
+  assert.equal(projects.length, 5);
   assert.equal(new Set(projects.map(project => project.slug)).size, projects.length);
   for (const project of projects) {
     assert.match(project.slug, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);

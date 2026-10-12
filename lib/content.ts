@@ -138,6 +138,27 @@ export const projects: Project[] = [
       "Thread-safe buffering between capture and analysis",
     ],
   },
+  {
+    slug: "the-hobbiest",
+    title: "The Hobbiest",
+    category: "Software",
+    year: "2026",
+    summary: "A personal archive connecting stories, places, hobbies, and reading through interactive maps and a custom publishing workflow.",
+    cardSummary: "A living personal archive with an interactive identity map, reading shelves, and an owner-only editor.",
+    categoryTags: ["Software", "Interaction", "Publishing"],
+    tags: ["Next.js", "TypeScript", "Supabase", "MapLibre"],
+    metric: "Full stack",
+    metricLabel: "personal publishing",
+    liveUrl: "https://thehobbiest.vercel.app/",
+    sourceUrl: "https://github.com/huynguyen9999/Personal-Website",
+    image: "/work/the-hobbiest.jpg",
+    imageAlt: "The Hobbiest homepage with Huy Nguyen’s name over a mountain photograph and links to his story and interests",
+    problem: "A personal website needs room for changing interests, reading, photographs, and stories. Keeping that material current should not require editing source code for every update.",
+    contribution: "I built a Next.js personal archive with an interactive identity map, geographic storytelling, and reading shelves. A custom owner-only editor supports drafting and publishing copy, uploading photographs, and placing them on specific pages with alt text and captions.",
+    tradeoff: "Interactive storytelling adds client-side complexity, while a publishing system needs a clear boundary between drafts and public content. The identity map supports keyboard navigation, and published pages use fallback copy when content is unavailable. The editor separates drafts from published entries and stages uploads privately before placing them on the public site.",
+    result: "Deployed a personal archive on Vercel with connected story, interests, reading, and current-activity pages. The repository includes unit, component, integration, and browser tests for the interface and publishing workflows.",
+    evidence: ["Keyboard-accessible identity map with themed filters", "Owner-only draft, publish, and photo-placement workflows", "Published-content fallback and light, dark, and system themes"],
+  },
 ];
 
 export const experience: {

@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 
-const routes = ["/", "/projects/igauchoback", "/projects/lidar", "/projects/orbit", "/projects/guitar-tuner"];
+const routes = ["/", "/projects/igauchoback", "/projects/lidar", "/projects/orbit", "/projects/guitar-tuner", "/projects", "/projects/the-hobbiest"];
 
 test("all responses enforce browser restrictions without leaking framework headers", async ({ request }) => {
   for (const path of [...routes, "/Huy%20Nguyen%27s%20Resume.pdf", "/robots.txt", "/sitemap.xml", "/opengraph-image", "/missing-page"]) {
@@ -30,8 +30,8 @@ test("navigation has no failed assets, runtime errors, or CSP violations", async
     document.addEventListener("securitypolicyviolation", event => console.error(`CSP: ${event.violatedDirective}`));
   });
   await page.goto("/");
-  await page.getByRole("link", { name: "Case study: iGauchoBack" }).click();
-  for (const title of ["LiDAR Security System", "Orbit AFE", "Chromatic Guitar Tuner", "iGauchoBack"]) {
+  await page.getByRole("link", { name: "Explore project: iGauchoBack" }).click();
+  for (const title of ["LiDAR Security System", "Orbit AFE", "Chromatic Guitar Tuner", "The Hobbiest", "iGauchoBack"]) {
     await page.locator(".next-project").getByRole("link", { name: title }).click();
     await expect(page.locator("h1")).toHaveText(title);
   }
@@ -49,7 +49,7 @@ test("content and navigation survive JavaScript being unavailable", async ({ bro
   // Playwright text selectors deliberately exclude noscript content.
   await expect(page.locator("noscript p")).toBeVisible();
   await expect(page.locator("noscript p")).toContainText("JavaScript is unavailable.");
-  await page.getByRole("link", { name: "Case study: iGauchoBack" }).click();
+  await page.getByRole("link", { name: "Explore project: iGauchoBack" }).click();
   await expect(page.locator("h1")).toHaveText("iGauchoBack");
   await expect(page.getByRole("link", { name: "View résumé" })).toHaveAttribute("href", "/Huy%20Nguyen%27s%20Resume.pdf");
   await context.close();
@@ -148,7 +148,7 @@ test("metadata, internal links, and external link isolation remain valid", async
   }
   for (const path of internalPaths) expect((await request.get(path)).status()).toBe(200);
   const sitemap = await (await request.get("/sitemap.xml")).text();
-  expect((sitemap.match(/<loc>/g) || []).length).toBe(5);
+  expect((sitemap.match(/<loc>/g) || []).length).toBe(7);
   for (const path of routes.slice(1)) expect(sitemap).toContain(path);
 });
 
