@@ -2,7 +2,7 @@ import type { Vec2 } from "./interpolation.ts";
 
 export type GraphNode = Vec2 & { deps: number[] };
 
-const LAYERS = [3, 5, 6, 4, 2];
+const LAYERS = [4, 6, 7, 5, 3];
 
 /** Normalized prerequisite layout inspired by a degree graph, not a catalog export. */
 export function graphLayout(): GraphNode[] {

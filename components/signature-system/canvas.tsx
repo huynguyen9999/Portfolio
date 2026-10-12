@@ -9,6 +9,7 @@ import type { PointerSample } from "./use-pointer";
 
 const NODES = graphLayout();
 const RETURNS = lidarLayout(NODES.length);
+const FLOW_COUNT = 10;
 const CUBE = [
   [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
   [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1],
@@ -67,6 +68,7 @@ export function SignatureCanvas({
       velocity: { x: 0, y: 0 },
       energy: 0,
     }));
+    const graphEdges = particles.flatMap((particle, index) => particle.deps.map(dep => ({ from: index, to: dep })));
     let width = 0;
     let height = 0;
     let frame = 0;
@@ -196,6 +198,17 @@ export function SignatureCanvas({
         context.moveTo(origin.x, origin.y);
         context.lineTo(origin.x + Math.cos(Math.PI - beam) * Math.min(width, height) * 0.46, origin.y - Math.sin(beam) * Math.min(width, height) * 0.42);
         context.stroke();
+        if (!reducedMotion) {
+          context.fillStyle = accent;
+          for (let index = 0; index < 5; index++) {
+            const along = (now * 0.00022 + index * 0.19) % 1;
+            const distance = Math.min(width, height) * (0.1 + along * 0.36);
+            context.globalAlpha = weights.lidar * (0.16 + along * 0.34);
+            context.beginPath();
+            context.arc(origin.x + Math.cos(Math.PI - beam) * distance, origin.y - Math.sin(beam) * distance * 0.9, 1.25 + along, 0, Math.PI * 2);
+            context.fill();
+          }
+        }
         context.globalAlpha = 1;
       }
 
@@ -223,6 +236,22 @@ export function SignatureCanvas({
           context.fillStyle = accent;
           context.beginPath();
           context.arc(parent.x + (from.x - parent.x) * along, parent.y + (from.y - parent.y) * along, 2.4, 0, Math.PI * 2);
+          context.fill();
+        }
+      }
+      if (!reducedMotion && weights.graph > 0.35) {
+        context.fillStyle = accent;
+        for (let index = 0; index < Math.min(FLOW_COUNT, graphEdges.length); index++) {
+          const edge = graphEdges[(index * 3 + Math.floor(now / 1250)) % graphEdges.length];
+          const destination = particles[edge.from];
+          const source = particles[edge.to];
+          const along = (now * 0.00024 + index * 0.17) % 1;
+          const eased = along * along * (3 - 2 * along);
+          const sourcePoint = toPixel(source.graph, width, height, padX, padY);
+          const destinationPoint = toPixel(destination.graph, width, height, padX, padY);
+          context.globalAlpha = weights.graph * (0.2 + Math.sin(along * Math.PI) * 0.42);
+          context.beginPath();
+          context.arc(sourcePoint.x + (destinationPoint.x - sourcePoint.x) * eased, sourcePoint.y + (destinationPoint.y - sourcePoint.y) * eased, 1.3 + Math.sin(along * Math.PI) * 1.1, 0, Math.PI * 2);
           context.fill();
         }
       }
