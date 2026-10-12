@@ -1,18 +1,5 @@
 import { Tuner } from "./tuner";
-
-function Roadmap() {
-  return <div className="diagram diagram-roadmap"><div className="visual-topline"><span>iGauchoBack</span><span>From courses to clarity</span></div>
-    <svg viewBox="0 0 480 230" role="img" aria-label="Illustrative prerequisite graph: foundations connect to two intermediate courses, then a capstone.">
-      <defs><pattern id="roadmap-grid" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#adc0d0" /></pattern></defs>
-      <rect width="480" height="230" fill="url(#roadmap-grid)" />
-      <g fill="none" stroke="#8daac3" strokeWidth="1.5"><path d="M110 115h32q14 0 14-14V67q0-14 14-14h24M110 115h32q14 0 14 14v34q0 14 14 14h24M286 53h22q16 0 16 16v31q0 15 15 15h28M286 177h22q16 0 16-16v-31q0-15 15-15h28" /></g>
-      <g fontFamily="Arial, sans-serif" textAnchor="middle"><rect x="14" y="89" width="105" height="52" rx="7" fill="#f9fcfe" stroke="#afc1d0" /><text x="66" y="111" fontSize="9" fill="#5c748b">START HERE</text><text x="66" y="128" fontSize="12" fill="#284a68">Foundations</text>
-      <rect x="188" y="29" width="108" height="49" rx="7" fill="#f9fcfe" stroke="#afc1d0"/><text x="242" y="59" fontSize="12" fill="#284a68">Course A</text>
-      <rect x="188" y="152" width="108" height="49" rx="7" fill="#f9fcfe" stroke="#afc1d0"/><text x="242" y="182" fontSize="12" fill="#284a68">Course B</text>
-      <rect x="361" y="90" width="108" height="51" rx="7" fill="#426d90"/><text x="415" y="120" fontSize="12" fill="white">Capstone</text></g>
-      <g fill="#426d90"><circle cx="118" cy="115" r="3"/><circle cx="360" cy="115" r="3"/></g>
-    </svg><p className="visual-caption">Concept diagram · prerequisite relationships</p></div>;
-}
+import { IGauchoBackRoadmap } from "./igauchoback-roadmap";
 
 function Lidar() {
   return <div className="diagram diagram-lidar"><div className="visual-topline"><span>LiDAR / 180°</span><span>Sense. Filter. Detect.</span></div>
@@ -41,7 +28,7 @@ function Orbit() {
 
 export function ProjectVisual({ slug }: { slug: string }) {
   if (slug === "guitar-tuner") return <Tuner />;
-  if (slug === "igauchoback") return <Roadmap />;
+  if (slug === "igauchoback") return <IGauchoBackRoadmap />;
   if (slug === "lidar") return <Lidar />;
   return <Orbit />;
 }

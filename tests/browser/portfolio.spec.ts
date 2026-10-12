@@ -80,6 +80,25 @@ test("project navigation, metadata, not-found, and reduced motion work", async (
   await expect(page.getByRole("link", { name: "Back to home" })).toBeVisible();
 });
 
+test("iGauchoBack roadmap supports selection, keyboard reset, and a responsive inspector", async ({ page }) => {
+  await page.goto("/projects/igauchoback");
+  const circuit = page.getByRole("button", { name: /ECE 10C, Circuits & Systems III/ });
+  await circuit.focus();
+  await circuit.press("Enter");
+  await expect(circuit).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("status")).toContainText("ECE 10C · Circuits & Systems III");
+  await expect(page.getByRole("status")).toContainText("ECE 10B");
+  await page.keyboard.press("Escape");
+  await expect(circuit).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("status")).toContainText("Select a course or outcome");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await circuit.click();
+  await expect(circuit).toHaveAttribute("aria-pressed", "true");
+  await page.setViewportSize({ width: 320, height: 740 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await expect(page.getByRole("link", { name: /Try the live roadmap/ })).toHaveAttribute("href", "https://igauchoback.vercel.app/roadmap/ucsb/electrical-engineering");
+});
+
 test("narrow screens remain usable", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
   await page.goto("/");
