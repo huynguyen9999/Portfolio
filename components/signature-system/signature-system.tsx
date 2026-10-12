@@ -28,6 +28,7 @@ const STAGES: { name: StageName; label: string; value: number }[] = [
 export function SignatureSystem() {
   const frame = useRef<HTMLDivElement>(null);
   const readoutRef = useRef<HTMLParagraphElement>(null);
+  const sensorReadoutRef = useRef<HTMLParagraphElement>(null);
   const pinRef = useRef<number | null>(null);
   const pinEpoch = useRef(0);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -88,15 +89,16 @@ export function SignatureSystem() {
     <div className="signature-copy">
       <h2 id="signature-heading" className="signature-kicker">Graph, signal, sensor</h2>
       <p aria-live="polite">{COPY[stage]}</p>
-      <p className="signature-note">The same points move from a prerequisite graph, into a waveform, then into a scanning distance field. The waveform and distances are illustrative, not a live recording or a sensor log.</p>
+      <p className="signature-note">The same points move from a prerequisite graph, into a waveform, then into a scanning distance field. The waveform and distances are illustrative, not a live recording or a sensor log. Sensor mode sweeps an illustrative 180° field and shows a 100 cm proximity indicator.</p>
     </div>
     <div className="signature-stage">
       <div ref={frame}>
-        <SignatureCanvas pointer={pointer} pinRef={pinRef} pinEpoch={pinEpoch} pinTick={pinTick} reducedMotion={reducedMotion} onStage={onStage} onRelease={onRelease} readoutRef={readoutRef} />
+        <SignatureCanvas pointer={pointer} pinRef={pinRef} pinEpoch={pinEpoch} pinTick={pinTick} reducedMotion={reducedMotion} onStage={onStage} onRelease={onRelease} readoutRef={readoutRef} sensorReadoutRef={sensorReadoutRef} />
       </div>
     </div>
     <div className="signature-meta">
       <p className="signature-readout" ref={readoutRef} aria-live="off" />
+      <p className="signature-sensor-readout" ref={sensorReadoutRef} aria-live="off" />
       {revealed && <Link className="signature-link" href={LINKS[stage].href}>{LINKS[stage].label} <Arrow /></Link>}
     </div>
     <div className="signature-controls" role="radiogroup" aria-label="Visualization state">

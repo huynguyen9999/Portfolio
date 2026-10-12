@@ -18,6 +18,14 @@ test("signature visualization renders and keyboard reaches each project", async 
   }
 });
 
+test("sensor mode sweeps an illustrative field with a proximity LED status", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("radio", { name: "Sensor" }).click();
+  await expect(page.locator(".signature-sensor-readout")).toContainText("180° sweep");
+  await expect(page.locator(".signature-sensor-readout")).toContainText(/LED (on|off)/);
+  await expect(page.locator("[data-signature-canvas]")).toHaveAttribute("data-sensor-led", /on|off/);
+});
+
 test("reduced motion keeps the states and project links reachable", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");

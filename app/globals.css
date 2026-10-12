@@ -62,9 +62,10 @@ svg { display: block; flex-shrink: 0; }
 .signature-frame { height: 420px; border: 1px solid var(--line); border-radius: 8px; background: #f3f2ee; overflow: hidden; touch-action: pan-y; }
 .signature-frame canvas { display: block; width: 100%; height: 100%; }
 .signature-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; min-height: 36px; margin-top: 10px; }
-.signature-readout, .signature-link { position: static; font-size: 12px; }
-.signature-readout { color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; }
-.signature-readout:empty { display: none; }
+.signature-readout, .signature-sensor-readout, .signature-link { position: static; font-size: 12px; }
+.signature-readout, .signature-sensor-readout { color: var(--ink); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; }
+.signature-sensor-readout { color: var(--muted); }
+.signature-readout:empty, .signature-sensor-readout:empty { display: none; }
 .signature-link { display: inline-flex; align-items: center; gap: 8px; margin-left: auto; min-height: 36px; flex-shrink: 0; }
 .signature-controls { display: flex; gap: 8px; margin-top: 12px; }
 .signature-controls button { min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 4px; background: transparent; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { dependencyPath, graphLayout } from "./graph-state";
-import { beamHits, lidarLayout, scanAngle } from "./lidar-state";
+import { lidarLayout, proximityHits, scanAngle, sweepAngle } from "./lidar-state";
 import { dominantStage, mixPosition, springStep, stageWeights, type StageName, type Vec2 } from "./interpolation";
 import { signalCents, signalPoint, signalReadout } from "./signal-state";
 import type { PointerSample } from "./use-pointer";
@@ -28,6 +28,26 @@ function cubePoint(index: number, width: number, height: number): Vec2 {
   return { x: width / 2 + (corner[0] + corner[2] * 0.45) * scale, y: height / 2 + (corner[1] - corner[2] * 0.32) * scale };
 }
 
+function drawSensorLed(context: CanvasRenderingContext2D, width: number, lit: boolean, opacity: number) {
+  const x = width - 118;
+  const y = 18;
+  context.globalAlpha = opacity;
+  context.fillStyle = "#e8ece9";
+  context.fillRect(x, y, 100, 29);
+  context.fillStyle = lit ? "#d48b2a" : "#9aa3a3";
+  if (lit) {
+    context.shadowColor = "#d48b2a";
+    context.shadowBlur = 12;
+  }
+  context.beginPath();
+  context.arc(x + 14, y + 14.5, 6, 0, Math.PI * 2);
+  context.fill();
+  context.shadowBlur = 0;
+  context.fillStyle = "#42515a";
+  context.font = "9px ui-monospace, SFMono-Regular, Menlo, monospace";
+  context.fillText(lit ? "LED · 100 CM" : "LED · CLEAR", x + 27, y + 17.5);
+}
+
 export function SignatureCanvas({
   pointer,
   pinRef,
@@ -37,6 +57,7 @@ export function SignatureCanvas({
   onStage,
   onRelease,
   readoutRef,
+  sensorReadoutRef,
 }: {
   pointer: RefObject<PointerSample>;
   pinRef: RefObject<number | null>;
@@ -46,6 +67,7 @@ export function SignatureCanvas({
   onStage: (stage: StageName) => void;
   onRelease: () => void;
   readoutRef: RefObject<HTMLParagraphElement | null>;
+  sensorReadoutRef: RefObject<HTMLParagraphElement | null>;
 }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
@@ -180,7 +202,15 @@ export function SignatureCanvas({
         });
       }
       highlighted = hover >= 0 ? dependencyPath(NODES, hover) : new Set();
-      const beam = scanAngle(sample.x);
+      const beam = mode === "lidar" && weights.lidar > 0.55 ? sweepAngle(now) : scanAngle(sample.x);
+      const closeReturns = proximityHits(beam, RETURNS);
+      const ledOn = weights.lidar > 0.55 && closeReturns.length > 0;
+      host.dataset.sensorLed = ledOn ? "on" : "off";
+      if (sensorReadoutRef.current) {
+        sensorReadoutRef.current.textContent = weights.lidar > 0.55
+          ? `180° sweep · LED ${ledOn ? "on — object within 100 cm" : "off — field clear"}`
+          : "";
+      }
 
       context.clearRect(0, 0, width, height);
       context.lineWidth = 1;
@@ -209,6 +239,7 @@ export function SignatureCanvas({
             context.fill();
           }
         }
+        drawSensorLed(context, width, ledOn, weights.lidar);
         context.globalAlpha = 1;
       }
 
@@ -285,7 +316,7 @@ export function SignatureCanvas({
           particle.velocity.x = 0;
           particle.velocity.y = 0;
         } else springStep(particle.current, particle.velocity, target, dt);
-        const hit = weights.lidar > 0.55 && beamHits(beam, lidar.angle);
+        const hit = weights.lidar > 0.55 && closeReturns.some(sample => sample.angle === lidar.angle);
         context.fillStyle = highlighted.has(index) || hit ? accent : ink;
         context.globalAlpha = 0.9;
         context.beginPath();
@@ -322,7 +353,7 @@ export function SignatureCanvas({
       resizeObserver.disconnect();
       intersection.disconnect();
     };
-  }, [onRelease, onStage, pinEpoch, pinRef, pointer, readoutRef, reducedMotion]);
+  }, [onRelease, onStage, pinEpoch, pinRef, pointer, readoutRef, reducedMotion, sensorReadoutRef]);
 
   useEffect(() => {
     if (!reducedMotion) return;

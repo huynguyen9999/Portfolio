@@ -23,6 +23,17 @@ export function scanAngle(pointerX: number): number {
   return Math.PI * (0.06 + Math.min(1, Math.max(0, pointerX)) * 0.88);
 }
 
+/** Sweeps left to right through the illustrative 180° field, then reverses. */
+export function sweepAngle(elapsedMs: number, cycleMs = 4400): number {
+  const cycle = ((elapsedMs % cycleMs) + cycleMs) % cycleMs;
+  const progress = cycle / cycleMs;
+  return scanAngle(progress <= 0.5 ? progress * 2 : (1 - progress) * 2);
+}
+
 export function beamHits(angle: number, sample: number, tolerance = 0.11): boolean {
   return Math.abs(angle - sample) <= tolerance;
+}
+
+export function proximityHits(angle: number, samples: LidarSample[], thresholdCm = 100): LidarSample[] {
+  return samples.filter(sample => sample.cm <= thresholdCm && beamHits(angle, sample.angle, 0.075));
 }
