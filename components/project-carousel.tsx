@@ -16,10 +16,10 @@ export function ProjectCarousel({ projects }: { projects: CarouselProject[] }) {
     if (!track) return;
 
     const distance = Math.max(track.clientWidth * 0.82, 280);
-    track.scrollBy({
-      left: direction === "forward" ? distance : -distance,
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
-    });
+    const maximum = Math.max(0, track.scrollWidth - track.clientWidth);
+    const next = Math.min(maximum, Math.max(0, track.scrollLeft + (direction === "forward" ? distance : -distance)));
+    // Direct positioning keeps this control consistent at mandatory snap points.
+    track.scrollLeft = next;
   }
 
   return <div className="project-carousel">
