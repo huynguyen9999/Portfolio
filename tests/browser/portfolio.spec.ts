@@ -78,7 +78,7 @@ test("narrow screens remain usable", async ({ page }) => {
   await expect(page.locator(".tuner-status")).toContainText("Sharp");
 });
 
-test("project library links every project and preserves live/source access", async ({ page, request }) => {
+test("project library links every project and preserves live/source access", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("link", { name: "View all projects" }).click();
   await expect(page).toHaveURL(/\/projects$/);
@@ -95,7 +95,8 @@ test("project library links every project and preserves live/source access", asy
   await expect(page).toHaveURL(/\/projects$/);
   await page.setViewportSize({ width: 320, height: 740 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  const redirect = await request.get("/project", { maxRedirects: 0 });
-  expect(redirect.status()).toBe(308);
-  expect(redirect.headers().location).toBe("/projects");
+  // Follow any deployment-domain redirect before checking the route alias.
+  await page.goto("/project");
+  await expect(page).toHaveURL(/\/projects$/);
+  await expect(page.locator(".library-grid article")).toHaveCount(5);
 });
