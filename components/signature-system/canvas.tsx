@@ -104,6 +104,7 @@ export function SignatureCanvas({
     let pulse = 0;
     let pulseEdge = 0;
     let cubeUntil = 0;
+    let sensorSweepStartedAt = performance.now();
     const history: { stage: StageName; at: number }[] = [];
     let visible = true;
     const colors = getComputedStyle(document.documentElement);
@@ -169,6 +170,7 @@ export function SignatureCanvas({
       const mode = dominantStage(weights);
       if (mode !== seenStage) {
         seenStage = mode;
+        if (mode === "lidar") sensorSweepStartedAt = now;
         onStage(mode);
       }
       const holding = sample.down && mode === "signal";
@@ -202,7 +204,7 @@ export function SignatureCanvas({
         });
       }
       highlighted = hover >= 0 ? dependencyPath(NODES, hover) : new Set();
-      const beam = mode === "lidar" && weights.lidar > 0.55 ? sweepAngle(now) : scanAngle(sample.x);
+      const beam = mode === "lidar" && weights.lidar > 0.55 ? sweepAngle(now - sensorSweepStartedAt) : scanAngle(sample.x);
       const closeReturns = proximityHits(beam, RETURNS);
       const ledOn = weights.lidar > 0.55 && closeReturns.length > 0;
       host.dataset.sensorLed = ledOn ? "on" : "off";
