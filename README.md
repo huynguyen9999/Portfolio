@@ -4,7 +4,7 @@
 
 [View the live portfolio](https://huythedev.vercel.app/) · [Open my résumé](https://huythedev.vercel.app/Huy%20Nguyen%27s%20Resume.pdf) · [LinkedIn](https://www.linkedin.com/in/huynguyen06/)
 
-![iGauchoBack prerequisite graph](public/work/igauchoback-graph.jpg)
+![Huy Nguyen's portfolio homepage](public/portfolio-preview.png)
 
 This repository powers my personal portfolio: a fast, accessible way to evaluate my work in software, embedded systems, real-time interaction, and signal processing. It is intentionally light on decoration and built to make the engineering evidence easy to find.
 
