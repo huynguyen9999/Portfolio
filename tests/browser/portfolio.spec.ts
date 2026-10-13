@@ -19,6 +19,13 @@ test("homepage exposes work, contact, and a working résumé", async ({ page, re
   await expect.poll(() => carousel.evaluate(element => element.scrollLeft)).toBeLessThanOrEqual(initialScroll + 1);
   await expect(page.getByRole("contentinfo").getByRole("link", { name: "LinkedIn" })).toHaveAttribute("href", "https://www.linkedin.com/in/huynguyen06/");
   await expect(page.getByRole("contentinfo").getByRole("link", { name: "GitHub" })).toHaveAttribute("href", "https://github.com/huynguyen9999");
+  const contact = page.locator("#contact");
+  await expect(contact.getByRole("heading")).toHaveText("Let’s build something to help the other 90%!");
+  await expect(contact.getByRole("link", { name: "LinkedIn" })).toHaveAttribute("href", "https://www.linkedin.com/in/huynguyen06/");
+  await expect(contact.getByRole("link", { name: "GitHub" })).toHaveAttribute("href", "https://github.com/huynguyen9999");
+  await expect(contact.getByRole("link", { name: "Strava" })).toHaveAttribute("href", "https://www.strava.com/");
+  await expect(contact.getByRole("link", { name: "TikTok" })).toHaveAttribute("href", "https://www.tiktok.com/@huy_engineer");
+  await expect(contact.getByRole("link", { name: "Instagram" })).toHaveAttribute("href", "https://www.instagram.com/huy.engineer/");
   await page.getByRole("link", { name: "View work", exact: true }).click();
   await expect(page).toHaveURL(/#work$/);
   await expect(page.getByRole("link", { name: "Email", exact: true })).toHaveAttribute("href", "mailto:dominichuyn@gmail.com");

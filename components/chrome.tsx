@@ -17,7 +17,14 @@ export function Footer() {
 
 export function Contact() {
   return <section className="contact" id="contact" aria-labelledby="contact-heading">
-    <div><h2 id="contact-heading">Let’s connect</h2></div>
-    <div className="contact-links"><a className="contact-email" href="mailto:dominichuyn@gmail.com">dominichuyn@gmail.com <Arrow diagonal /></a><a href="https://www.linkedin.com/in/huynguyen06/" target="_blank" rel="noreferrer">Find me on LinkedIn <Arrow diagonal /></a></div>
+    <div><h2 id="contact-heading">Let’s build something to help the other 90%!</h2></div>
+    <div className="contact-links">
+      <a className="contact-email" href="mailto:dominichuyn@gmail.com">dominichuyn@gmail.com <Arrow diagonal /></a>
+      <a href="https://www.linkedin.com/in/huynguyen06/" target="_blank" rel="noreferrer">LinkedIn <Arrow diagonal /></a>
+      <a href="https://github.com/huynguyen9999" target="_blank" rel="noreferrer">GitHub <Arrow diagonal /></a>
+      <a href="https://www.strava.com/" target="_blank" rel="noreferrer">Strava <Arrow diagonal /></a>
+      <a href="https://www.tiktok.com/@huy_engineer" target="_blank" rel="noreferrer">TikTok <Arrow diagonal /></a>
+      <a href="https://www.instagram.com/huy.engineer/" target="_blank" rel="noreferrer">Instagram <Arrow diagonal /></a>
+    </div>
   </section>;
 }
