@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { dominantStage, mixPosition, springStep, stageWeights } from "../components/signature-system/interpolation.ts";
 import { dependencyPath, graphLayout } from "../components/signature-system/graph-state.ts";
 import { signalCents, signalPoint, signalReadout } from "../components/signature-system/signal-state.ts";
-import { beamHits, lidarLayout, proximityHits, scanAngle, SENSOR_SWEEP_CYCLE_MS, sweepAngle } from "../components/signature-system/lidar-state.ts";
+import { beamHits, lidarLayout, proximityHits, scanAngle, sensorRadiusForCm, SENSOR_REFERENCE_CM, SENSOR_SWEEP_CYCLE_MS, sweepAngle } from "../components/signature-system/lidar-state.ts";
 
 test("stage weights move from graph through signal to sensor", () => {
   const left = stageWeights(0);
@@ -85,7 +85,9 @@ test("sensor sweep reverses across 180 degrees and only detects close returns", 
   const closeSample = samples.find(sample => sample.cm <= 100);
   assert.ok(closeSample);
   assert.ok(proximityHits(closeSample.angle, samples).some(sample => sample.angle === closeSample.angle));
+  assert.equal(proximityHits(closeSample.angle + 0.03, [closeSample]).length, 0);
   const farSample = samples.find(sample => sample.cm > 100);
   assert.ok(farSample);
   assert.equal(proximityHits(farSample.angle, [farSample]).length, 0);
+  assert.ok(sensorRadiusForCm(SENSOR_REFERENCE_CM) > 0.28);
 });

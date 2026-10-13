@@ -4,6 +4,8 @@ export type LidarSample = Vec2 & { angle: number; cm: number; movement: boolean 
 
 /** One complete left-to-right-and-back pass. Kept deliberately slow to read as a physical scan. */
 export const SENSOR_SWEEP_CYCLE_MS = 17_600;
+export const SENSOR_REFERENCE_CM = 100;
+const SENSOR_HIT_TOLERANCE = 0.022;
 
 /** Normalized semicircle of synthetic returns. Distances are illustrative, not measurements. */
 export function lidarLayout(count: number): LidarSample[] {
@@ -26,6 +28,11 @@ export function scanAngle(pointerX: number): number {
   return Math.PI * (0.06 + Math.min(1, Math.max(0, pointerX)) * 0.88);
 }
 
+/** Maps the illustrative centimetre reading back to the radial layout used by the display. */
+export function sensorRadiusForCm(cm: number): number {
+  return Math.min(0.78, Math.max(0.28, (cm - 42) / 128));
+}
+
 /** Sweeps left to right through the illustrative 180° field, then reverses. */
 export function sweepAngle(elapsedMs: number, cycleMs = SENSOR_SWEEP_CYCLE_MS): number {
   const cycle = ((elapsedMs % cycleMs) + cycleMs) % cycleMs;
@@ -38,5 +45,5 @@ export function beamHits(angle: number, sample: number, tolerance = 0.11): boole
 }
 
 export function proximityHits(angle: number, samples: LidarSample[], thresholdCm = 100): LidarSample[] {
-  return samples.filter(sample => sample.cm <= thresholdCm && beamHits(angle, sample.angle, 0.075));
+  return samples.filter(sample => sample.cm <= thresholdCm && beamHits(angle, sample.angle, SENSOR_HIT_TOLERANCE));
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { dependencyPath, graphLayout } from "./graph-state";
-import { lidarLayout, proximityHits, scanAngle, sweepAngle } from "./lidar-state";
+import { lidarLayout, proximityHits, scanAngle, sensorRadiusForCm, SENSOR_REFERENCE_CM, sweepAngle } from "./lidar-state";
 import { dominantStage, mixPosition, springStep, stageWeights, type StageName, type Vec2 } from "./interpolation";
 import { signalCents, signalPoint, signalReadout } from "./signal-state";
 import type { PointerSample } from "./use-pointer";
@@ -46,6 +46,13 @@ function drawSensorLed(context: CanvasRenderingContext2D, width: number, lit: bo
   context.fillStyle = "#42515a";
   context.font = "9px ui-monospace, SFMono-Regular, Menlo, monospace";
   context.fillText(lit ? "LED · 100 CM" : "LED · CLEAR", x + 27, y + 17.5);
+}
+
+function sensorPoint(origin: Vec2, angle: number, radius: number, horizontalScale: number, verticalScale: number): Vec2 {
+  return {
+    x: origin.x + Math.cos(Math.PI - angle) * radius * horizontalScale,
+    y: origin.y - Math.sin(angle) * radius * verticalScale,
+  };
 }
 
 export function SignatureCanvas({
@@ -218,26 +225,39 @@ export function SignatureCanvas({
       context.lineWidth = 1;
       if (weights.lidar > 0.08) {
         const origin = toPixel({ x: 0.5, y: 0.82 }, width, height, padX, padY);
+        const horizontalScale = (width - padX * 2) * 0.72;
+        const verticalScale = (height - padY * 2) * 0.7;
+        const referenceRadius = sensorRadiusForCm(SENSOR_REFERENCE_CM);
         context.strokeStyle = accent;
         context.globalAlpha = weights.lidar * 0.28;
-        for (const radius of [0.28, 0.46, 0.64]) {
+        for (const radius of [0.28, 0.64, 0.78]) {
           context.beginPath();
-          context.arc(origin.x, origin.y, Math.min(width, height) * radius, Math.PI, Math.PI * 2);
+          context.ellipse(origin.x, origin.y, radius * horizontalScale, radius * verticalScale, 0, Math.PI, Math.PI * 2);
           context.stroke();
         }
+        context.globalAlpha = weights.lidar * 0.62;
+        context.setLineDash([4, 5]);
+        context.beginPath();
+        context.ellipse(origin.x, origin.y, referenceRadius * horizontalScale, referenceRadius * verticalScale, 0, Math.PI, Math.PI * 2);
+        context.stroke();
+        context.setLineDash([]);
+        context.fillStyle = muted;
+        context.font = "10px ui-monospace, SFMono-Regular, Menlo, monospace";
+        context.fillText("100 cm", origin.x + 8, origin.y - referenceRadius * verticalScale - 8);
         context.globalAlpha = weights.lidar * 0.7;
+        const beamEnd = sensorPoint(origin, beam, 0.82, horizontalScale, verticalScale);
         context.beginPath();
         context.moveTo(origin.x, origin.y);
-        context.lineTo(origin.x + Math.cos(Math.PI - beam) * Math.min(width, height) * 0.46, origin.y - Math.sin(beam) * Math.min(width, height) * 0.42);
+        context.lineTo(beamEnd.x, beamEnd.y);
         context.stroke();
         if (!reducedMotion) {
           context.fillStyle = accent;
           for (let index = 0; index < 5; index++) {
             const along = (now * 0.00022 + index * 0.19) % 1;
-            const distance = Math.min(width, height) * (0.1 + along * 0.36);
+            const point = sensorPoint(origin, beam, 0.1 + along * 0.72, horizontalScale, verticalScale);
             context.globalAlpha = weights.lidar * (0.16 + along * 0.34);
             context.beginPath();
-            context.arc(origin.x + Math.cos(Math.PI - beam) * distance, origin.y - Math.sin(beam) * distance * 0.9, 1.25 + along, 0, Math.PI * 2);
+            context.arc(point.x, point.y, 1.25 + along, 0, Math.PI * 2);
             context.fill();
           }
         }
