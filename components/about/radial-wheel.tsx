@@ -42,6 +42,5 @@ export function RadialWheel({ entries, active, selected, panelId, onPreview, onS
       })}
       <g className="pieces-center" aria-hidden="true"><text x="260" y="263" className="pieces-pi" textAnchor="middle">π</text><text x="260" y="291" textAnchor="middle">12 Pieces<tspan x="260" dy="18">of Me</tspan></text></g>
     </svg>
-    <p className="pieces-hint">A few things that make me, me.</p>
   </div>;
 }

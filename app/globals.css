@@ -72,7 +72,7 @@ svg { display: block; flex-shrink: 0; }
 .signature-controls button[aria-checked="true"] { color: var(--ink); border-color: var(--accent); }
 .work-section, .experience-section { border-top: 1px solid var(--line); padding: 39px 0 68px; }
 .section-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 28px; }
-.section-heading h2, .about-section h2, .contact h2 { font-size: clamp(44px, 5vw, 60px); font-weight: 650; letter-spacing: -.04em; line-height: 1.05; }
+.section-heading h2, .about-section h2, .pieces-intro h2, .contact h2 { font-size: clamp(44px, 5vw, 60px); font-weight: 650; letter-spacing: -.04em; line-height: 1.05; }
 .featured-flagship { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.9fr); gap: 28px; align-items: stretch; border: 1px solid var(--line); border-radius: 8px; padding: 14px; background: #fbfbf8; }
 .project-carousel { position: relative; margin-top: 18px; }
 .carousel-track { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 2px 1px 12px; scroll-padding-inline: 1px; }
@@ -265,7 +265,7 @@ svg { display: block; flex-shrink: 0; }
   .visual-topline > span:last-child { font-size: 8px; }
   .tuner-readout { margin-top: 10px; }
   .waveform { height: 62px; }
-  .section-heading h2, .about-section h2, .contact h2 { font-size: 40px; }
+  .section-heading h2, .about-section h2, .pieces-intro h2, .contact h2 { font-size: 40px; }
   .about-section { gap: 45px; }
   .about-notes { padding-left: 28px; }
   .case-body { gap: 40px; }
@@ -292,7 +292,7 @@ svg { display: block; flex-shrink: 0; }
   .signature-meta { flex-direction: column; align-items: flex-start; gap: 2px; }
   .signature-link { margin-left: 0; }
   .section-heading { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 22px; }
-  .section-heading h2, .about-section h2, .contact h2 { font-size: 36px; }
+  .section-heading h2, .about-section h2, .pieces-intro h2, .contact h2 { font-size: 36px; }
   .carousel-track .featured-card { flex-basis: min(84%, 360px); }
   .experience-strip { grid-template-columns: 1fr; }
   .diagram, .tuner { padding: 21px 22px 15px; }

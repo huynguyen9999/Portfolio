@@ -12,6 +12,6 @@ export function DetailPanel({ entry, index, total, id, onPrevious, onNext }: Pro
         {entry.image && <Image className="pieces-photo" {...entry.image} sizes="(max-width: 640px) 90vw, 320px" alt={entry.image.alt} />}
       </div>
     </div>
-    <div className="pieces-panel-bottom"><span>One piece at a time.</span><div><button type="button" onClick={onPrevious} aria-label="Previous section"><Arrow direction="left" /></button><button type="button" onClick={onNext} aria-label="Next section"><Arrow /></button></div></div>
+    <div className="pieces-panel-bottom"><div><button type="button" onClick={onPrevious} aria-label="Previous section"><Arrow direction="left" /></button><button type="button" onClick={onNext} aria-label="Next section"><Arrow /></button></div></div>
   </div>;
 }
