@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { AboutMe } from "@/components/about/about-me";
 import { Arrow } from "@/components/icons";
 import { Contact } from "@/components/chrome";
 import { ExperienceStrip } from "@/components/experience-strip";
@@ -23,7 +24,7 @@ export default function Home() {
     <FeaturedWork />
     <ExperienceStrip />
 
-    <section id="about" className="about-section" aria-labelledby="about-heading"><div><h2 id="about-heading">About me</h2><p>I’m studying Electrical Engineering at UC Santa Barbara, graduating in June 2028. I like projects that make me think across disciplines: the code, the signal, and the person on the other end.</p><p>Outside of engineering, you’ll find me speed cubing, rock crawling, or behind a camera shooting sports.</p></div><aside className="about-notes" aria-label="Education and leadership"><div><span className="eyebrow">Education</span><h3>University of California,<br />Santa Barbara</h3><p>B.S. Electrical Engineering · 2028</p></div><div><span className="eyebrow">Beyond the classroom</span><p>Amazon Future Engineer scholar<br />UCSB Promise Scholar<br />Autodesk Design & Make Ambassador<br />Former Vice President, Sigma Eta Pi</p></div><span className="location"><span aria-hidden="true">↗</span> Based in Santa Barbara, CA</span></aside></section>
+    <AboutMe />
     <Contact />
   </main>;
 }
