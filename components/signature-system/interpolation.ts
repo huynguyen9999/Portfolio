@@ -8,7 +8,11 @@ export function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
 }
 
-export function smoothstep(edge0: number, edge1: number, value: number): number {
+export function smoothstep(
+  edge0: number,
+  edge1: number,
+  value: number,
+): number {
   if (edge0 === edge1) return value >= edge1 ? 1 : 0;
   const t = clamp((value - edge0) / (edge1 - edge0), 0, 1);
   return t * t * (3 - 2 * t);
@@ -27,25 +31,44 @@ export function stageWeights(stage: number): StageWeights {
 }
 
 export function dominantStage(weights: StageWeights): StageName {
-  if (weights.lidar >= weights.signal && weights.lidar >= weights.graph) return "lidar";
+  if (weights.lidar >= weights.signal && weights.lidar >= weights.graph)
+    return "lidar";
   if (weights.signal >= weights.graph) return "signal";
   return "graph";
 }
 
-export function mixPosition(graph: Vec2, signal: Vec2, lidar: Vec2, weights: StageWeights): Vec2 {
+export function mixPosition(
+  graph: Vec2,
+  signal: Vec2,
+  lidar: Vec2,
+  weights: StageWeights,
+): Vec2 {
   return {
-    x: graph.x * weights.graph + signal.x * weights.signal + lidar.x * weights.lidar,
-    y: graph.y * weights.graph + signal.y * weights.signal + lidar.y * weights.lidar,
+    x:
+      graph.x * weights.graph +
+      signal.x * weights.signal +
+      lidar.x * weights.lidar,
+    y:
+      graph.y * weights.graph +
+      signal.y * weights.signal +
+      lidar.y * weights.lidar,
   };
 }
 
-/** Frame-rate-independent damped spring. Mutates current and velocity. */
-export function springStep(current: Vec2, velocity: Vec2, target: Vec2, dtMs: number, stiffness = 0.012, damping = 0.045): void {
-  const dt = clamp(dtMs, 0, 40);
-  const follow = 1 - Math.exp(-stiffness * dt);
-  const drag = Math.exp(-damping * dt);
-  velocity.x = velocity.x * drag + (target.x - current.x) * follow;
-  velocity.y = velocity.y * drag + (target.y - current.y) * follow;
-  current.x += velocity.x;
-  current.y += velocity.y;
+/** Exact critically damped spring; velocity is in pixels/second. */
+export function springStep(
+  current: Vec2,
+  velocity: Vec2,
+  target: Vec2,
+  dtMs: number,
+): void {
+  const dt = clamp(dtMs, 0, 40) / 1000;
+  const speed = 18;
+  const decay = Math.exp(-speed * dt);
+  for (const axis of ["x", "y"] as const) {
+    const offset = current[axis] - target[axis];
+    const impulse = velocity[axis] + speed * offset;
+    current[axis] = target[axis] + (offset + impulse * dt) * decay;
+    velocity[axis] = (velocity[axis] - speed * impulse * dt) * decay;
+  }
 }

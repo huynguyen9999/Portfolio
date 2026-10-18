@@ -59,12 +59,17 @@ The test suite covers project content and routes, the interactive tuner, respons
 
 ## Repository guide
 
-- `lib/content.ts` — factual project and experience content
+- `lib/content.ts` — factual project and experience content; `featured` selects the homepage lead and `visual` selects a diagram without branching on project slugs
+- `lib/links.ts` — shared résumé filename, URLs, and contact destinations
+- `components/about/content.ts` — editable wheel labels, answers, icons, and optional images
+- `components/signature-system/` — visualization, pointer lifecycle, and independently tested animation math
 - `app/projects/[slug]` — statically generated project breakdown pages
 - `components/project-carousel.tsx` — accessible homepage project browsing controls
 - `components/tuner.tsx` — silent synthesized pitch concept demo
 - `public/` — résumé, LiDAR poster, portrait, and project visuals
 - `SECURITY.md` — browser security policy and dependency-audit notes
+
+Keep content in these data files and interaction logic beside its component. Tests should protect behavior and invariants rather than duplicate editorial copy or freeze the number of projects. Browser tests run against a production build and cover both desktop and touch layouts.
 
 ## Deployment
 

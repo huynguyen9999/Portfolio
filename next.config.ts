@@ -1,3 +1,4 @@
+import { resume } from "./lib/links";
 import type { NextConfig } from "next";
 
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -20,26 +21,45 @@ const contentSecurityPolicy = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   async redirects() {
-    return [{ source: "/Huy%20Nguyen%27s%20Resume.pdf", destination: "/Huy%20Nguyen's%20Resume.pdf", permanent: true }];
+    return [
+      { source: resume.href, destination: resume.servedPath, permanent: true },
+    ];
   },
   async headers() {
-    return [{
-      source: "/:path*",
-      headers: [
-        { key: "Content-Security-Policy", value: contentSecurityPolicy },
-        { key: "X-Content-Type-Options", value: "nosniff" },
-        { key: "X-Frame-Options", value: "DENY" },
-        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-        { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
-        { key: "Strict-Transport-Security", value: "max-age=31536000" },
-      ],
-    }, {
-      source: "/Huy%20Nguyen's%20Resume.pdf",
-      headers: [{ key: "Content-Disposition", value: "inline; filename=\"Huy Nguyen's Resume.pdf\"; filename*=UTF-8''Huy%20Nguyen%27s%20Resume.pdf" }],
-    }, {
-      source: "/lidar-poster.pdf",
-      headers: [{ key: "Content-Disposition", value: 'inline; filename="Huy-Nguyen-LiDAR-Poster.pdf"' }],
-    }];
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "Content-Security-Policy", value: contentSecurityPolicy },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), payment=()",
+          },
+          { key: "Strict-Transport-Security", value: "max-age=31536000" },
+        ],
+      },
+      {
+        source: resume.servedPath,
+        headers: [
+          {
+            key: "Content-Disposition",
+            value: `inline; filename="${resume.filename}"; filename*=UTF-8''${resume.href.slice(1)}`,
+          },
+        ],
+      },
+      {
+        source: "/lidar-poster.pdf",
+        headers: [
+          {
+            key: "Content-Disposition",
+            value: 'inline; filename="Huy-Nguyen-LiDAR-Poster.pdf"',
+          },
+        ],
+      },
+    ];
   },
 };
 

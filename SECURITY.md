@@ -26,6 +26,8 @@ References: [advisory](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm), [tiny
 
 ## Verification boundaries
 
-Automated coverage includes all published routes, keyboard tuning, PDF integrity and new-tab navigation, missing and malformed paths, metadata, browser security headers, asset/console/CSP errors, JavaScript-disabled browsing, narrow layouts, reduced motion, axe accessibility checks, and a small local concurrent request burst. Unit tests cover every pitch step, numerical symmetry, invalid input, URL configuration, and content/route invariants.
+Automated coverage includes all published routes, keyboard tuning and radio navigation, pointer release on focus loss, PDF integrity and new-tab navigation, missing and malformed paths, metadata, browser security headers, asset/console/CSP errors, JavaScript-disabled browsing, narrow layouts, reduced motion, and axe accessibility checks. Unit tests cover every pitch step, numerical symmetry, invalid input, frame-rate-independent spring motion, URL configuration, and content/route invariants.
+
+The full dependency audit was rerun on 2026-10-17 and reported no known vulnerabilities. This result reflects the advisory database at that time, not a guarantee against undiscovered issues.
 
 These checks are not a penetration test, real-device accessibility review, uptime guarantee, or proof of real-traffic capacity. Vercel platform firewalls and quotas remain account configuration, and laboratory performance is distinct from field measurements. Review Vercel request/error metrics after publication and after traffic changes. Avoid adding telemetry that collects visitor data without a concrete need.

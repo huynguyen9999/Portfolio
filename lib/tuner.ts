@@ -20,6 +20,8 @@ export function waveformPath(cents: number): string {
 
 function validateCents(cents: number): void {
   if (!Number.isFinite(cents) || cents < -50 || cents > 50) {
-    throw new RangeError("Pitch must be a finite number between -50 and 50 cents.");
+    throw new RangeError(
+      "Pitch must be a finite number between -50 and 50 cents.",
+    );
   }
 }

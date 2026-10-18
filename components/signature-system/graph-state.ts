@@ -15,9 +15,13 @@ export function graphLayout(): GraphNode[] {
       if (layer > 0) {
         const prevCount = LAYERS[layer - 1];
         const prevStart = starts[layer - 1];
-        const slot = Math.min(prevCount - 1, Math.round((i / Math.max(1, count - 1)) * (prevCount - 1)));
+        const slot = Math.min(
+          prevCount - 1,
+          Math.round((i / Math.max(1, count - 1)) * (prevCount - 1)),
+        );
         deps.push(prevStart + slot);
-        if (prevCount > 2 && i % 2 === 1) deps.push(prevStart + Math.max(0, slot - 1));
+        if (prevCount > 2 && i % 2 === 1 && slot > 0)
+          deps.push(prevStart + slot - 1);
       }
       nodes.push({
         x: layer / (LAYERS.length - 1),
@@ -39,7 +43,9 @@ export function dependencyPath(nodes: GraphNode[], index: number): Set<number> {
     for (const dep of nodes[node]?.deps ?? []) ancestors.push(dep);
   }
   const children: number[][] = nodes.map(() => []);
-  nodes.forEach((node, i) => node.deps.forEach(dep => children[dep]?.push(i)));
+  nodes.forEach((node, i) =>
+    node.deps.forEach((dep) => children[dep]?.push(i)),
+  );
   const forward = [index];
   while (forward.length) {
     const node = forward.pop()!;

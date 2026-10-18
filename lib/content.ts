@@ -19,25 +19,31 @@ export type Project = {
   sourceUrl?: string;
   image?: string;
   imageAlt?: string;
+  visual?: "roadmap" | "lidar" | "orbit" | "tuner";
+  featured?: boolean;
 };
 
 export const projects: Project[] = [
   {
     slug: "igauchoback",
+    visual: "roadmap",
+    featured: true,
     liveUrl: "https://igauchoback.vercel.app/",
     title: "iGauchoBack",
     category: "Software",
     year: "2026",
     summary:
       "An interactive degree planner that turns UC course catalogs into prerequisite maps, helping students see how their classes connect.",
-    cardSummary: "Interactive prerequisite graph and personalized roadmaps for 70+ degree programs.",
+    cardSummary:
+      "Interactive prerequisite graph and personalized roadmaps for 70+ degree programs.",
     categoryTags: ["Software", "Graphs", "Education"],
     tags: ["Next.js", "TypeScript", "Supabase", "React Flow"],
     metric: "70+",
     metricLabel: "degree roadmaps",
     sourceUrl: "https://github.com/huynguyen9999/iGauchoBack",
     image: "/work/igauchoback-graph.jpg",
-    imageAlt: "iGauchoBack prerequisite graph for the UCSB Electrical Engineering roadmap",
+    imageAlt:
+      "iGauchoBack prerequisite graph for the UCSB Electrical Engineering roadmap",
     problem:
       "Planning a degree means connecting requirements spread across course catalogs. Inconsistent catalog formats make it difficult to translate those requirements into a clear, navigable prerequisite map.",
     contribution:
@@ -54,13 +60,15 @@ export const projects: Project[] = [
   },
   {
     slug: "lidar",
+    visual: "lidar",
     posterUrl: "/lidar-poster.pdf",
     title: "LiDAR Security System",
     category: "Embedded",
     year: "2024",
     summary:
       "A scanning Arduino system that turns noisy distance readings into movement detection, with adaptive baselines and recovery from failed readings.",
-    cardSummary: "An Arduino scan that turns noisy distance readings into movement detection.",
+    cardSummary:
+      "An Arduino scan that turns noisy distance readings into movement detection.",
     categoryTags: ["Embedded", "Sensors", "Real-time"],
     tags: ["Arduino Uno R3", "C++", "I2C", "LiDAR"],
     image: "/work/lidar-board.jpg",
@@ -83,13 +91,15 @@ export const projects: Project[] = [
   },
   {
     slug: "orbit",
+    visual: "orbit",
     liveUrl: "https://orbitafe.vercel.app/",
     title: "Orbit AFE",
     category: "Software",
     year: "2026",
     summary:
       "A community platform for interns, combining opt-in presence maps, real-time conversations, and profile-based connection matching.",
-    cardSummary: "Opt-in presence maps and matching that help interns find each other, launched in 24 hours.",
+    cardSummary:
+      "Opt-in presence maps and matching that help interns find each other, launched in 24 hours.",
     categoryTags: ["Software", "Real-time", "Product"],
     tags: ["JavaScript", "Supabase", "Leaflet", "Globe.gl"],
     sourceUrl: "https://github.com/huynguyen9999/AFE-2026-Hackathon",
@@ -113,12 +123,14 @@ export const projects: Project[] = [
   },
   {
     slug: "guitar-tuner",
+    visual: "tuner",
     title: "Chromatic Guitar Tuner",
     category: "Signal Processing",
     year: "2026",
     summary:
       "A real-time guitar tuner that listens through a microphone, identifies a note, and shows whether the pitch is sharp, flat, or in tune.",
-    cardSummary: "FFT pitch detection that identifies a note and shows whether it is sharp, flat, or in tune.",
+    cardSummary:
+      "FFT pitch detection that identifies a note and shows whether it is sharp, flat, or in tune.",
     categoryTags: ["Signal processing", "Audio", "DSP"],
     tags: ["Python", "NumPy", "SoundDevice", "FFT"],
     sourceUrl: "https://github.com/huynguyen9999/Chromatic-guitar-tuner",
@@ -143,8 +155,10 @@ export const projects: Project[] = [
     title: "The Hobbiest",
     category: "Software",
     year: "2026",
-    summary: "A personal archive connecting stories, places, hobbies, and reading through interactive maps and a custom publishing workflow.",
-    cardSummary: "A living personal archive with an interactive identity map, reading shelves, and an owner-only editor.",
+    summary:
+      "A personal archive connecting stories, places, hobbies, and reading through interactive maps and a custom publishing workflow.",
+    cardSummary:
+      "A living personal archive with an interactive identity map, reading shelves, and an owner-only editor.",
     categoryTags: ["Software", "Interaction", "Publishing"],
     tags: ["Next.js", "TypeScript", "Supabase", "MapLibre"],
     metric: "Full stack",
@@ -152,12 +166,21 @@ export const projects: Project[] = [
     liveUrl: "https://thehobbiest.vercel.app/",
     sourceUrl: "https://github.com/huynguyen9999/Personal-Website",
     image: "/work/the-hobbiest.jpg",
-    imageAlt: "The Hobbiest homepage with Huy Nguyen’s name over a mountain photograph and links to his story and interests",
-    problem: "A personal website needs room for changing interests, reading, photographs, and stories. Keeping that material current should not require editing source code for every update.",
-    contribution: "I built a Next.js personal archive with an interactive identity map, geographic storytelling, and reading shelves. A custom owner-only editor supports drafting and publishing copy, uploading photographs, and placing them on specific pages with alt text and captions.",
-    tradeoff: "Interactive storytelling adds client-side complexity, while a publishing system needs a clear boundary between drafts and public content. The identity map supports keyboard navigation, and published pages use fallback copy when content is unavailable. The editor separates drafts from published entries and stages uploads privately before placing them on the public site.",
-    result: "Deployed a personal archive on Vercel with connected story, interests, reading, and current-activity pages. The repository includes unit, component, integration, and browser tests for the interface and publishing workflows.",
-    evidence: ["Keyboard-accessible identity map with themed filters", "Owner-only draft, publish, and photo-placement workflows", "Published-content fallback and light, dark, and system themes"],
+    imageAlt:
+      "The Hobbiest homepage with Huy Nguyen’s name over a mountain photograph and links to his story and interests",
+    problem:
+      "A personal website needs room for changing interests, reading, photographs, and stories. Keeping that material current should not require editing source code for every update.",
+    contribution:
+      "I built a Next.js personal archive with an interactive identity map, geographic storytelling, and reading shelves. A custom owner-only editor supports drafting and publishing copy, uploading photographs, and placing them on specific pages with alt text and captions.",
+    tradeoff:
+      "Interactive storytelling adds client-side complexity, while a publishing system needs a clear boundary between drafts and public content. The identity map supports keyboard navigation, and published pages use fallback copy when content is unavailable. The editor separates drafts from published entries and stages uploads privately before placing them on the public site.",
+    result:
+      "Deployed a personal archive on Vercel with connected story, interests, reading, and current-activity pages. The repository includes unit, component, integration, and browser tests for the interface and publishing workflows.",
+    evidence: [
+      "Keyboard-accessible identity map with themed filters",
+      "Owner-only draft, publish, and photo-placement workflows",
+      "Published-content fallback and light, dark, and system themes",
+    ],
   },
 ];
 
@@ -175,14 +198,16 @@ export const experience: {
     logo: "amazon",
     role: "Software Development Engineer Intern",
     period: "Jun – Sep 2026",
-    impact: "Built a WebRTC character-calling system with interruption handling and lip-synced avatars, keeping conversational latency under 1.5 seconds.",
+    impact:
+      "Built a WebRTC character-calling system with interruption handling and lip-synced avatars, keeping conversational latency under 1.5 seconds.",
   },
   {
     company: "Polymarket",
     logo: "polymarket",
     role: "Software Engineer Intern · Mobile & Product",
     period: "Apr – Jun 2026",
-    impact: "Synthesized 300+ user interviews and shipped a real-time trading heat map with distinct Analyst and Casual experiences.",
+    impact:
+      "Synthesized 300+ user interviews and shipped a real-time trading heat map with distinct Analyst and Casual experiences.",
   },
   {
     company: "Amazon",
@@ -190,6 +215,7 @@ export const experience: {
     logo: "amazon",
     role: "Software Development Engineer Intern",
     period: "Jun – Sep 2025",
-    impact: "Unified three backend services for voice access to call history and deployed an AWS proof of concept with 50+ evaluation scenarios.",
+    impact:
+      "Unified three backend services for voice access to call history and deployed an AWS proof of concept with 50+ evaluation scenarios.",
   },
 ];

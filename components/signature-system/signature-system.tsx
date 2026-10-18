@@ -55,54 +55,117 @@ export function SignatureSystem() {
     };
   }, []);
 
-  const onStage = useCallback((next: StageName) => {
-    if (announced.current && stageRef.current === next) return;
-    announced.current = true;
-    stageRef.current = next;
-    setStage(next);
-    window.clearTimeout(dwell.current);
-    if (reducedMotion || controlRef.current) {
-      setRevealed(true);
-      return;
-    }
-    setRevealed(false);
-    dwell.current = window.setTimeout(() => setRevealed(true), 650);
-  }, [reducedMotion]);
+  const onStage = useCallback(
+    (next: StageName) => {
+      if (announced.current && stageRef.current === next) return;
+      announced.current = true;
+      stageRef.current = next;
+      setStage(next);
+      window.clearTimeout(dwell.current);
+      if (reducedMotion || controlRef.current) {
+        setRevealed(true);
+        return;
+      }
+      setRevealed(false);
+      dwell.current = window.setTimeout(() => setRevealed(true), 650);
+    },
+    [reducedMotion],
+  );
 
   const onRelease = useCallback(() => {
     controlRef.current = false;
   }, []);
 
-  const choose = (value: number) => {
-    const next = STAGES.find(item => item.value === value);
-    if (!next) return;
+  const choose = (next: (typeof STAGES)[number]) => {
+    window.clearTimeout(dwell.current);
     controlRef.current = true;
     stageRef.current = next.name;
-    pinRef.current = value;
+    pinRef.current = next.value;
     pinEpoch.current += 1;
-    setPinTick(count => count + 1);
+    setPinTick((count) => count + 1);
     setStage(next.name);
     setRevealed(true);
   };
 
-  return <section className="signature" aria-labelledby="signature-heading" data-reduced={reducedMotion ? "true" : "false"} data-stage={stage}>
-    <div className="signature-copy">
-      <h2 id="signature-heading" className="signature-kicker">Graph, signal, sensor</h2>
-      <p aria-live="polite">{COPY[stage]}</p>
-      <p className="signature-note">The same points move from a prerequisite graph, into a waveform, then into a scanning distance field. The waveform and distances are illustrative, not a live recording or a sensor log. Sensor mode sweeps an illustrative 180° field and shows a 100 cm proximity indicator.</p>
-    </div>
-    <div className="signature-stage">
-      <div ref={frame}>
-        <SignatureCanvas pointer={pointer} pinRef={pinRef} pinEpoch={pinEpoch} pinTick={pinTick} reducedMotion={reducedMotion} onStage={onStage} onRelease={onRelease} readoutRef={readoutRef} sensorReadoutRef={sensorReadoutRef} />
+  return (
+    <section
+      className="signature"
+      aria-labelledby="signature-heading"
+      data-reduced={reducedMotion ? "true" : "false"}
+      data-stage={stage}
+    >
+      <div className="signature-copy">
+        <h2 id="signature-heading" className="signature-kicker">
+          Graph, signal, sensor
+        </h2>
+        <p aria-live="polite">{COPY[stage]}</p>
+        <p className="signature-note">
+          The same points move from a prerequisite graph, into a waveform, then
+          into a scanning distance field. The waveform and distances are
+          illustrative, not a live recording or a sensor log. Sensor mode sweeps
+          an illustrative 180° field and shows a 100 cm proximity indicator.
+        </p>
       </div>
-    </div>
-    <div className="signature-meta">
-      <p className="signature-readout" ref={readoutRef} aria-live="off" />
-      <p className="signature-sensor-readout" ref={sensorReadoutRef} aria-live="off" />
-      {revealed && <Link className="signature-link" href={LINKS[stage].href}>{LINKS[stage].label} <Arrow /></Link>}
-    </div>
-    <div className="signature-controls" role="radiogroup" aria-label="Visualization state">
-      {STAGES.map(item => <button key={item.name} type="button" role="radio" aria-checked={stage === item.name} onClick={() => choose(item.value)}>{item.label}</button>)}
-    </div>
-  </section>;
+      <div className="signature-stage">
+        <div ref={frame}>
+          <SignatureCanvas
+            pointer={pointer}
+            pinRef={pinRef}
+            pinEpoch={pinEpoch}
+            pinTick={pinTick}
+            reducedMotion={reducedMotion}
+            onStage={onStage}
+            onRelease={onRelease}
+            readoutRef={readoutRef}
+            sensorReadoutRef={sensorReadoutRef}
+          />
+        </div>
+      </div>
+      <div className="signature-meta">
+        <p className="signature-readout" ref={readoutRef} aria-live="off" />
+        <p
+          className="signature-sensor-readout"
+          ref={sensorReadoutRef}
+          aria-live="off"
+        />
+        {revealed && (
+          <Link className="signature-link" href={LINKS[stage].href}>
+            {LINKS[stage].label} <Arrow />
+          </Link>
+        )}
+      </div>
+      <div
+        className="signature-controls"
+        role="radiogroup"
+        aria-label="Visualization state"
+      >
+        {STAGES.map((item, index) => (
+          <button
+            key={item.name}
+            type="button"
+            role="radio"
+            aria-checked={stage === item.name}
+            tabIndex={stage === item.name ? 0 : -1}
+            onClick={() => choose(item)}
+            onKeyDown={(event) => {
+              const forward =
+                event.key === "ArrowRight" || event.key === "ArrowDown";
+              const backward =
+                event.key === "ArrowLeft" || event.key === "ArrowUp";
+              if (!forward && !backward) return;
+              event.preventDefault();
+              const nextIndex =
+                (index + (forward ? 1 : -1) + STAGES.length) % STAGES.length;
+              choose(STAGES[nextIndex]);
+              event.currentTarget.parentElement
+                ?.querySelectorAll<HTMLButtonElement>("button")
+                [nextIndex]?.focus();
+            }}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+    </section>
+  );
 }

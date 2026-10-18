@@ -6,7 +6,6 @@ test("A4 reference and equal temperament endpoints", () => {
   assert.equal(frequencyFromCents(0), 440);
   assert.ok(Math.abs(frequencyFromCents(-50) - 427.474054) < 0.000001);
   assert.ok(Math.abs(frequencyFromCents(50) - 452.892984) < 0.000001);
-
 });
 test("pitch feedback distinguishes flat, target, and sharp", () => {
   assert.equal(pitchStatus(-1), "Flat");
@@ -26,7 +25,9 @@ test("every slider step is monotonic, symmetric in cents, and has a bounded wave
   for (let cents = -50; cents <= 50; cents++) {
     const frequency = frequencyFromCents(cents);
     assert.ok(frequency > previous);
-    assert.ok(Math.abs(frequency * frequencyFromCents(-cents) - 440 ** 2) < 1e-8);
+    assert.ok(
+      Math.abs(frequency * frequencyFromCents(-cents) - 440 ** 2) < 1e-8,
+    );
     previous = frequency;
     const points = [...waveformPath(cents).matchAll(/[ML]([\d.]+) ([\d.]+)/g)];
     assert.equal(points.length, 221);
@@ -38,7 +39,16 @@ test("every slider step is monotonic, symmetric in cents, and has a bounded wave
 });
 
 test("invalid and out-of-range pitch fails explicitly instead of rendering NaN", () => {
-  for (const value of [NaN, Infinity, -Infinity, -51, 51, undefined, null, "0"]) {
+  for (const value of [
+    NaN,
+    Infinity,
+    -Infinity,
+    -51,
+    51,
+    undefined,
+    null,
+    "0",
+  ]) {
     for (const fn of [frequencyFromCents, pitchStatus, waveformPath]) {
       assert.throws(() => fn(value), RangeError);
     }

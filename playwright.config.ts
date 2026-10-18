@@ -13,16 +13,35 @@ export default defineConfig({
   reporter: [["list"], ["html", { open: "never" }]],
   use: { baseURL, trace: "retain-on-failure", screenshot: "only-on-failure" },
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"], ...chrome, viewport: { width: 1440, height: 1000 } } },
-    { name: "mobile", use: { ...devices["iPhone 13"], defaultBrowserType: "chromium", ...chrome } },
-    ...(process.env.CROSS_BROWSER ? [
-      { name: "webkit", use: { ...devices["Desktop Safari"] } },
-      { name: "firefox", use: { ...devices["Desktop Firefox"] } },
-    ] : []),
+    {
+      name: "desktop",
+      use: {
+        ...devices["Desktop Chrome"],
+        ...chrome,
+        viewport: { width: 1440, height: 1000 },
+      },
+    },
+    {
+      name: "mobile",
+      use: {
+        ...devices["iPhone 13"],
+        defaultBrowserType: "chromium",
+        ...chrome,
+      },
+    },
+    ...(process.env.CROSS_BROWSER
+      ? [
+          { name: "webkit", use: { ...devices["Desktop Safari"] } },
+          { name: "firefox", use: { ...devices["Desktop Firefox"] } },
+        ]
+      : []),
   ],
-  webServer: process.env.PLAYWRIGHT_BASE_URL ? undefined : {
-    command: "node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3001",
-    url: baseURL,
-    reuseExistingServer: false,
-  },
+  webServer: process.env.PLAYWRIGHT_BASE_URL
+    ? undefined
+    : {
+        command:
+          "node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3001",
+        url: baseURL,
+        reuseExistingServer: false,
+      },
 });

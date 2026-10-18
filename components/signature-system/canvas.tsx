@@ -2,8 +2,22 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { dependencyPath, graphLayout } from "./graph-state";
-import { lidarLayout, proximityHits, scanAngle, sensorRadiusForCm, SENSOR_REFERENCE_CM, sweepAngle } from "./lidar-state";
-import { dominantStage, mixPosition, springStep, stageWeights, type StageName, type Vec2 } from "./interpolation";
+import {
+  lidarLayout,
+  proximityHits,
+  scanAngle,
+  sensorRadiusForCm,
+  SENSOR_REFERENCE_CM,
+  sweepAngle,
+} from "./lidar-state";
+import {
+  dominantStage,
+  mixPosition,
+  springStep,
+  stageWeights,
+  type StageName,
+  type Vec2,
+} from "./interpolation";
 import { signalCents, signalPoint, signalReadout } from "./signal-state";
 import type { PointerSample } from "./use-pointer";
 
@@ -11,24 +25,57 @@ const NODES = graphLayout();
 const RETURNS = lidarLayout(NODES.length);
 const FLOW_COUNT = 10;
 const CUBE = [
-  [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-  [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1],
+  [-1, -1, -1],
+  [1, -1, -1],
+  [1, 1, -1],
+  [-1, 1, -1],
+  [-1, -1, 1],
+  [1, -1, 1],
+  [1, 1, 1],
+  [-1, 1, 1],
 ] as const;
 
-type Particle = { graph: Vec2; deps: number[]; current: Vec2; velocity: Vec2; energy: number };
+type Particle = {
+  graph: Vec2;
+  deps: number[];
+  current: Vec2;
+  velocity: Vec2;
+  energy: number;
+};
 
-function toPixel(point: Vec2, width: number, height: number, padX: number, padY: number): Vec2 {
-  return { x: padX + point.x * (width - padX * 2), y: padY + point.y * (height - padY * 2) };
+function toPixel(
+  point: Vec2,
+  width: number,
+  height: number,
+  padX: number,
+  padY: number,
+): Vec2 {
+  return {
+    x: padX + point.x * (width - padX * 2),
+    y: padY + point.y * (height - padY * 2),
+  };
 }
 
 function cubePoint(index: number, width: number, height: number): Vec2 {
   const corner = CUBE[index % CUBE.length];
   const scale = Math.min(width, height) * 0.14;
-  if (index >= CUBE.length) return { x: width / 2 + ((index % 5) - 2) * 7, y: height / 2 + ((index % 3) - 1) * 7 };
-  return { x: width / 2 + (corner[0] + corner[2] * 0.45) * scale, y: height / 2 + (corner[1] - corner[2] * 0.32) * scale };
+  if (index >= CUBE.length)
+    return {
+      x: width / 2 + ((index % 5) - 2) * 7,
+      y: height / 2 + ((index % 3) - 1) * 7,
+    };
+  return {
+    x: width / 2 + (corner[0] + corner[2] * 0.45) * scale,
+    y: height / 2 + (corner[1] - corner[2] * 0.32) * scale,
+  };
 }
 
-function drawSensorLed(context: CanvasRenderingContext2D, width: number, lit: boolean, opacity: number) {
+function drawSensorLed(
+  context: CanvasRenderingContext2D,
+  width: number,
+  lit: boolean,
+  opacity: number,
+) {
   const x = width - 118;
   const y = 18;
   context.globalAlpha = opacity;
@@ -48,7 +95,13 @@ function drawSensorLed(context: CanvasRenderingContext2D, width: number, lit: bo
   context.fillText(lit ? "LED · 100 CM" : "LED · CLEAR", x + 27, y + 17.5);
 }
 
-function sensorPoint(origin: Vec2, angle: number, radius: number, horizontalScale: number, verticalScale: number): Vec2 {
+function sensorPoint(
+  origin: Vec2,
+  angle: number,
+  radius: number,
+  horizontalScale: number,
+  verticalScale: number,
+): Vec2 {
   return {
     x: origin.x + Math.cos(Math.PI - angle) * radius * horizontalScale,
     y: origin.y - Math.sin(angle) * radius * verticalScale,
@@ -76,7 +129,7 @@ export function SignatureCanvas({
   readoutRef: RefObject<HTMLParagraphElement | null>;
   sensorReadoutRef: RefObject<HTMLParagraphElement | null>;
 }) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const hostRef = useRef<HTMLDivElement>(null);
   const drawRef = useRef<((now: number) => void) | null>(null);
 
@@ -90,14 +143,16 @@ export function SignatureCanvas({
       return;
     }
     host.dataset.canvas = "ready";
-    const particles: Particle[] = NODES.map(node => ({
+    const particles: Particle[] = NODES.map((node) => ({
       graph: { x: node.x, y: node.y },
       deps: node.deps,
       current: { x: 0, y: 0 },
       velocity: { x: 0, y: 0 },
       energy: 0,
     }));
-    const graphEdges = particles.flatMap((particle, index) => particle.deps.map(dep => ({ from: index, to: dep })));
+    const graphEdges = particles.flatMap((particle, index) =>
+      particle.deps.map((dep) => ({ from: index, to: dep })),
+    );
     let width = 0;
     let height = 0;
     let frame = 0;
@@ -113,7 +168,7 @@ export function SignatureCanvas({
     let cubeUntil = 0;
     let sensorSweepStartedAt = performance.now();
     const history: { stage: StageName; at: number }[] = [];
-    let visible = true;
+    let visible = false;
     const colors = getComputedStyle(document.documentElement);
     const ink = colors.getPropertyValue("--ink").trim() || "#292e2f";
     const accent = colors.getPropertyValue("--accent").trim() || "#42698b";
@@ -132,7 +187,13 @@ export function SignatureCanvas({
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
       if (particles[0].current.x === 0 && particles[0].current.y === 0) {
         for (const particle of particles) {
-          const placed = toPixel(particle.graph, width, height, width * 0.1, height * 0.14);
+          const placed = toPixel(
+            particle.graph,
+            width,
+            height,
+            width * 0.1,
+            height * 0.14,
+          );
           particle.current.x = placed.x;
           particle.current.y = placed.y;
         }
@@ -142,8 +203,6 @@ export function SignatureCanvas({
     resize();
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(host);
-    const intersection = new IntersectionObserver(entries => { visible = entries.some(entry => entry.isIntersecting); }, { threshold: 0.05 });
-    intersection.observe(host);
 
     const scrollBias = () => {
       const rect = host.getBoundingClientRect();
@@ -151,8 +210,10 @@ export function SignatureCanvas({
       return Math.min(1, -rect.top / Math.max(1, rect.height * 0.7));
     };
 
-    const draw = (now: number) => {
-      const dt = Math.min(40, now - last);
+    const draw = (timestamp: number) => {
+      // A static reduced-motion frame must not change just because it is resized.
+      const now = reducedMotion ? 0 : timestamp;
+      const dt = reducedMotion ? 0 : Math.max(0, Math.min(40, now - last));
       last = now;
       pulse += dt;
       if (pulse > 4200) {
@@ -165,7 +226,10 @@ export function SignatureCanvas({
         holdX = sample.clientX;
         holdY = sample.clientY;
       }
-      const pointerTravel = Math.hypot(sample.clientX - holdX, sample.clientY - holdY);
+      const pointerTravel = Math.hypot(
+        sample.clientX - holdX,
+        sample.clientY - holdY,
+      );
       if (pinRef.current !== null && pointerTravel > 18) {
         pinRef.current = null;
         onRelease();
@@ -184,15 +248,19 @@ export function SignatureCanvas({
       const cents = signalCents(sample.x, sample.y, holding);
       const readout = signalReadout(cents);
       if (readoutRef.current) {
-        readoutRef.current.textContent = weights.signal > 0.45 ? readout.label : "";
+        const text = weights.signal > 0.45 ? readout.label : "";
+        if (readoutRef.current.textContent !== text)
+          readoutRef.current.textContent = text;
         readoutRef.current.dataset.cents = cents.toFixed(1);
       }
       if (history.at(-1)?.stage !== mode) {
         history.push({ stage: mode, at: now });
         if (history.length > 5) history.shift();
-        const names = history.map(item => item.stage).join("-");
-        const span = history.length === 5 ? history[4].at - history[0].at : Infinity;
-        if (names === "graph-signal-lidar-signal-graph" && span < 2600) cubeUntil = now + 720;
+        const names = history.map((item) => item.stage).join("-");
+        const span =
+          history.length === 5 ? history[4].at - history[0].at : Infinity;
+        if (names === "graph-signal-lidar-signal-graph" && span < 2600)
+          cubeUntil = now + 720;
       }
       const cubing = now < cubeUntil;
       const padX = width * 0.1;
@@ -211,14 +279,20 @@ export function SignatureCanvas({
         });
       }
       highlighted = hover >= 0 ? dependencyPath(NODES, hover) : new Set();
-      const beam = mode === "lidar" && weights.lidar > 0.55 ? sweepAngle(now - sensorSweepStartedAt) : scanAngle(sample.x);
+      const beam =
+        !reducedMotion && mode === "lidar" && weights.lidar > 0.55
+          ? sweepAngle(now - sensorSweepStartedAt)
+          : scanAngle(sample.x);
       const closeReturns = proximityHits(beam, RETURNS);
       const ledOn = weights.lidar > 0.55 && closeReturns.length > 0;
       host.dataset.sensorLed = ledOn ? "on" : "off";
       if (sensorReadoutRef.current) {
-        sensorReadoutRef.current.textContent = weights.lidar > 0.55
-          ? `180° sweep · LED ${ledOn ? "on — object within 100 cm" : "off — field clear"}`
-          : "";
+        const text =
+          weights.lidar > 0.55
+            ? `180° sweep · LED ${ledOn ? "on — object within 100 cm" : "off — field clear"}`
+            : "";
+        if (sensorReadoutRef.current.textContent !== text)
+          sensorReadoutRef.current.textContent = text;
       }
 
       context.clearRect(0, 0, width, height);
@@ -232,20 +306,46 @@ export function SignatureCanvas({
         context.globalAlpha = weights.lidar * 0.28;
         for (const radius of [0.28, 0.64, 0.78]) {
           context.beginPath();
-          context.ellipse(origin.x, origin.y, radius * horizontalScale, radius * verticalScale, 0, Math.PI, Math.PI * 2);
+          context.ellipse(
+            origin.x,
+            origin.y,
+            radius * horizontalScale,
+            radius * verticalScale,
+            0,
+            Math.PI,
+            Math.PI * 2,
+          );
           context.stroke();
         }
         context.globalAlpha = weights.lidar * 0.62;
         context.setLineDash([4, 5]);
         context.beginPath();
-        context.ellipse(origin.x, origin.y, referenceRadius * horizontalScale, referenceRadius * verticalScale, 0, Math.PI, Math.PI * 2);
+        context.ellipse(
+          origin.x,
+          origin.y,
+          referenceRadius * horizontalScale,
+          referenceRadius * verticalScale,
+          0,
+          Math.PI,
+          Math.PI * 2,
+        );
         context.stroke();
         context.setLineDash([]);
         context.fillStyle = muted;
         context.font = "10px ui-monospace, SFMono-Regular, Menlo, monospace";
-        context.fillText("100 cm", origin.x + 8, origin.y - referenceRadius * verticalScale - 8);
+        context.fillText(
+          "100 cm",
+          origin.x + 8,
+          origin.y - referenceRadius * verticalScale - 8,
+        );
         context.globalAlpha = weights.lidar * 0.7;
-        const beamEnd = sensorPoint(origin, beam, 0.82, horizontalScale, verticalScale);
+        const beamEnd = sensorPoint(
+          origin,
+          beam,
+          0.82,
+          horizontalScale,
+          verticalScale,
+        );
         context.beginPath();
         context.moveTo(origin.x, origin.y);
         context.lineTo(beamEnd.x, beamEnd.y);
@@ -254,7 +354,13 @@ export function SignatureCanvas({
           context.fillStyle = accent;
           for (let index = 0; index < 5; index++) {
             const along = (now * 0.00022 + index * 0.19) % 1;
-            const point = sensorPoint(origin, beam, 0.1 + along * 0.72, horizontalScale, verticalScale);
+            const point = sensorPoint(
+              origin,
+              beam,
+              0.1 + along * 0.72,
+              horizontalScale,
+              verticalScale,
+            );
             context.globalAlpha = weights.lidar * (0.16 + along * 0.34);
             context.beginPath();
             context.arc(point.x, point.y, 1.25 + along, 0, Math.PI * 2);
@@ -270,8 +376,18 @@ export function SignatureCanvas({
       particles.forEach((particle, index) => {
         const from = toPixel(particle.graph, width, height, padX, padY);
         for (const dep of particle.deps) {
-          const parent = toPixel(particles[dep].graph, width, height, padX, padY);
-          context.globalAlpha = (highlighted.size === 0 || (highlighted.has(index) && highlighted.has(dep)) ? 0.7 : 0.28) * weights.graph;
+          const parent = toPixel(
+            particles[dep].graph,
+            width,
+            height,
+            padX,
+            padY,
+          );
+          context.globalAlpha =
+            (highlighted.size === 0 ||
+            (highlighted.has(index) && highlighted.has(dep))
+              ? 0.7
+              : 0.28) * weights.graph;
           context.beginPath();
           context.moveTo(from.x, from.y);
           context.lineTo(parent.x, parent.y);
@@ -288,30 +404,61 @@ export function SignatureCanvas({
           context.globalAlpha = 0.8;
           context.fillStyle = accent;
           context.beginPath();
-          context.arc(parent.x + (from.x - parent.x) * along, parent.y + (from.y - parent.y) * along, 2.4, 0, Math.PI * 2);
+          context.arc(
+            parent.x + (from.x - parent.x) * along,
+            parent.y + (from.y - parent.y) * along,
+            2.4,
+            0,
+            Math.PI * 2,
+          );
           context.fill();
         }
       }
       if (!reducedMotion && weights.graph > 0.35) {
         context.fillStyle = accent;
-        for (let index = 0; index < Math.min(FLOW_COUNT, graphEdges.length); index++) {
-          const edge = graphEdges[(index * 3 + Math.floor(now / 1250)) % graphEdges.length];
+        for (
+          let index = 0;
+          index < Math.min(FLOW_COUNT, graphEdges.length);
+          index++
+        ) {
+          const edge =
+            graphEdges[
+              (index * 3 + Math.floor(now / 1250)) % graphEdges.length
+            ];
           const destination = particles[edge.from];
           const source = particles[edge.to];
           const along = (now * 0.00024 + index * 0.17) % 1;
           const eased = along * along * (3 - 2 * along);
           const sourcePoint = toPixel(source.graph, width, height, padX, padY);
-          const destinationPoint = toPixel(destination.graph, width, height, padX, padY);
-          context.globalAlpha = weights.graph * (0.2 + Math.sin(along * Math.PI) * 0.42);
+          const destinationPoint = toPixel(
+            destination.graph,
+            width,
+            height,
+            padX,
+            padY,
+          );
+          context.globalAlpha =
+            weights.graph * (0.2 + Math.sin(along * Math.PI) * 0.42);
           context.beginPath();
-          context.arc(sourcePoint.x + (destinationPoint.x - sourcePoint.x) * eased, sourcePoint.y + (destinationPoint.y - sourcePoint.y) * eased, 1.3 + Math.sin(along * Math.PI) * 1.1, 0, Math.PI * 2);
+          context.arc(
+            sourcePoint.x + (destinationPoint.x - sourcePoint.x) * eased,
+            sourcePoint.y + (destinationPoint.y - sourcePoint.y) * eased,
+            1.3 + Math.sin(along * Math.PI) * 1.1,
+            0,
+            Math.PI * 2,
+          );
           context.fill();
         }
       }
       context.globalAlpha = 1;
 
       particles.forEach((particle, index) => {
-        const signal = signalPoint(index, particles.length, cents, now * 0.0015);
+        const signal = signalPoint(
+          index,
+          particles.length,
+          cents,
+          now * 0.0015,
+        );
         const lidar = RETURNS[index];
         let target = mixPosition(
           toPixel(particle.graph, width, height, padX, padY),
@@ -322,15 +469,26 @@ export function SignatureCanvas({
         if (cubing) target = cubePoint(index, width, height);
         if (!cubing && weights.graph > 0.55) {
           const idle = Math.sin(now * 0.0007 + index) * 1.6 * weights.graph;
-          target = { x: target.x + idle, y: target.y + Math.cos(now * 0.0005 + index) * 1.2 * weights.graph };
+          target = {
+            x: target.x + idle,
+            y: target.y + Math.cos(now * 0.0005 + index) * 1.2 * weights.graph,
+          };
           const placed = toPixel(particle.graph, width, height, padX, padY);
           const distance = Math.hypot(placed.x - local.x, placed.y - local.y);
           if (sample.inside && distance < 92) {
             const pull = (1 - distance / 92) * 9 * weights.graph;
-            target = { x: target.x + (local.x - placed.x) / Math.max(1, distance) * pull, y: target.y + (local.y - placed.y) / Math.max(1, distance) * pull };
+            target = {
+              x:
+                target.x +
+                ((local.x - placed.x) / Math.max(1, distance)) * pull,
+              y:
+                target.y +
+                ((local.y - placed.y) / Math.max(1, distance)) * pull,
+            };
           }
         }
-        if (highlighted.has(index)) particle.energy = Math.min(1, particle.energy + dt * 0.01);
+        if (highlighted.has(index))
+          particle.energy = Math.min(1, particle.energy + dt * 0.01);
         else particle.energy = Math.max(0, particle.energy - dt * 0.004);
         if (reducedMotion) {
           particle.current.x = target.x;
@@ -338,17 +496,29 @@ export function SignatureCanvas({
           particle.velocity.x = 0;
           particle.velocity.y = 0;
         } else springStep(particle.current, particle.velocity, target, dt);
-        const hit = weights.lidar > 0.55 && closeReturns.some(sample => sample.angle === lidar.angle);
+        const hit =
+          weights.lidar > 0.55 &&
+          closeReturns.some((sample) => sample.angle === lidar.angle);
         context.fillStyle = highlighted.has(index) || hit ? accent : ink;
         context.globalAlpha = 0.9;
         context.beginPath();
-        context.arc(particle.current.x, particle.current.y, 3.1 + particle.energy * 1.8 + (hit ? 1.4 : 0), 0, Math.PI * 2);
+        context.arc(
+          particle.current.x,
+          particle.current.y,
+          3.1 + particle.energy * 1.8 + (hit ? 1.4 : 0),
+          0,
+          Math.PI * 2,
+        );
         context.fill();
         if (hit && (lidar.movement || index === 4)) {
           context.globalAlpha = weights.lidar;
           context.fillStyle = muted;
           context.font = "11px ui-monospace, SFMono-Regular, Menlo, monospace";
-          context.fillText(lidar.movement ? "movement" : `${lidar.cm} cm`, particle.current.x + 8, particle.current.y - 8);
+          context.fillText(
+            lidar.movement ? "movement" : `${lidar.cm} cm`,
+            particle.current.x + 8,
+            particle.current.y - 8,
+          );
         }
       });
       context.globalAlpha = 1;
@@ -356,31 +526,57 @@ export function SignatureCanvas({
     paint = draw;
     drawRef.current = draw;
 
-    if (reducedMotion) {
-      draw(performance.now());
-      return () => {
-        resizeObserver.disconnect();
-        intersection.disconnect();
-      };
-    }
-
     const loop = (now: number) => {
-      frame = requestAnimationFrame(loop);
-      if (!visible) return;
+      frame = 0;
       draw(now);
+      frame = requestAnimationFrame(loop);
     };
-    frame = requestAnimationFrame(loop);
+    const updateAnimation = () => {
+      const shouldAnimate = !reducedMotion && visible && !document.hidden;
+      if (shouldAnimate && !frame) {
+        last = performance.now();
+        frame = requestAnimationFrame(loop);
+      } else if (!shouldAnimate && frame) {
+        cancelAnimationFrame(frame);
+        frame = 0;
+      }
+    };
+    const intersection = new IntersectionObserver(
+      (entries) => {
+        visible = entries.some((entry) => entry.isIntersecting);
+        updateAnimation();
+      },
+      { threshold: 0.05 },
+    );
+    intersection.observe(host);
+    document.addEventListener("visibilitychange", updateAnimation);
+    draw(performance.now());
     return () => {
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
       intersection.disconnect();
+      document.removeEventListener("visibilitychange", updateAnimation);
+      drawRef.current = null;
     };
-  }, [onRelease, onStage, pinEpoch, pinRef, pointer, readoutRef, reducedMotion, sensorReadoutRef]);
+  }, [
+    onRelease,
+    onStage,
+    pinEpoch,
+    pinRef,
+    pointer,
+    readoutRef,
+    reducedMotion,
+    sensorReadoutRef,
+  ]);
 
   useEffect(() => {
     if (!reducedMotion) return;
     drawRef.current?.(performance.now());
   }, [pinTick, reducedMotion]);
 
-  return <div className="signature-frame" ref={hostRef} data-signature-canvas=""><canvas ref={canvasRef} aria-hidden="true" /></div>;
+  return (
+    <div className="signature-frame" ref={hostRef} data-signature-canvas="">
+      <canvas ref={canvasRef} aria-hidden="true" />
+    </div>
+  );
 }
