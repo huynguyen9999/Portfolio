@@ -41,7 +41,7 @@ test("homepage exposes work, contact, and a working résumé", async ({
   ).toHaveAttribute("href", "https://github.com/huynguyen9999");
   const contact = page.locator("#contact");
   await expect(contact.getByRole("heading")).toHaveText(
-    "Let’s build something to help the other 90%!",
+    "Let's build something cool",
   );
   await expect(contact.getByRole("link", { name: "LinkedIn" })).toHaveAttribute(
     "href",

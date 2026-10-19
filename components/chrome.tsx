@@ -47,7 +47,7 @@ export function Contact() {
     <section className="contact" id="contact" aria-labelledby="contact-heading">
       <div>
         <h2 id="contact-heading">
-          Let’s build something to help the other 90%!
+          Let&apos;s build something <span className="contact-accent">cool</span>
         </h2>
       </div>
       <div className="contact-links">
