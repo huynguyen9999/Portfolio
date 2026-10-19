@@ -53,7 +53,7 @@ test("homepage exposes work, contact, and a working résumé", async ({
   );
   await expect(contact.getByRole("link", { name: "Strava" })).toHaveAttribute(
     "href",
-    "https://www.strava.com/",
+    "https://www.strava.com/athletes/45200919",
   );
   await expect(contact.getByRole("link", { name: "TikTok" })).toHaveAttribute(
     "href",
