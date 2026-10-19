@@ -87,8 +87,8 @@ test("content and navigation survive JavaScript being unavailable", async ({
     "Huy Nguyen.",
   );
   // Playwright text selectors deliberately exclude noscript content.
-  await expect(page.locator("noscript p")).toBeVisible();
-  await expect(page.locator("noscript p")).toContainText(
+  await expect(page.locator("noscript .visual-caption")).toBeVisible();
+  await expect(page.locator("noscript .visual-caption")).toContainText(
     "JavaScript is unavailable.",
   );
   await page

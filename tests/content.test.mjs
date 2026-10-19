@@ -51,12 +51,27 @@ test("project content supports unique static routes and complete breakdowns", ()
 });
 
 test("About entries have unique identities and readable content", () => {
-  assert.equal(pieces.length, 12);
+  assert.deepEqual(
+    pieces.map((piece) => piece.id),
+    ["roots", "engineer", "community", "photography", "hobbies", "learning"],
+  );
+  assert.deepEqual(
+    pieces.map((piece) => piece.label),
+    [
+      "My Roots",
+      "The Engineer",
+      "People & Community",
+      "Behind the Lens",
+      "Off the Clock",
+      "Still Figuring It Out",
+    ],
+  );
   assert.equal(new Set(pieces.map((piece) => piece.id)).size, pieces.length);
   for (const piece of pieces) {
     for (const field of ["label", "question", "answer", "icon"])
       assert.ok(piece[field].trim());
     assert.ok(piece.shortLabel.length >= 1 && piece.shortLabel.length <= 2);
     assert.match(piece.color, /^#[\da-f]{6}$/i);
+    assert.equal(piece.image, undefined);
   }
 });

@@ -29,6 +29,9 @@ export default defineConfig({
         ...chrome,
       },
     },
+    ...(process.env.WEBKIT_MOBILE === "1"
+      ? [{ name: "mobile-webkit", use: { ...devices["iPhone 13"] } }]
+      : []),
     ...(process.env.CROSS_BROWSER
       ? [
           { name: "webkit", use: { ...devices["Desktop Safari"] } },

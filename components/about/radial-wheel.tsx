@@ -23,7 +23,7 @@ const CENTER = SIZE / 2;
 const OUTER_RADIUS = 242;
 const INNER_RADIUS = 100;
 const LABEL_RADIUS = 174;
-const ACTIVE_OFFSET = 8;
+const ACTIVE_OFFSET = 6;
 
 const point = (radius: number, degrees: number) => {
   const radians = (degrees * Math.PI) / 180;
@@ -62,7 +62,7 @@ export function RadialWheel({
       <svg
         className="pieces-wheel"
         viewBox={`0 0 ${SIZE} ${SIZE}`}
-        role="group"
+        role="radiogroup"
         aria-labelledby={titleId}
         aria-describedby={helpId}
         onPointerLeave={() => onPreview(null)}
@@ -73,8 +73,8 @@ export function RadialWheel({
       >
         <title id={titleId}>{`${entries.length} pieces of me`}</title>
         <desc id={helpId}>
-          Explore each section. Hover to preview, click to keep a selection. Use
-          Tab to focus a section and Enter or Space to select.
+          Choose a story. Use arrow keys to change the selection, or tap a
+          section. Mouse hover previews a story; clicking keeps it.
         </desc>
         {entries.map((entry, index) => {
           const angle = -90 + index * segmentAngle;
@@ -88,10 +88,10 @@ export function RadialWheel({
           return (
             <g
               key={entry.id}
-              role="button"
-              tabIndex={0}
+              role="radio"
+              tabIndex={selected === index ? 0 : -1}
               aria-label={entry.label}
-              aria-pressed={selected === index}
+              aria-checked={selected === index}
               aria-controls={panelId}
               className={`pieces-segment${isActive ? " is-active" : ""}`}
               style={
@@ -102,21 +102,42 @@ export function RadialWheel({
                 } as CSSProperties
               }
               onPointerEnter={(event) => {
-                if (event.pointerType !== "touch") onPreview(index);
+                if (
+                  event.pointerType !== "touch" &&
+                  window.matchMedia("(any-hover: hover)").matches
+                ) {
+                  onPreview(index);
+                }
               }}
-              onFocus={() => onPreview(index)}
               onClick={() => onSelect(index)}
               onKeyDown={(event) => {
+                const forward =
+                  event.key === "ArrowRight" || event.key === "ArrowDown";
+                const backward =
+                  event.key === "ArrowLeft" || event.key === "ArrowUp";
+                if (forward || backward) {
+                  event.preventDefault();
+                  const next =
+                    (index + (forward ? 1 : -1) + entries.length) %
+                    entries.length;
+                  onSelect(next);
+                  event.currentTarget.parentElement
+                    ?.querySelectorAll<SVGGElement>('[role="radio"]')
+                    [next]?.focus();
+                  return;
+                }
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault();
                   onSelect(index);
                 }
               }}
             >
-              <path className="pieces-hit-area" d={path} />
-              <g className="pieces-segment-art">
+              <path className="pieces-hit-area" d={path} aria-hidden="true" />
+              <g className="pieces-segment-art" aria-hidden="true">
                 <path className="pieces-wedge" d={path} />
-                <g transform={`translate(${x - 11} ${y - 25})`}>
+                <g
+                  transform={`translate(${x - 14} ${y - 35}) scale(${28 / 22})`}
+                >
                   <PieceIcon path={entry.icon} />
                 </g>
                 <text
@@ -126,7 +147,7 @@ export function RadialWheel({
                   textAnchor="middle"
                 >
                   {entry.shortLabel.map((line, i) => (
-                    <tspan key={line} x={x} dy={i ? 13 : 0}>
+                    <tspan key={line} x={x} dy={i ? 21 : 0}>
                       {line}
                     </tspan>
                   ))}
@@ -138,15 +159,20 @@ export function RadialWheel({
         <g className="pieces-center" aria-hidden="true">
           <text
             x={CENTER}
-            y={CENTER + 3}
-            className="pieces-pi"
+            y={CENTER - 8}
+            className="pieces-number"
             textAnchor="middle"
           >
-            π
+            {entries.length}
           </text>
-          <text x={CENTER} y={CENTER + 31} textAnchor="middle">
-            {`${entries.length} Pieces`}
-            <tspan x={CENTER} dy="18">
+          <text
+            className="pieces-center-copy"
+            x={CENTER}
+            y={CENTER + 22}
+            textAnchor="middle"
+          >
+            Pieces
+            <tspan x={CENTER} dy="22">
               of Me
             </tspan>
           </text>
