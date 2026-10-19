@@ -201,7 +201,20 @@ test("touch hits icons, labels, and wedge interiors without activating the cente
 }) => {
   test.skip(!isMobile, "Uses trusted touchscreen taps on a touch project");
   await page.goto("/#about");
-  await radioFor(page, 1).locator("svg").tap({ force: true });
+  const wheelControl = sectionFor(page).locator(".pieces-wheel");
+  // Read both rectangles in one frame and keep the target relative to the wheel.
+  // Normal actionability checks then wait for scrolling/stability before tapping.
+  const iconPoint = await radioFor(page, 1)
+    .locator("svg")
+    .evaluate((element) => {
+      const icon = element.getBoundingClientRect();
+      const wheel = element.closest(".pieces-wheel")!.getBoundingClientRect();
+      return {
+        x: icon.x + icon.width / 2 - wheel.x,
+        y: icon.y + icon.height / 2 - wheel.y,
+      };
+    });
+  await wheelControl.tap({ position: iconPoint });
   await expectStory(page, 1);
   // WebKit reports the SVG text parent bounds incorrectly when x is set on tspans.
   // Target the rendered label's SVG baseline instead of that automation bounding box.
@@ -213,9 +226,10 @@ test("touch hits icons, labels, and wedge interiors without activating the cente
         text.x.baseVal.getItem(0).value,
         text.y.baseVal.getItem(0).value - 7,
       ).matrixTransform(text.getScreenCTM()!);
-      return { x: point.x, y: point.y };
+      const wheel = element.closest(".pieces-wheel")!.getBoundingClientRect();
+      return { x: point.x - wheel.x, y: point.y - wheel.y };
     });
-  await page.touchscreen.tap(labelPoint.x, labelPoint.y);
+  await wheelControl.tap({ position: labelPoint });
   await expectStory(page, 2);
   const point = await radioFor(page, 4)
     .locator(".pieces-hit-area")
@@ -227,20 +241,18 @@ test("touch hits icons, labels, and wedge interiors without activating the cente
         for (let x = box.x + 12; x < box.x + box.width; x += 12) {
           if (path.isPointInFill(new DOMPoint(x, y))) {
             const screen = new DOMPoint(x, y).matrixTransform(matrix);
-            return { x: screen.x, y: screen.y };
+            const wheel = element
+              .closest(".pieces-wheel")!
+              .getBoundingClientRect();
+            return { x: screen.x - wheel.x, y: screen.y - wheel.y };
           }
         }
       }
       throw new Error("No interior wedge point");
     });
-  await page.touchscreen.tap(point.x, point.y);
+  await wheelControl.tap({ position: point });
   await expectStory(page, 4);
-  const wheel = await sectionFor(page).locator(".pieces-wheel").boundingBox();
-  expect(wheel).not.toBeNull();
-  await page.touchscreen.tap(
-    wheel!.x + wheel!.width / 2,
-    wheel!.y + wheel!.height / 2,
-  );
+  await wheelControl.tap();
   await expectStory(page, 4);
 });
 

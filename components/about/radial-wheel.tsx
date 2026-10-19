@@ -101,8 +101,11 @@ export function RadialWheel({
                   "--piece-y": `${dy - CENTER}px`,
                 } as CSSProperties
               }
-              onPointerEnter={(event) => {
+              // Focus-driven scrolling can fire pointerenter under a stationary mouse.
+              // Preview only actual pointer movement so it cannot override keyboard focus.
+              onPointerMove={(event) => {
                 if (
+                  active !== index &&
                   event.pointerType !== "touch" &&
                   window.matchMedia("(any-hover: hover)").matches
                 ) {
