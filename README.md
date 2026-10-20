@@ -6,7 +6,7 @@
 
 ![Huy Nguyen's portfolio homepage](public/portfolio-preview.png)
 
-This repository powers my personal portfolio: a fast, accessible way to evaluate my work in software, embedded systems, real-time interaction, and signal processing. It is intentionally light on decoration and built to make the engineering evidence easy to find.
+This public repository powers my personal portfolio: a fast, accessible way to explore my work in software, embedded systems, real-time interaction, and signal processing. It is intentionally light on decoration and built to make the engineering evidence easy to find.
 
 ## What to explore
 
@@ -55,7 +55,13 @@ pnpm build
 pnpm test:browser
 ```
 
-The test suite covers project content and routes, the interactive tuner, responsive layouts, accessibility rules, security headers, résumé behavior, metadata, and production navigation. Run `pnpm audit:security` to check dependencies for known vulnerabilities.
+For the same verification sequence used by the production deployment, run:
+
+```sh
+pnpm build:verified
+```
+
+The test suite covers project content and routes, the interactive tuner, responsive layouts, accessibility rules, security headers, résumé behavior, metadata, and production navigation. Run `pnpm audit:security` to check dependencies for known vulnerabilities. Browser tests require a production build and a working local browser environment.
 
 ## Repository guide
 
@@ -73,7 +79,9 @@ Keep content in these data files and interaction logic beside its component. Tes
 
 ## Deployment
 
-This repository deploys through Vercel. Pushes to `main` publish to [huythedev.vercel.app](https://huythedev.vercel.app/); other branches receive preview deployments. Before sharing a change, run the checks above and verify the production site in a logged-out browser session.
+This repository deploys through Vercel. Pushes to `main` publish to [huythedev.vercel.app](https://huythedev.vercel.app/); other branches receive preview deployments. Before pushing a change, run `pnpm build:verified`. After deployment, verify the public site in a logged-out browser session.
+
+No credentials, API keys, or private environment files are required for local development. Keep secrets out of source control, commits, issues, and pull requests. If a secret is exposed, revoke it through the relevant provider and remove it from the repository history.
 
 ---
 

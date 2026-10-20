@@ -16,9 +16,9 @@ export const pieces: readonly Piece[] = [
     label: "My Roots",
     shortLabel: ["My Roots"],
     icon: "M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12Z M9 9a3 3 0 1 0 6 0a3 3 0 1 0-6 0",
-    question: "From Vietnam to California",
+    question: "🇻🇳 → 🇺🇸",
     answer:
-      "I moved from Vietnam to California and learned a lot of my English through YouTube. I watched MKBHD, Mark Rober, tech-company day-in-the-life videos, and prank channels. Looking back, it’s funny how much of my early curiosity about technology came from watching people explain and build things online. The prank videos were just for fun.",
+      "Believe it or not, a lot of my English came from watching YouTube. After moving from Vietnam to California, I’d spend endless hours watching MKBHD talk about the newest gadgets, Mark Rober build things I could barely wrap my head around, and lots of random modified car videos with big turbo noises. As a kid, I was already jailbreaking my iPad, messing around with iOS games, and figuring out glitch money. I didn’t really know what I was doing half the time, but that was part of the fun. I loved experimenting, breaking things, and seeing what I could get away with.",
     color: "#ead9d7",
   },
   {
@@ -36,9 +36,9 @@ export const pieces: readonly Piece[] = [
     label: "People & Community",
     shortLabel: ["Community"],
     icon: "M8 3a3 3 0 1 0 0 6 3 3 0 1 0 0-6ZM2 21v-4a6 6 0 0 1 12 0v4M16 3a3 3 0 0 1 0 6M17 12a5 5 0 0 1 5 5v4",
-    question: "The people make the experience",
+    question: "It’s 120% the people",
     answer:
-      "At UCSB, I’ve been involved with Sigma Eta Pi as vice president and with the Autodesk Design & Make Ambassador program. I want college to be about more than courses and internships. Getting to know people outside class, working on things together, and having conversations along the way are parts of the experience I want to make time for, too.",
+      "Some of my favorite parts of college have had nothing to do with sitting in a classroom. I’ve gotten involved with Sigma Eta Pi and the Autodesk Design & Make Ambassador program, and both have given me incredible opportunities to meet people I probably wouldn’t have crossed paths with otherwise. I enjoy the technical side of what I do, but I don’t want my college experience to revolve entirely around assignments, projects, and internships. There’s so much to learn from just talking and being kind to the people around you.",
     color: "#dce5ef",
   },
   {
@@ -58,7 +58,7 @@ export const pieces: readonly Piece[] = [
     icon: "M3 17v-6l3-6h12l3 6v6H3ZM3 11h18M6 14h2M16 14h2M5 17v3h3v-3M16 17v3h3v-3",
     question: "No dream car. A whole garage.",
     answer:
-      "I’m a big fan of JDM cars and American muscle. I can’t settle on one dream car, so my completely reasonable plan is to have a 30-car garage someday. I also enjoy rock crawling and speedcubing. They’re pretty different hobbies, but they’re all things I can easily lose track of time doing.",
+      "Whenever someone asks what my dream car is, I never have a good answer. I’m into JDM cars, American muscle, and honestly way too many cars to narrow it down to just one. So naturally, the only reasonable solution is to have a 30-car garage someday. When I’m not thinking about cars, I also enjoy poker, 4x4 rock crawling, speedcubing, and making social media content. I’m also constantly tinkering around and diving into areas where I have zero knowledge.",
     color: "#eadfd3",
   },
   {
