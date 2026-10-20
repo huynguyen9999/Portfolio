@@ -26,9 +26,9 @@ export const pieces: readonly Piece[] = [
     label: "The Engineer",
     shortLabel: ["The", "Engineer"],
     icon: "M8 3v3M16 3v3M8 18v3M16 18v3M3 8h3M3 16h3M18 8h3M18 16h3M6 6h12v12H6ZM9 9h6v6H9Z",
-    question: "Why I chose electrical engineering",
+    question: "Why electrical engineering?",
     answer:
-      "I chose electrical engineering because I wanted to understand hardware and software together. A lot of hardware is difficult to explore without labs, equipment, and professors to learn from. I’ve enjoyed building iGauchoBack and working on my LiDAR project, and I want to spend more time with embedded systems. Right now, I’m also exploring RF and antenna design through a research group. There’s a lot I’m still learning.",
+      "I’ve always been the type to mess around with something just to see how it works. Sometimes that meant figuring out how to hack iOS games like Clash of Clans and Real Racing, and other times it meant going down a rabbit hole trying to understand something I probably could’ve left alone. Electrical engineering felt like a natural way to keep exploring that curiosity because I liked the idea of understanding both the software and the physical hardware behind it, instead of choosing just one. These days, that curiosity has taken me from building software projects to experimenting with sensors, embedded systems, and RF design. There’s still a lot I don’t understand, which is honestly part of what makes it so interesting to me.",
     color: "#ece5cf",
   },
   {
