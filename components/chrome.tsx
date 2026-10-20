@@ -29,7 +29,7 @@ export function Footer() {
   return (
     <footer className="site-footer wrap">
       <p>© {new Date().getFullYear()} Huy Nguyen</p>
-      <p>Made with intention, in Santa Barbara.</p>
+      <p>Santa Barbara, CA</p>
       <div className="footer-links">
         <a href={contactLinks.linkedin} target="_blank" rel="noreferrer">
           LinkedIn <Arrow diagonal />
