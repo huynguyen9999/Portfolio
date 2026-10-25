@@ -47,7 +47,7 @@ export const projects: Project[] = [
       width: 375,
       height: 1024,
       title: "Explore switching signals",
-      caption: "See reported switches at a glance, track them month by month, and explore which apps users mention moving to or from. Demo view—not a validated measure of customer churn.",
+      caption: "Inspect an app’s switching summary and monthly activity. Open the full panel for the app-to-app breakdown. Demo signals—not measured churn.",
     },
     imageAlt:
       "ECHO live website showing app icons grouped into colored review clusters on a dark interactive map",

@@ -1804,28 +1804,37 @@ svg {
 }
 .case-gallery {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-  gap: 28px;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 0.85fr);
+  gap: 0 24px;
   align-items: start;
 }
 .case-gallery-item {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
   margin: 0;
   min-width: 0;
 }
-.case-gallery-item:has(.case-feature-image) {
-  width: min(100%, 320px);
-  justify-self: center;
-}
+/* The overview sets the shared image-row height. The detail is a deliberate
+   top-aligned preview, not a full-height sidebar that stretches the page. */
 .case-feature-image {
+  position: relative;
   display: block;
+  align-self: stretch;
+  min-height: 0;
   border: 1px solid var(--line);
   border-radius: 6px;
   overflow: hidden;
+  background: #0d0d12;
 }
 .case-feature-image img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 .case-gallery figcaption {
   padding: 16px 2px 0;
@@ -1850,6 +1859,18 @@ svg {
   .case-gallery {
     grid-template-columns: minmax(0, 1fr);
     gap: 28px;
+  }
+  .case-gallery-item {
+    display: block;
+    grid-row: auto;
+  }
+  .case-feature-image {
+    height: 420px;
+  }
+  .case-feature-image img {
+    width: min(100%, 375px);
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 @media (max-width: 700px) {

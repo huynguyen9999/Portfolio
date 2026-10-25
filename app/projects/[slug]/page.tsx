@@ -125,7 +125,7 @@ export default async function ProjectPage({
                 width={project.imageWidth ?? 1440}
                 height={project.imageHeight ?? 1000}
                 sizes={project.featureShot
-                  ? "(max-width: 900px) 100vw, 540px"
+                  ? "(max-width: 900px) 100vw, 720px"
                   : "(max-width: 700px) 100vw, 1080px"}
               />
             ) : (
@@ -134,8 +134,8 @@ export default async function ProjectPage({
           </div>
           {project.featureShot && (
             <figcaption>
-              <h2>The product at a glance</h2>
-              <p>Explore the app landscape, then drill into an individual app for a closer look at its review insights.</p>
+              <h2>Explore the app landscape</h2>
+              <p>Start with the big picture: discover related apps, then select one to explore the feedback behind it.</p>
             </figcaption>
           )}
         </figure>
@@ -153,14 +153,14 @@ export default async function ProjectPage({
                 alt={project.featureShot.alt}
                 width={project.featureShot.width}
                 height={project.featureShot.height}
-                sizes="(max-width: 900px) 100vw, 540px"
+                sizes="(max-width: 900px) 375px, 360px"
               />
             </a>
             <figcaption>
               <h2>{project.featureShot.title}</h2>
               <p>{project.featureShot.caption}</p>
               <a className="inline-link" href={project.featureShot.image} target="_blank" rel="noreferrer">
-                View full-size screenshot <Arrow diagonal />
+                View complete panel <Arrow diagonal />
               </a>
             </figcaption>
           </figure>

@@ -106,9 +106,25 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
     const figures = element.querySelectorAll("figure");
     const first = figures[0].getBoundingClientRect();
     const second = figures[1].getBoundingClientRect();
-    return { stacked: second.top >= first.bottom, sideBySide: second.left >= first.right, width: innerWidth };
+    const overview = element.querySelector(".case-visual")!.getBoundingClientRect();
+    const detail = element.querySelector(".case-feature-image")!.getBoundingClientRect();
+    const captions = element.querySelectorAll("figcaption");
+    return {
+      stacked: second.top >= first.bottom,
+      sideBySide: second.left >= first.right,
+      width: innerWidth,
+      imageHeightDifference: Math.abs(overview.height - detail.height),
+      captionOffset: Math.abs(captions[0].getBoundingClientRect().top - captions[1].getBoundingClientRect().top),
+      detailHeight: detail.height,
+    };
   });
   expect(gallery.width <= 900 ? gallery.stacked : gallery.sideBySide).toBe(true);
+  if (gallery.width > 900) {
+    expect(gallery.imageHeightDifference).toBeLessThan(2);
+    expect(gallery.captionOffset).toBeLessThan(2);
+  }
+  expect(gallery.detailHeight).toBeLessThanOrEqual(500);
+  await expect(page.getByRole("link", { name: "View complete panel" })).toHaveAttribute("href", "/work/echo-switching.jpg");
   const eventLink = page.locator(".case-header").getByRole("link", { name: "Unwrapathon", exact: true });
   await expect(eventLink).toHaveAttribute("href", projects[0].summaryLink!.href);
   await expect(eventLink).toHaveAttribute("target", "_blank");
