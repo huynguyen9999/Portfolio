@@ -581,6 +581,10 @@ svg {
   flex-direction: column;
   padding: 21px 25px 15px;
 }
+.diagram-unwrap {
+  background: #f1f3ed;
+  color: #485447;
+}
 .diagram-roadmap {
   background: #edf2f5;
   color: #3e607a;

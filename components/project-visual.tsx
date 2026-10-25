@@ -3,6 +3,64 @@ import { IGauchoBackRoadmap } from "./igauchoback-roadmap";
 import type { Project } from "@/lib/content";
 import { useId } from "react";
 
+function Unwrap() {
+  return (
+    <div className="diagram diagram-unwrap">
+      <div className="visual-topline">
+        <span>Unwrap / Review intelligence</span>
+        <span>Find the signal in the feedback</span>
+      </div>
+      <svg
+        viewBox="0 0 480 230"
+        role="img"
+        aria-label="Conceptual semantic map of app clusters connected to review topics. Illustrative layout, not measured review data."
+      >
+        <g fill="none" stroke="#c4c9bf" strokeDasharray="4 5">
+          <path d="M106 88 235 63 352 113 247 172 106 88M235 63 247 172" />
+        </g>
+        <g strokeWidth="1">
+          <ellipse cx="106" cy="88" rx="66" ry="48" fill="#e8eee4" stroke="#9bae90" />
+          <ellipse cx="235" cy="63" rx="51" ry="37" fill="#efe9dc" stroke="#b5a47e" />
+          <ellipse cx="352" cy="113" rx="67" ry="51" fill="#e5ebf0" stroke="#91a8ba" />
+          <ellipse cx="247" cy="172" rx="58" ry="35" fill="#eee5e8" stroke="#b99aa6" />
+        </g>
+        <g fill="none" stroke="#87917e" opacity=".6">
+          <path d="m81 75 35 24 15-32M81 75l50-8M216 54l32 20 6-30M329 102l35 29 20-37M329 102l55-8M227 169l33 14 8-24" />
+        </g>
+        <g stroke="#fafbf7" strokeWidth="3">
+          <g fill="#6e8b5f">
+            <circle cx="81" cy="75" r="13" />
+            <circle cx="116" cy="99" r="18" />
+            <circle cx="131" cy="67" r="10" />
+          </g>
+          <g fill="#ac925b">
+            <circle cx="216" cy="54" r="12" />
+            <circle cx="248" cy="74" r="16" />
+            <circle cx="254" cy="44" r="8" />
+          </g>
+          <g fill="#6489a4">
+            <circle cx="329" cy="102" r="15" />
+            <circle cx="364" cy="131" r="19" />
+            <circle cx="384" cy="94" r="11" />
+          </g>
+          <g fill="#a5788c">
+            <circle cx="227" cy="169" r="12" />
+            <circle cx="260" cy="183" r="14" />
+            <circle cx="268" cy="159" r="9" />
+          </g>
+        </g>
+        <g fill="#485447" fontFamily="monospace" fontSize="10" textAnchor="middle">
+          <text x="106" y="25">Social &amp; Community</text>
+          <text x="235" y="12">Shopping &amp; Rewards</text>
+          <text x="356" y="181">Finance &amp; Banking</text>
+          <text x="247" y="225">Photo &amp; Video</text>
+        </g>
+      </svg>
+      <p className="visual-caption">Concept map · illustrative app clusters</p>
+    </div>
+  );
+}
+
 function Lidar() {
   const fillId = useId();
   return (
@@ -157,6 +215,8 @@ function Orbit() {
 
 export function ProjectVisual({ kind }: { kind: Project["visual"] }) {
   switch (kind) {
+    case "unwrap":
+      return <Unwrap />;
     case "tuner":
       return <Tuner />;
     case "roadmap":

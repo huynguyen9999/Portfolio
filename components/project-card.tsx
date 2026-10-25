@@ -6,7 +6,7 @@ import type { Project } from "@/lib/content";
 
 type ProjectActionData = Pick<
   Project,
-  "slug" | "title" | "liveUrl" | "posterUrl"
+  "slug" | "title" | "liveUrl" | "posterUrl" | "sourceUrl"
 >;
 type ProjectShotData = Pick<Project, "visual" | "image" | "imageAlt">;
 
@@ -31,6 +31,16 @@ export function ProjectActions({ project }: { project: ProjectActionData }) {
           aria-label={`View poster: ${project.title}`}
         >
           Poster <Arrow diagonal />
+        </a>
+      )}
+      {!project.liveUrl && !project.posterUrl && project.sourceUrl && (
+        <a
+          href={project.sourceUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`View on GitHub: ${project.title}`}
+        >
+          GitHub <Arrow diagonal />
         </a>
       )}
       <Link

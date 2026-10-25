@@ -79,6 +79,16 @@ export default async function ProjectPage({
               View project poster <Arrow diagonal />
             </a>
           )}
+          {!project.liveUrl && !project.posterUrl && project.sourceUrl && (
+            <a
+              className="button-primary"
+              href={project.sourceUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on GitHub <Arrow diagonal />
+            </a>
+          )}
           <a
             className="button-text"
             href={resume.href}

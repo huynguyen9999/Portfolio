@@ -50,6 +50,18 @@ test("project content supports unique static routes and complete breakdowns", ()
   assert.ok(experience.length > 0);
 });
 
+test("Unwrap is the newest and featured project with a repository link", () => {
+  const latest = projects[0];
+  assert.equal(latest.slug, "unwrapathon");
+  assert.equal(latest.title, "Unwrap");
+  assert.equal(latest.featured, true);
+  assert.equal(projects.find((project) => project.featured), latest);
+  assert.equal(latest.sourceUrl, "https://github.com/kylevillepo2/Unwrapathon");
+  assert.equal(latest.visual, "unwrap");
+  assert.match(latest.metricLabel, /demo/);
+  assert.match(latest.tradeoff, /generated metadata/);
+});
+
 test("About entries have unique identities and readable content", () => {
   assert.deepEqual(
     pieces.map((piece) => piece.id),

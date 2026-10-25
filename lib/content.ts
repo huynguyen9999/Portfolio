@@ -19,15 +19,44 @@ export type Project = {
   sourceUrl?: string;
   image?: string;
   imageAlt?: string;
-  visual?: "roadmap" | "lidar" | "orbit" | "tuner";
+  visual?: "unwrap" | "roadmap" | "lidar" | "orbit" | "tuner";
   featured?: boolean;
 };
 
 export const projects: Project[] = [
   {
+    slug: "unwrapathon",
+    visual: "unwrap",
+    featured: true,
+    title: "Unwrap",
+    category: "Software",
+    year: "2026",
+    summary:
+      "An app-store review intelligence tool that turns review corpora into semantic maps, searchable feedback, and review-traceable product topics.",
+    cardSummary:
+      "Semantic app maps and an NLP pipeline that turn app-store reviews into explorable product insights.",
+    categoryTags: ["Software", "NLP", "Data visualization"],
+    tags: ["SvelteKit", "TypeScript", "Python", "Embeddings", "HDBSCAN"],
+    metric: "60 apps",
+    metricLabel: "in the offline demo",
+    sourceUrl: "https://github.com/kylevillepo2/Unwrapathon",
+    problem:
+      "App-store reviews contain useful product feedback, but individual comments are difficult to connect across apps and recurring topics. Teams need a way to explore that feedback while keeping insights traceable to the original reviews.",
+    contribution:
+      "Built a review-exploration interface with a custom force-directed map, category clusters, app inspection, and semantic search. The project also includes a Python pipeline for review embeddings, representative sampling, LLM aspect extraction, topic refinement, and similarity-based tagging.",
+    tradeoff:
+      "The interface separates an offline demo from a live API through a shared data contract. Demo ratings, trends, and similarity links are generated metadata, not validated findings. The NLP pipeline preserves review provenance and distinguishes topic discovery from population estimates; similarity scores are not probabilities or verified complaint rates.",
+    result:
+      "Created a hackathon demo spanning 60 apps in 12 semantic category clusters, with 9,000 sampled reviews available in the interface. Custom SVG charts and a local force simulation support exploration without external chart or UI libraries, while the processing pipeline exports review-traceable topic insights.",
+    evidence: [
+      "Offline demo: 60 apps, 12 category clusters, and 9,000 sampled reviews",
+      "Custom force layout, SVG charts, and semantic search interface",
+      "Review-traceable NLP pipeline with resumable extraction and topic tagging",
+    ],
+  },
+  {
     slug: "igauchoback",
     visual: "roadmap",
-    featured: true,
     liveUrl: "https://igauchoback.vercel.app/",
     title: "iGauchoBack",
     category: "Software",

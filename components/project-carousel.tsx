@@ -14,6 +14,7 @@ type CarouselProject = Pick<
   | "cardSummary"
   | "liveUrl"
   | "posterUrl"
+  | "sourceUrl"
   | "image"
   | "imageAlt"
   | "visual"
