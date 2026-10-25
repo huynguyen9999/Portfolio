@@ -100,7 +100,7 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
       && Math.abs(frame.height - bounds.height) <= 2;
   })).toBe(true);
   await expect(page.locator(".case-gallery figure")).toHaveCount(2);
-  await expect(page.getByRole("heading", { name: "Explore switching signals", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Explore user switching signals", exact: true })).toBeVisible();
   await expect(page.locator(".case-feature-image img")).toHaveAttribute("src", /echo-switching/);
   const gallery = await page.locator(".case-gallery").evaluate((element) => {
     const figures = element.querySelectorAll("figure");

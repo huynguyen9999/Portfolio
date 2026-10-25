@@ -29,7 +29,7 @@ export type Project = {
     width: number;
     height: number;
     title: string;
-    caption: string;
+    caption?: string;
   };
   visual?: "unwrap" | "roadmap" | "lidar" | "orbit" | "tuner";
   featured?: boolean;
@@ -46,8 +46,7 @@ export const projects: Project[] = [
       alt: "Close-up of ECHO’s Capital One Mobile panel showing reported switches, reviews analyzed, a monthly switching chart, and switches to and from other finance apps",
       width: 375,
       height: 1024,
-      title: "Explore switching signals",
-      caption: "Inspect an app’s switching summary and monthly activity. Open the full panel for the app-to-app breakdown. Demo signals—not measured churn.",
+      title: "Explore user switching signals",
     },
     imageAlt:
       "ECHO live website showing app icons grouped into colored review clusters on a dark interactive map",

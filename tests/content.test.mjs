@@ -36,7 +36,9 @@ test("project content supports unique static routes and complete breakdowns", ()
     }
     if (project.featureShot) {
       assert.ok(project.featureShot.alt.trim());
-      assert.ok(project.featureShot.caption.trim());
+      assert.ok(project.featureShot.title.trim());
+      if (project.featureShot.caption !== undefined)
+        assert.ok(project.featureShot.caption.trim());
       assert.ok(project.featureShot.width > 0 && project.featureShot.height > 0);
     }
     for (const asset of [project.image, project.posterUrl, project.featureShot?.image].filter(Boolean)) {

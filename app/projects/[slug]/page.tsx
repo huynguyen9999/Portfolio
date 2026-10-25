@@ -158,7 +158,7 @@ export default async function ProjectPage({
             </a>
             <figcaption>
               <h2>{project.featureShot.title}</h2>
-              <p>{project.featureShot.caption}</p>
+              {project.featureShot.caption && <p>{project.featureShot.caption}</p>}
               <a className="inline-link" href={project.featureShot.image} target="_blank" rel="noreferrer">
                 View complete panel <Arrow diagonal />
               </a>
