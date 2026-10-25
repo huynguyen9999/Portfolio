@@ -66,9 +66,9 @@ test("ECHO leads with source-corpus metrics and distinguishes planned estimates"
   ]);
   assert.match(latest.problem, /5,529,110 reviews/);
   assert.match(latest.result, /9,000 sampled reviews/);
-  assert.match(latest.tradeoff, /remain planned capabilities, not validated results/);
-  assert.match(latest.tradeoff, /not reviews individually processed by an LLM/);
-  assert.match(latest.tradeoff, /generated metadata/);
+  assert.match(latest.tradeoff, /remain future work/);
+  assert.match(latest.tradeoff, /not all individually analyzed by AI/);
+  assert.match(latest.tradeoff, /some demo data is simulated/);
 });
 
 test("About entries have unique identities and readable content", () => {

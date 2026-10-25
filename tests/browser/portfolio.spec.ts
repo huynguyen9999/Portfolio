@@ -91,7 +91,7 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("ECHO");
   await expect(page.getByRole("link", { name: "View on GitHub", exact: true }))
     .toHaveAttribute("href", "https://github.com/kylevillepo2/Unwrapathon");
-  await expect(page.locator(".case-narrative")).toContainText("generated metadata");
+  await expect(page.locator(".case-narrative")).toContainText("some demo data is simulated");
   await page.getByRole("link", { name: "All projects" }).click();
   await expect(page.locator(".library-grid article").first().getByRole("heading"))
     .toHaveText("ECHO");
