@@ -23,6 +23,10 @@ test("project content supports unique static routes and complete breakdowns", ()
     ]) {
       assert.ok(project[key].trim().length > 0, `${project.slug}: ${key}`);
     }
+    if (project.summaryLink) {
+      assert.ok(project.summary.includes(project.summaryLink.text));
+      assert.equal(new URL(project.summaryLink.href).protocol, "https:");
+    }
     assert.ok(project.evidence.length > 0);
     assert.ok(project.tags.length > 0);
     for (const url of [project.liveUrl, project.sourceUrl].filter(Boolean)) {

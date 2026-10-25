@@ -52,7 +52,22 @@ export default async function ProjectPage({
           · {project.year}
         </p>
         <h1>{project.title}</h1>
-        <p>{project.summary}</p>
+        <p>
+          {project.summaryLink ? (
+            <>
+              {project.summary.slice(0, project.summary.indexOf(project.summaryLink.text))}
+              <a
+                className="summary-link"
+                href={project.summaryLink.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {project.summaryLink.text}
+              </a>
+              {project.summary.slice(project.summary.indexOf(project.summaryLink.text) + project.summaryLink.text.length)}
+            </>
+          ) : project.summary}
+        </p>
         <ul className="tags" aria-label="Technologies">
           {project.tags.map((tag) => (
             <li key={tag}>{tag}</li>

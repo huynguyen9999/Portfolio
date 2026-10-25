@@ -1203,6 +1203,11 @@ svg {
   color: var(--muted);
   max-width: 690px;
 }
+.summary-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .case-header .eyebrow span {
   padding-inline: 9px;
 }

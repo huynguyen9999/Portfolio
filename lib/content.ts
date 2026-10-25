@@ -4,6 +4,7 @@ export type Project = {
   category: string;
   year: string;
   summary: string;
+  summaryLink?: { text: string; href: string };
   cardSummary: string;
   categoryTags: string[];
   tags: string[];
@@ -30,6 +31,10 @@ export const projects: Project[] = [
     visual: "unwrap",
     featured: true,
     title: "ECHO",
+    summaryLink: {
+      text: "Unwrapathon",
+      href: "https://www.unwrap.ai/?utm_term=unwrap%20ai&utm_campaign=Search-Brand-US|UK|CA|AU&utm_source=adwords&utm_medium=ppc&hsa_acc=1487518043&hsa_cam=23301306700&hsa_grp=188818953069&hsa_ad=785599820615&hsa_src=g&hsa_tgt=kwd-2263000801660&hsa_kw=unwrap%20ai&hsa_mt=e&hsa_net=adwords&hsa_ver=3&gad_source=1&gad_campaignid=23301306700&gbraid=0AAAAAqmvszxcuyxfb0zHLwvYlSSupzkVN&gclid=CjwKCAjw0fbWBhBkEiwAwJuQ8cmig68fmWMB-T9cCJxRc1PReXjV_dhuKtJeHJZ6d5R48dDDVvm67BoC2CEQAvD_BwE",
+    },
     category: "Machine Learning",
     year: "2026",
     summary:
