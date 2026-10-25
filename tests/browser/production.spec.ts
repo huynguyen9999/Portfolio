@@ -61,7 +61,7 @@ test("navigation has no failed assets, runtime errors, or CSP violations", async
   });
   await page.goto("/");
   await page
-    .getByRole("link", { name: "Explore project: iGauchoBack" })
+    .getByRole("link", { name: `Explore project: ${projects[0].title}` })
     .click();
   for (const { title } of [...projects.slice(1), projects[0]]) {
     await page
