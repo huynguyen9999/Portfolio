@@ -69,7 +69,7 @@ test("ECHO leads with source-corpus metrics and distinguishes planned estimates"
   assert.equal(latest.image, "/work/echo.jpg");
   assert.equal(latest.visual, undefined);
   assert.equal(latest.metric, "5.5M+");
-  assert.equal(latest.metricLabel, "reviews in source corpus");
+  assert.equal(latest.metricLabel, "reviews in dataset");
   assert.deepEqual(latest.supportingMetrics, [
     { value: "60", label: "apps" },
     { value: "12", label: "categories" },

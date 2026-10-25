@@ -81,7 +81,7 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
   const featured = page.locator(".featured-flagship");
   await expect(featured.getByRole("heading")).toHaveText("ECHO");
   await expect(featured.locator(".featured-metrics dt")).toHaveText(["5.5M+", "60", "12"]);
-  await expect(featured.locator(".featured-metrics")).toContainText("reviews in source corpus");
+  await expect(featured.locator(".featured-metrics")).toContainText("reviews in dataset");
   await expect(
     featured.getByRole("link", { name: "Live site: ECHO" }),
   ).toHaveAttribute("href", "https://unwrapathon.vercel.app/");

@@ -8,7 +8,7 @@ type ProjectActionData = Pick<
   Project,
   "slug" | "title" | "liveUrl" | "posterUrl" | "sourceUrl"
 >;
-type ProjectShotData = Pick<Project, "visual" | "image" | "imageAlt">;
+type ProjectShotData = Pick<Project, "visual" | "image" | "imageAlt" | "imageWidth" | "imageHeight">;
 
 export function ProjectActions({ project }: { project: ProjectActionData }) {
   return (
@@ -61,8 +61,17 @@ export function ProjectShot({
   priority?: boolean;
 }) {
   return (
-    <div className="featured-shot">
-      {project.image ? (
+    <div className={`featured-shot${priority && project.image ? " featured-shot-natural" : ""}`}>
+      {priority && project.image ? (
+        <Image
+          src={project.image}
+          alt={project.imageAlt ?? ""}
+          width={project.imageWidth ?? 1440}
+          height={project.imageHeight ?? 1000}
+          sizes="(max-width: 900px) 100vw, 640px"
+          preload
+        />
+      ) : project.image ? (
         <Image
           src={project.image}
           alt={project.imageAlt ?? ""}

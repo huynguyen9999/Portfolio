@@ -62,11 +62,11 @@ export const projects: Project[] = [
     summary:
       "From messy data to actionable insights. Built for Unwrapathon 2026, ECHO combines a multi-stage NLP pipeline with an interactive explorer to uncover customer pain points in App Store and Google Play reviews, drawing on a dataset of 5.5M+ reviews across 60 apps and 12 categories.",
     cardSummary:
-      "App-review intelligence for a 5.5M+ review corpus: semantic clustering, sampled LLM extraction, and review-traceable product topics.",
+      "Turn App Store and Google Play feedback into clear customer pain points with an NLP pipeline and interactive app explorer.",
     categoryTags: ["Machine learning", "NLP", "Data engineering"],
     tags: ["Python", "Sentence Transformers", "NumPy", "HDBSCAN", "SvelteKit", "TypeScript"],
     metric: "5.5M+",
-    metricLabel: "reviews in source corpus",
+    metricLabel: "reviews in dataset",
     supportingMetrics: [
       { value: "60", label: "apps" },
       { value: "12", label: "categories" },

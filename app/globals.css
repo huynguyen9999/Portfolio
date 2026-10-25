@@ -383,6 +383,55 @@ svg {
   padding: 14px;
   background: #fbfbf8;
 }
+/* Keep the featured screenshot edge-to-edge at its actual proportions. */
+.featured-flagship:has(.featured-shot-natural) {
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 28px;
+  padding: 16px;
+}
+.featured-flagship .featured-shot-natural {
+  aspect-ratio: auto;
+  min-height: 0;
+  height: auto;
+  background: #09090b;
+}
+.featured-flagship .featured-shot-natural img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.featured-flagship .featured-copy {
+  padding: 12px 8px;
+}
+.featured-flagship .featured-copy h3 {
+  font-size: clamp(32px, 3vw, 40px);
+}
+.featured-flagship .featured-metrics {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding-top: 20px;
+  margin-block: 20px 0;
+  border-top: 1px solid var(--line);
+}
+.featured-flagship .featured-metrics dd {
+  max-width: none;
+  font-size: 11px;
+}
+.featured-flagship .featured-actions {
+  margin-top: 22px;
+  padding-top: 0;
+}
+.featured-flagship .featured-actions a {
+  min-height: 44px;
+}
+@media (max-width: 900px) {
+  .featured-flagship:has(.featured-shot-natural) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+}
 .project-carousel {
   position: relative;
   margin-top: 18px;
@@ -515,7 +564,7 @@ svg {
   padding: 8px 8px 4px;
 }
 .featured-flagship .featured-copy {
-  padding: 18px 12px 10px 4px;
+  padding: 12px 8px;
 }
 .featured-tags {
   display: flex;
