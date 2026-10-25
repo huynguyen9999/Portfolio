@@ -34,7 +34,12 @@ test("project content supports unique static routes and complete breakdowns", ()
       assert.equal(parsed.protocol, "https:");
       assert.equal(parsed.username + parsed.password, "");
     }
-    for (const asset of [project.image, project.posterUrl].filter(Boolean)) {
+    if (project.featureShot) {
+      assert.ok(project.featureShot.alt.trim());
+      assert.ok(project.featureShot.caption.trim());
+      assert.ok(project.featureShot.width > 0 && project.featureShot.height > 0);
+    }
+    for (const asset of [project.image, project.posterUrl, project.featureShot?.image].filter(Boolean)) {
       assert.match(asset, /^\/(?!\/)/);
       assert.ok(
         existsSync(new URL(`../public${asset}`, import.meta.url)),

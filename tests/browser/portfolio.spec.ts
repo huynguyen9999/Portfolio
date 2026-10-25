@@ -99,6 +99,16 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
       && Math.abs(frame.width - bounds.width) <= 2
       && Math.abs(frame.height - bounds.height) <= 2;
   })).toBe(true);
+  await expect(page.locator(".case-gallery figure")).toHaveCount(2);
+  await expect(page.getByRole("heading", { name: "Explore switching signals", exact: true })).toBeVisible();
+  await expect(page.locator(".case-feature-image img")).toHaveAttribute("src", /echo-switching/);
+  const gallery = await page.locator(".case-gallery").evaluate((element) => {
+    const figures = element.querySelectorAll("figure");
+    const first = figures[0].getBoundingClientRect();
+    const second = figures[1].getBoundingClientRect();
+    return { stacked: second.top >= first.bottom, sideBySide: second.left >= first.right, width: innerWidth };
+  });
+  expect(gallery.width <= 900 ? gallery.stacked : gallery.sideBySide).toBe(true);
   const eventLink = page.locator(".case-header").getByRole("link", { name: "Unwrapathon", exact: true });
   await expect(eventLink).toHaveAttribute("href", projects[0].summaryLink!.href);
   await expect(eventLink).toHaveAttribute("target", "_blank");

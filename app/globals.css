@@ -1753,6 +1753,56 @@ svg {
   width: 100%;
   height: auto;
 }
+.case-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.case-gallery-item {
+  margin: 0;
+  min-width: 0;
+}
+.case-gallery-item:has(.case-feature-image) {
+  width: min(100%, 320px);
+  justify-self: center;
+}
+.case-feature-image {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.case-feature-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.case-gallery figcaption {
+  padding: 16px 2px 0;
+}
+.case-gallery h2 {
+  font-family: "DM Sans Variable", sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.case-gallery figcaption p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.case-gallery .inline-link {
+  margin-top: 6px;
+  color: var(--accent);
+}
+@media (max-width: 900px) {
+  .case-gallery {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+}
 @media (max-width: 700px) {
   .library-grid {
     grid-template-columns: 1fr;

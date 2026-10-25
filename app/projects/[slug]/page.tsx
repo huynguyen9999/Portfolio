@@ -114,18 +114,56 @@ export default async function ProjectPage({
           </a>
         </div>
       </header>
-      <div className="case-visual">
-        {!project.visual && project.image ? (
-          <Image
-            className="case-screenshot"
-            src={project.image}
-            alt={project.imageAlt ?? project.title}
-            width={project.imageWidth ?? 1440}
-            height={project.imageHeight ?? 1000}
-            sizes="(max-width: 700px) 100vw, 1080px"
-          />
-        ) : (
-          <ProjectVisual kind={project.visual} />
+      <div className={project.featureShot ? "case-gallery" : undefined}>
+        <figure className={project.featureShot ? "case-gallery-item" : undefined}>
+          <div className="case-visual">
+            {!project.visual && project.image ? (
+              <Image
+                className="case-screenshot"
+                src={project.image}
+                alt={project.imageAlt ?? project.title}
+                width={project.imageWidth ?? 1440}
+                height={project.imageHeight ?? 1000}
+                sizes={project.featureShot
+                  ? "(max-width: 900px) 100vw, 540px"
+                  : "(max-width: 700px) 100vw, 1080px"}
+              />
+            ) : (
+              <ProjectVisual kind={project.visual} />
+            )}
+          </div>
+          {project.featureShot && (
+            <figcaption>
+              <h2>The product at a glance</h2>
+              <p>Explore the app landscape, then drill into an individual app for a closer look at its review insights.</p>
+            </figcaption>
+          )}
+        </figure>
+        {project.featureShot && (
+          <figure className="case-gallery-item">
+            <a
+              className="case-feature-image"
+              href={project.featureShot.image}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Enlarge screenshot: ${project.featureShot.title} (opens in a new tab)`}
+            >
+              <Image
+                src={project.featureShot.image}
+                alt={project.featureShot.alt}
+                width={project.featureShot.width}
+                height={project.featureShot.height}
+                sizes="(max-width: 900px) 100vw, 540px"
+              />
+            </a>
+            <figcaption>
+              <h2>{project.featureShot.title}</h2>
+              <p>{project.featureShot.caption}</p>
+              <a className="inline-link" href={project.featureShot.image} target="_blank" rel="noreferrer">
+                View full-size screenshot <Arrow diagonal />
+              </a>
+            </figcaption>
+          </figure>
         )}
       </div>
       <div className="case-body">

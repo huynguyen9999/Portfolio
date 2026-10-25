@@ -23,6 +23,14 @@ export type Project = {
   imageAlt?: string;
   imageWidth?: number;
   imageHeight?: number;
+  featureShot?: {
+    image: string;
+    alt: string;
+    width: number;
+    height: number;
+    title: string;
+    caption: string;
+  };
   visual?: "unwrap" | "roadmap" | "lidar" | "orbit" | "tuner";
   featured?: boolean;
 };
@@ -33,6 +41,14 @@ export const projects: Project[] = [
     image: "/work/echo.jpg",
     imageWidth: 1440,
     imageHeight: 900,
+    featureShot: {
+      image: "/work/echo-switching.jpg",
+      alt: "Close-up of ECHO’s Capital One Mobile panel showing reported switches, reviews analyzed, a monthly switching chart, and switches to and from other finance apps",
+      width: 375,
+      height: 1024,
+      title: "Explore switching signals",
+      caption: "See reported switches at a glance, track them month by month, and explore which apps users mention moving to or from. Demo view—not a validated measure of customer churn.",
+    },
     imageAlt:
       "ECHO live website showing app icons grouped into colored review clusters on a dark interactive map",
     featured: true,
