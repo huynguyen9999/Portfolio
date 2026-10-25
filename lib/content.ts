@@ -33,7 +33,7 @@ export const projects: Project[] = [
     category: "Machine Learning",
     year: "2026",
     summary:
-      "From reviews to insight. Built for Unwrapathon 2026, ECHO pairs an app-review explorer with a hierarchical, sampling-aware NLP pipeline, using a source corpus of 5.5M+ reviews across 60 apps and 12 categories.",
+      "From messy data to actionable insights. Built for Unwrapathon 2026, ECHO combines a multi-stage NLP pipeline with an interactive explorer to uncover customer pain points in App Store and Google Play reviews, drawing on a dataset of 5.5M+ reviews across 60 apps and 12 categories.",
     cardSummary:
       "App-review intelligence for a 5.5M+ review corpus: semantic clustering, sampled LLM extraction, and review-traceable product topics.",
     categoryTags: ["Machine learning", "NLP", "Data engineering"],
