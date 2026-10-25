@@ -83,8 +83,8 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
   await expect(featured.locator(".featured-metrics dt")).toHaveText(["5.5M+", "60", "12"]);
   await expect(featured.locator(".featured-metrics")).toContainText("reviews in source corpus");
   await expect(
-    featured.getByRole("link", { name: "View on GitHub: ECHO" }),
-  ).toHaveAttribute("href", "https://github.com/kylevillepo2/Unwrapathon");
+    featured.getByRole("link", { name: "Live site: ECHO" }),
+  ).toHaveAttribute("href", "https://unwrapathon.vercel.app/");
   await featured.getByRole("link", { name: "Explore project: ECHO" }).click();
   await expect(page).toHaveURL(/\/projects\/unwrapathon$/);
   await expect(page).toHaveTitle("ECHO — Huy Nguyen");
@@ -93,12 +93,14 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
   await expect(eventLink).toHaveAttribute("target", "_blank");
   await expect(page.locator(".case-header > p").last()).toHaveText(projects[0].summary);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("ECHO");
-  await expect(page.getByRole("link", { name: "View on GitHub", exact: true }))
-    .toHaveAttribute("href", "https://github.com/kylevillepo2/Unwrapathon");
+  await expect(page.getByRole("link", { name: "Visit live project", exact: true }))
+    .toHaveAttribute("href", "https://unwrapathon.vercel.app/");
   await expect(page.locator(".case-narrative")).toContainText("some demo data is simulated");
   await page.getByRole("link", { name: "All projects" }).click();
   await expect(page.locator(".library-grid article").first().getByRole("heading"))
     .toHaveText("ECHO");
+  await expect(page.locator(".library-grid article").first().getByRole("link", { name: "Live site: ECHO" }))
+    .toHaveAttribute("href", "https://unwrapathon.vercel.app/");
 });
 
 test("tuner responds to keyboard input, endpoints, and reset", async ({

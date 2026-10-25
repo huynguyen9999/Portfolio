@@ -49,6 +49,7 @@ export const projects: Project[] = [
       { value: "60", label: "apps" },
       { value: "12", label: "categories" },
     ],
+    liveUrl: "https://unwrapathon.vercel.app/",
     sourceUrl: "https://github.com/kylevillepo2/Unwrapathon",
     problem:
       "Feedback is everywhere, but messy reviews hide recurring product issues and user needs. A source corpus of 5,529,110 reviews across 60 apps and 12 categories makes manual inspection impractical, while sending every review to an LLM would add unnecessary inference cost. The challenge is uncovering specific, actionable experiences without losing the original review evidence.",
