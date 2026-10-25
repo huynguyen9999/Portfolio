@@ -50,15 +50,24 @@ test("project content supports unique static routes and complete breakdowns", ()
   assert.ok(experience.length > 0);
 });
 
-test("Unwrap is the newest and featured project with a repository link", () => {
+test("ECHO leads with source-corpus metrics and distinguishes planned estimates", () => {
   const latest = projects[0];
   assert.equal(latest.slug, "unwrapathon");
-  assert.equal(latest.title, "Unwrap");
+  assert.equal(latest.title, "ECHO");
   assert.equal(latest.featured, true);
   assert.equal(projects.find((project) => project.featured), latest);
   assert.equal(latest.sourceUrl, "https://github.com/kylevillepo2/Unwrapathon");
   assert.equal(latest.visual, "unwrap");
-  assert.match(latest.metricLabel, /demo/);
+  assert.equal(latest.metric, "5.5M+");
+  assert.equal(latest.metricLabel, "reviews in source corpus");
+  assert.deepEqual(latest.supportingMetrics, [
+    { value: "60", label: "apps" },
+    { value: "12", label: "categories" },
+  ]);
+  assert.match(latest.problem, /5,529,110 reviews/);
+  assert.match(latest.result, /9,000 sampled reviews/);
+  assert.match(latest.tradeoff, /remain planned capabilities, not validated results/);
+  assert.match(latest.tradeoff, /not reviews individually processed by an LLM/);
   assert.match(latest.tradeoff, /generated metadata/);
 });
 

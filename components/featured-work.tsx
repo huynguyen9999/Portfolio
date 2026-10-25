@@ -54,10 +54,15 @@ export function FeaturedWork() {
           </h3>
           <p>{flagship.cardSummary}</p>
           <dl className="featured-metrics">
-            <div>
-              <dt>{flagship.metric}</dt>
-              <dd>{flagship.metricLabel}</dd>
-            </div>
+            {[
+              { value: flagship.metric, label: flagship.metricLabel },
+              ...(flagship.supportingMetrics ?? []),
+            ].map(({ value, label }) => (
+              <div key={label}>
+                <dt>{value}</dt>
+                <dd>{label}</dd>
+              </div>
+            ))}
           </dl>
           <ProjectActions project={flagship} />
         </div>

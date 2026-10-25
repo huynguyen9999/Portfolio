@@ -74,25 +74,27 @@ test("homepage exposes work, contact, and a working résumé", async ({
   expect(errors).toEqual([]);
 });
 
-test("Unwrap leads the homepage and project library with a working breakdown", async ({
+test("ECHO leads the homepage and project library with a working breakdown", async ({
   page,
 }) => {
   await page.goto("/");
   const featured = page.locator(".featured-flagship");
-  await expect(featured.getByRole("heading")).toHaveText("Unwrap");
+  await expect(featured.getByRole("heading")).toHaveText("ECHO");
+  await expect(featured.locator(".featured-metrics dt")).toHaveText(["5.5M+", "60", "12"]);
+  await expect(featured.locator(".featured-metrics")).toContainText("reviews in source corpus");
   await expect(
-    featured.getByRole("link", { name: "View on GitHub: Unwrap" }),
+    featured.getByRole("link", { name: "View on GitHub: ECHO" }),
   ).toHaveAttribute("href", "https://github.com/kylevillepo2/Unwrapathon");
-  await featured.getByRole("link", { name: "Explore project: Unwrap" }).click();
+  await featured.getByRole("link", { name: "Explore project: ECHO" }).click();
   await expect(page).toHaveURL(/\/projects\/unwrapathon$/);
-  await expect(page).toHaveTitle("Unwrap — Huy Nguyen");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Unwrap");
+  await expect(page).toHaveTitle("ECHO — Huy Nguyen");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("ECHO");
   await expect(page.getByRole("link", { name: "View on GitHub", exact: true }))
     .toHaveAttribute("href", "https://github.com/kylevillepo2/Unwrapathon");
   await expect(page.locator(".case-narrative")).toContainText("generated metadata");
   await page.getByRole("link", { name: "All projects" }).click();
   await expect(page.locator(".library-grid article").first().getByRole("heading"))
-    .toHaveText("Unwrap");
+    .toHaveText("ECHO");
 });
 
 test("tuner responds to keyboard input, endpoints, and reset", async ({

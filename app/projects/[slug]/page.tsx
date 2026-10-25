@@ -118,6 +118,16 @@ export default async function ProjectPage({
           <span className="eyebrow">At a glance</span>
           <p className="case-metric">{project.metric}</p>
           <p>{project.metricLabel}</p>
+          {project.supportingMetrics && (
+            <dl className="featured-metrics">
+              {project.supportingMetrics.map(({ value, label }) => (
+                <div key={label}>
+                  <dt>{value}</dt>
+                  <dd>{label}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
           <div>
             <span className="eyebrow">Project highlights</span>
             <ul>

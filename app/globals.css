@@ -533,6 +533,7 @@ svg {
 }
 .featured-metrics {
   display: flex;
+  flex-wrap: wrap;
   gap: 28px;
   margin-top: 22px;
 }

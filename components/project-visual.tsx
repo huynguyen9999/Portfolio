@@ -7,8 +7,8 @@ function Unwrap() {
   return (
     <div className="diagram diagram-unwrap">
       <div className="visual-topline">
-        <span>Unwrap / Review intelligence</span>
-        <span>Find the signal in the feedback</span>
+        <span>ECHO / Unwrapathon 2026</span>
+        <span>From reviews to insight</span>
       </div>
       <svg
         viewBox="0 0 480 230"

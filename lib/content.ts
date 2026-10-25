@@ -9,6 +9,7 @@ export type Project = {
   tags: string[];
   metric: string;
   metricLabel: string;
+  supportingMetrics?: { value: string; label: string }[];
   problem: string;
   contribution: string;
   tradeoff: string;
@@ -28,30 +29,36 @@ export const projects: Project[] = [
     slug: "unwrapathon",
     visual: "unwrap",
     featured: true,
-    title: "Unwrap",
-    category: "Software",
+    title: "ECHO",
+    category: "Machine Learning",
     year: "2026",
     summary:
-      "An app-store review intelligence tool that turns review corpora into semantic maps, searchable feedback, and review-traceable product topics.",
+      "From reviews to insight. Built for Unwrapathon 2026, ECHO pairs an app-review explorer with a hierarchical, sampling-aware NLP pipeline, using a source corpus of 5.5M+ reviews across 60 apps and 12 categories.",
     cardSummary:
-      "Semantic app maps and an NLP pipeline that turn app-store reviews into explorable product insights.",
-    categoryTags: ["Software", "NLP", "Data visualization"],
-    tags: ["SvelteKit", "TypeScript", "Python", "Embeddings", "HDBSCAN"],
-    metric: "60 apps",
-    metricLabel: "in the offline demo",
+      "App-review intelligence for a 5.5M+ review corpus: semantic clustering, sampled LLM extraction, and review-traceable product topics.",
+    categoryTags: ["Machine learning", "NLP", "Data engineering"],
+    tags: ["Python", "Sentence Transformers", "NumPy", "HDBSCAN", "SvelteKit", "TypeScript"],
+    metric: "5.5M+",
+    metricLabel: "reviews in source corpus",
+    supportingMetrics: [
+      { value: "60", label: "apps" },
+      { value: "12", label: "categories" },
+    ],
     sourceUrl: "https://github.com/kylevillepo2/Unwrapathon",
     problem:
-      "App-store reviews contain useful product feedback, but individual comments are difficult to connect across apps and recurring topics. Teams need a way to explore that feedback while keeping insights traceable to the original reviews.",
+      "Feedback is everywhere, but messy reviews hide recurring product issues and user needs. A source corpus of 5,529,110 reviews across 60 apps and 12 categories makes manual inspection impractical, while sending every review to an LLM would add unnecessary inference cost. The challenge is uncovering specific, actionable experiences without losing the original review evidence.",
     contribution:
-      "Built a review-exploration interface with a custom force-directed map, category clusters, app inspection, and semantic search. The project also includes a Python pipeline for review embeddings, representative sampling, LLM aspect extraction, topic refinement, and similarity-based tagging.",
+      "Built a hierarchical NLP workflow: embed and cluster reviews, select centroid, random, and boundary samples, and extract atomic product aspects with structured LLM output. A second embedding and clustering stage regroups those aspects; LLM refinement merges equivalent issues, flags irrelevant clusters, organizes related topics, and assigns canonical labels. Review IDs and metadata stay linked through the pipeline. The project also includes resumable extraction, similarity-based topic tagging, and an interactive app map for exploring the feedback.",
     tradeoff:
-      "The interface separates an offline demo from a live API through a shared data contract. Demo ratings, trends, and similarity links are generated metadata, not validated findings. The NLP pipeline preserves review provenance and distinguishes topic discovery from population estimates; similarity scores are not probabilities or verified complaint rates.",
+      "Sampling avoids running expensive LLM extraction on every review, but discovery examples cannot stand in for unbiased prevalence estimates. Centroid and boundary samples surface themes; probability-based random samples are the basis for the plan’s weighted estimates. Weighted prevalence with uncertainty intervals, cross-app statistical comparisons, and temporal anomaly detection remain planned capabilities, not validated results. The 5.5M+ figure describes the source corpus, not reviews individually processed by an LLM. Demo ratings, trends, and similarity links are generated metadata; similarity scores are not probabilities or verified complaint rates.",
     result:
-      "Created a hackathon demo spanning 60 apps in 12 semantic category clusters, with 9,000 sampled reviews available in the interface. Custom SVG charts and a local force simulation support exploration without external chart or UI libraries, while the processing pipeline exports review-traceable topic insights.",
+      "Delivered an Unwrapathon 2026 review-intelligence prototype backed by a 60-app, 12-category demo, with 9,000 sampled reviews available in the interface. The implemented pipeline connects review clustering and sampling to aspect extraction, canonical topic refinement, and review-traceable exports. Its architecture targets customer voices, emerging trends, and switching signals without claiming measured cost savings, full-corpus LLM coverage, or validated population statistics.",
     evidence: [
-      "Offline demo: 60 apps, 12 category clusters, and 9,000 sampled reviews",
-      "Custom force layout, SVG charts, and semantic search interface",
-      "Review-traceable NLP pipeline with resumable extraction and topic tagging",
+      "Source corpus: 5,529,110 reviews across 60 apps and 12 categories",
+      "9,000 sampled reviews available in the demo interface",
+      "Review clustering → sampled aspect extraction → aspect clustering → LLM refinement",
+      "Canonical topics retain mappings to original reviews and supporting evidence",
+      "Resumable extraction and similarity-based tagging; weighted statistical estimates remain planned",
     ],
   },
   {
