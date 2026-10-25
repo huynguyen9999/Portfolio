@@ -88,6 +88,8 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
   await featured.getByRole("link", { name: "Explore project: ECHO" }).click();
   await expect(page).toHaveURL(/\/projects\/unwrapathon$/);
   await expect(page).toHaveTitle("ECHO — Huy Nguyen");
+  await expect(page.locator(".case-visual img")).toHaveAttribute("src", /echo\.jpg/);
+  await expect(page.locator(".case-visual .diagram-unwrap")).toHaveCount(0);
   const eventLink = page.locator(".case-header").getByRole("link", { name: "Unwrapathon", exact: true });
   await expect(eventLink).toHaveAttribute("href", projects[0].summaryLink!.href);
   await expect(eventLink).toHaveAttribute("target", "_blank");

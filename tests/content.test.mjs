@@ -61,7 +61,8 @@ test("ECHO leads with source-corpus metrics and distinguishes planned estimates"
   assert.equal(latest.featured, true);
   assert.equal(projects.find((project) => project.featured), latest);
   assert.equal(latest.sourceUrl, "https://github.com/kylevillepo2/Unwrapathon");
-  assert.equal(latest.visual, "unwrap");
+  assert.equal(latest.image, "/work/echo.jpg");
+  assert.equal(latest.visual, undefined);
   assert.equal(latest.metric, "5.5M+");
   assert.equal(latest.metricLabel, "reviews in source corpus");
   assert.deepEqual(latest.supportingMetrics, [

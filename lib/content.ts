@@ -28,7 +28,9 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "unwrapathon",
-    visual: "unwrap",
+    image: "/work/echo.jpg",
+    imageAlt:
+      "ECHO live website showing app icons grouped into colored review clusters on a dark interactive map",
     featured: true,
     title: "ECHO",
     summaryLink: {

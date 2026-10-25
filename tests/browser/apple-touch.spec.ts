@@ -61,7 +61,6 @@ for (const viewport of [
           return rect.top >= frame.top - 1 && rect.bottom <= frame.bottom + 1 && rect.left >= frame.left - 1 && rect.right <= frame.right + 1 && rect.height > 0;
         });
       }));
-      expect(diagrams.length).toBeGreaterThan(0);
       expect(diagrams.every(Boolean), "Diagram header, SVG, and caption stay inside the card").toBe(true);
       const tunerFits = await page.locator(".featured-shot:has(.tuner)").evaluateAll((shots) => shots.every((shot) => {
         const frame = shot.getBoundingClientRect();
