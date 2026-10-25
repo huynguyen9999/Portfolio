@@ -230,7 +230,11 @@ export function SignatureCanvas({
         sample.clientX - holdX,
         sample.clientY - holdY,
       );
-      if (pinRef.current !== null && pointerTravel > 18) {
+      // Touch-down location and vertical scrolling must not discard a mode.
+      const releasePin = sample.touch
+        ? sample.down && sample.horizontalDrag
+        : pointerTravel > 18;
+      if (pinRef.current !== null && releasePin) {
         pinRef.current = null;
         onRelease();
       }

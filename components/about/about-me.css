@@ -258,7 +258,7 @@
     grid-column: 1 / -1;
   }
 }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .pieces-section {
     grid-template-columns: minmax(0, 1fr);
     padding-block: 38px 48px;

@@ -30,7 +30,14 @@ export default defineConfig({
       },
     },
     ...(process.env.WEBKIT_MOBILE === "1"
-      ? [{ name: "mobile-webkit", use: { ...devices["iPhone 13"] } }]
+      ? [
+          { name: "mobile-webkit", use: { ...devices["iPhone 13"] } },
+          { name: "ipad-webkit", use: { ...devices["iPad (gen 7)"] } },
+          {
+            name: "ipad-landscape-webkit",
+            use: { ...devices["iPad (gen 7) landscape"] },
+          },
+        ]
       : []),
     ...(process.env.CROSS_BROWSER
       ? [

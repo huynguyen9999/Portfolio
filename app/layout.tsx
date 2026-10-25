@@ -1,9 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/dm-sans";
 import "@fontsource-variable/newsreader";
 import "./globals.css";
 import { Header, Footer } from "@/components/chrome";
 import { siteDescription, siteUrl } from "@/lib/site";
+
+// Respect notches and the home indicator without restricting pinch-to-zoom.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#f8f7f4",
+  colorScheme: "light",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

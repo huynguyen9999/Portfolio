@@ -39,7 +39,7 @@ export function SignatureSystem() {
   const stageRef = useRef<StageName>("graph");
   const announced = useRef(false);
   const dwell = useRef(0);
-  const pointer = usePointer(frame, reducedMotion);
+  const pointer = usePointer(frame, reducedMotion, pinRef);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");

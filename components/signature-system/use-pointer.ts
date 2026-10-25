@@ -11,11 +11,14 @@ export type PointerSample = {
   inside: boolean;
   clientX: number;
   clientY: number;
+  touch: boolean;
+  horizontalDrag: boolean;
 };
 
 export function usePointer(
   target: RefObject<HTMLElement | null>,
   reducedMotion: boolean,
+  pinnedStage: RefObject<number | null>,
 ) {
   const sample = useRef<PointerSample>({
     x: 0.12,
@@ -25,6 +28,8 @@ export function usePointer(
     inside: false,
     clientX: 0,
     clientY: 0,
+    touch: false,
+    horizontalDrag: false,
   });
 
   useEffect(() => {
@@ -33,6 +38,8 @@ export function usePointer(
     const state = sample.current;
     let activePointer: number | null = null;
     let originX = 0;
+    let originY = 0;
+    let intent: "horizontal" | "vertical" | null = null;
     let originStage = sample.current.stage;
 
     const point = (event: PointerEvent) => {
@@ -48,6 +55,7 @@ export function usePointer(
         (activePointer !== null && event.pointerId !== activePointer)
       )
         return;
+      sample.current.touch = event.pointerType === "touch";
       const next = point(event);
       sample.current.x = next.x;
       sample.current.y = next.y;
@@ -56,10 +64,17 @@ export function usePointer(
       sample.current.inside = true;
       if (event.pointerType === "touch") {
         if (!sample.current.down) return;
-        const dx =
-          (event.clientX - originX) /
-          Math.max(1, el.getBoundingClientRect().width);
-        sample.current.stage = clamp(originStage + dx, 0, 1);
+        const dx = event.clientX - originX;
+        const dy = event.clientY - originY;
+        if (intent === null && Math.max(Math.abs(dx), Math.abs(dy)) > 18)
+          intent = Math.abs(dx) > Math.abs(dy) ? "horizontal" : "vertical";
+        if (intent !== "horizontal") return;
+        sample.current.horizontalDrag = true;
+        sample.current.stage = clamp(
+          originStage + dx / Math.max(1, el.getBoundingClientRect().width),
+          0,
+          1,
+        );
         return;
       }
       if (next.y <= 0.86) sample.current.stage = next.x;
@@ -70,7 +85,11 @@ export function usePointer(
       activePointer = event.pointerId;
       sample.current.down = true;
       originX = event.clientX;
-      originStage = sample.current.stage;
+      originY = event.clientY;
+      intent = null;
+      sample.current.horizontalDrag = false;
+      originStage = pinnedStage.current ?? sample.current.stage;
+      sample.current.stage = originStage;
       if (event.pointerType === "touch") el.setPointerCapture(event.pointerId);
       move(event);
     };
@@ -115,7 +134,7 @@ export function usePointer(
       window.removeEventListener("blur", reset);
       reset();
     };
-  }, [target, reducedMotion]);
+  }, [target, reducedMotion, pinnedStage]);
 
   return sample;
 }
