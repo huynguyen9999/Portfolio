@@ -1744,10 +1744,14 @@ svg {
 .library-grid .featured-shot img {
   object-position: top;
 }
+/* Screenshots define their own frame height instead of being letterboxed. */
+.case-visual:has(.case-screenshot) {
+  height: auto;
+}
 .case-screenshot {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
 }
 @media (max-width: 700px) {
   .library-grid {

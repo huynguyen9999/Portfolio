@@ -90,6 +90,15 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
   await expect(page).toHaveTitle("ECHO — Huy Nguyen");
   await expect(page.locator(".case-visual img")).toHaveAttribute("src", /echo\.jpg/);
   await expect(page.locator(".case-visual .diagram-unwrap")).toHaveCount(0);
+  await expect.poll(() => page.locator(".case-screenshot").evaluate((image) => {
+    const img = image as HTMLImageElement;
+    const frame = img.parentElement!.getBoundingClientRect();
+    const bounds = img.getBoundingClientRect();
+    return img.complete && img.naturalWidth > 0
+      && Math.abs(bounds.width / bounds.height - 1440 / 900) < 0.01
+      && Math.abs(frame.width - bounds.width) <= 2
+      && Math.abs(frame.height - bounds.height) <= 2;
+  })).toBe(true);
   const eventLink = page.locator(".case-header").getByRole("link", { name: "Unwrapathon", exact: true });
   await expect(eventLink).toHaveAttribute("href", projects[0].summaryLink!.href);
   await expect(eventLink).toHaveAttribute("target", "_blank");

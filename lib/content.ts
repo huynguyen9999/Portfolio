@@ -21,6 +21,8 @@ export type Project = {
   sourceUrl?: string;
   image?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   visual?: "unwrap" | "roadmap" | "lidar" | "orbit" | "tuner";
   featured?: boolean;
 };
@@ -29,6 +31,8 @@ export const projects: Project[] = [
   {
     slug: "unwrapathon",
     image: "/work/echo.jpg",
+    imageWidth: 1440,
+    imageHeight: 900,
     imageAlt:
       "ECHO live website showing app icons grouped into colored review clusters on a dark interactive map",
     featured: true,

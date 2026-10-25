@@ -120,8 +120,8 @@ export default async function ProjectPage({
             className="case-screenshot"
             src={project.image}
             alt={project.imageAlt ?? project.title}
-            width={1440}
-            height={1000}
+            width={project.imageWidth ?? 1440}
+            height={project.imageHeight ?? 1000}
             sizes="(max-width: 700px) 100vw, 1080px"
           />
         ) : (
