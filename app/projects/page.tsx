@@ -17,9 +17,7 @@ export default function ProjectsPage() {
         ← Back to home
       </Link>
       <header className="library-header">
-        <p className="eyebrow">
-          The project library · {projects.length} projects
-        </p>
+        <p className="eyebrow">The project library</p>
         <h1>Things I’ve built.</h1>
       </header>
       <div className="library-grid">
