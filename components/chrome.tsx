@@ -1,6 +1,7 @@
 import { resume, contactLinks } from "@/lib/links";
 import Link from "next/link";
 import { Arrow } from "./icons";
+import { MagneticWord } from "./magnetic-word";
 
 export function Header() {
   return (
@@ -47,7 +48,7 @@ export function Contact() {
     <section className="contact" id="contact" aria-labelledby="contact-heading">
       <div>
         <h2 id="contact-heading">
-          Let&apos;s build something <span className="contact-accent">cool</span>
+          Let&apos;s build something <MagneticWord>cool</MagneticWord>
         </h2>
       </div>
       <div className="contact-links">
