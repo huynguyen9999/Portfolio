@@ -140,6 +140,22 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
     .toHaveAttribute("href", "https://unwrapathon.vercel.app/");
 });
 
+test("Projects heading exposes the complete project library", async ({ page }) => {
+  await page.goto("/");
+  const link = page.locator("#work .section-heading").getByRole("link", { name: "See all projects" });
+  await expect(link).toBeVisible();
+  await expect(link).toHaveAttribute("href", "/projects");
+  const geometry = await link.evaluate(element => {
+    const heading = element.parentElement!.querySelector("h2")!.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
+    return { right: rect.left >= heading.right, overlapY: rect.top < heading.bottom && rect.bottom > heading.top };
+  });
+  expect(geometry).toEqual({ right: true, overlapY: true });
+  await link.click();
+  await expect(page).toHaveURL(/\/projects$/);
+  await expect(page.locator(".library-grid article")).toHaveCount(projects.length);
+});
+
 test("tuner responds to keyboard input, endpoints, and reset", async ({
   page,
 }) => {

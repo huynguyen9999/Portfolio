@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Arrow } from "@/components/icons";
 import { ProjectCarousel } from "@/components/project-carousel";
 import { ProjectActions, ProjectShot } from "@/components/project-card";
 import { projects } from "@/lib/content";
@@ -37,6 +38,9 @@ export function FeaturedWork() {
     <section id="work" className="work-section" aria-labelledby="work-heading">
       <div className="section-heading">
         <h2 id="work-heading">Projects</h2>
+        <Link className="all-projects-link" href="/projects">
+          See all projects <Arrow />
+        </Link>
       </div>
       <article className="featured-card featured-flagship">
         <ProjectShot project={flagship} priority />
