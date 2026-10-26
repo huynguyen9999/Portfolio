@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { pieces } from "../../components/about/content";
 
 const labels = [
-  "My Roots",
+  "My Story",
   "The Engineer",
   "People & Community",
   "Behind the Lens",

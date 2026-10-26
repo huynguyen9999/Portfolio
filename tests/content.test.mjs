@@ -91,7 +91,7 @@ test("About entries have unique identities and readable content", () => {
   assert.deepEqual(
     pieces.map((piece) => piece.label),
     [
-      "My Roots",
+      "My Story",
       "The Engineer",
       "People & Community",
       "Behind the Lens",

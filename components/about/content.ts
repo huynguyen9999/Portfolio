@@ -13,8 +13,8 @@ export type Piece = {
 export const pieces: readonly Piece[] = [
   {
     id: "roots",
-    label: "My Roots",
-    shortLabel: ["My Roots"],
+    label: "My Story",
+    shortLabel: ["My Story"],
     icon: "M12 21s7-6 7-12a7 7 0 0 0-14 0c0 6 7 12 7 12Z M9 9a3 3 0 1 0 6 0a3 3 0 1 0-6 0",
     question: "🇻🇳 → 🇺🇸",
     answer:
