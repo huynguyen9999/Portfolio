@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { projects, experience } from "../lib/content.ts";
+import { projects, experience, research } from "../lib/content.ts";
 import { existsSync } from "node:fs";
 import { pieces } from "../components/about/content.ts";
 
@@ -59,6 +59,26 @@ test("project content supports unique static routes and complete breakdowns", ()
       );
   }
   assert.ok(experience.length > 0);
+});
+
+test("research names the UCSB lab project without a date range", () => {
+  assert.equal(
+    research.project,
+    "Glass Antenna-in-Package for Converged FMCW Radar & Lidar TRX",
+  );
+  assert.equal(research.role, "Undergraduate Researcher");
+  assert.equal(research.advisor, "Professor James F. Buckwalter");
+  assert.equal(research.school, "UC Santa Barbara");
+  assert.equal(
+    research.lab,
+    "RF & Mixed-signal Integrated Systems Lab",
+  );
+  assert.equal(
+    research.summary,
+    "Undergraduate research on a glass antenna-in-package for a transceiver that combines frequency-modulated continuous-wave radar and lidar.",
+  );
+  assert.equal(research.href, "https://rfic.ece.ucsb.edu/");
+  assert.equal(research.period, undefined);
 });
 
 test("ECHO leads with source-corpus metrics and distinguishes planned estimates", () => {

@@ -1,7 +1,7 @@
 import { resume } from "@/lib/links";
 import Image from "next/image";
 import { Arrow } from "@/components/icons";
-import { experience } from "@/lib/content";
+import { experience, research } from "@/lib/content";
 
 export function ExperienceStrip() {
   return (
@@ -43,6 +43,30 @@ export function ExperienceStrip() {
             <p className="experience-impact">{job.impact}</p>
           </article>
         ))}
+      </div>
+      <div className="research-block">
+        <h3 id="research-heading">Research</h3>
+        <article aria-labelledby="research-project">
+          <h4 id="research-project">{research.project}</h4>
+          <p className="experience-role">{research.role}</p>
+          {research.period ? (
+            <p className="experience-period">{research.period}</p>
+          ) : null}
+          <p className="experience-impact">{research.summary}</p>
+          <p className="research-meta">
+            {research.advisor}
+            <span aria-hidden="true"> · </span>
+            {research.school}
+          </p>
+          <a
+            className="inline-link"
+            href={research.href}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {research.lab} <Arrow diagonal />
+          </a>
+        </article>
       </div>
     </section>
   );

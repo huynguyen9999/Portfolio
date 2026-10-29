@@ -189,6 +189,53 @@ test("project details and separate live evidence remain accessible", async ({
   await expect(
     page.locator("#work-heading, #experience-heading, #about-heading"),
   ).toHaveText(["Projects", "Experience", "About me"]);
+  await expect(
+    page.getByRole("heading", { name: "Research", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "Glass Antenna-in-Package for Converged FMCW Radar & Lidar TRX",
+      exact: true,
+    }),
+  ).toBeVisible();
+  const lab = page.getByRole("link", {
+    name: "RF & Mixed-signal Integrated Systems Lab",
+    exact: true,
+  });
+  await expect(lab).toHaveAttribute("href", "https://rfic.ece.ucsb.edu/");
+  await expect(lab).toHaveAttribute("target", "_blank");
+  const experienceOrder = await page
+    .locator("#experience .experience-strip, #experience .research-block")
+    .evaluateAll((nodes) => nodes.map((node) => node.className));
+  expect(experienceOrder).toEqual(["experience-strip", "research-block"]);
+  const experienceType = await page.evaluate(() => {
+    const experience = getComputedStyle(
+      document.querySelector("#experience-heading")!,
+    );
+    const research = getComputedStyle(
+      document.querySelector("#research-heading")!,
+    );
+    const strip = getComputedStyle(document.querySelector(".experience-strip")!);
+    const section = document.querySelector("#experience")!;
+    return {
+      experienceSize: experience.fontSize,
+      researchSize: research.fontSize,
+      experienceFamily: experience.fontFamily,
+      researchFamily: research.fontFamily,
+      experienceWeight: experience.fontWeight,
+      researchWeight: research.fontWeight,
+      columns: strip.gridTemplateColumns.split(" ").filter(Boolean).length,
+      fits: section.scrollWidth <= section.clientWidth + 1,
+    };
+  });
+  expect(experienceType.researchSize).toBe(experienceType.experienceSize);
+  expect(experienceType.researchFamily).toBe(experienceType.experienceFamily);
+  expect(experienceType.researchWeight).toBe(experienceType.experienceWeight);
+  expect(experienceType.fits).toBe(true);
+  const width = page.viewportSize()?.width ?? 0;
+  expect(experienceType.columns).toBe(
+    width <= 640 ? 1 : width <= 1024 ? 2 : 3,
+  );
 });
 
 test("unknown and hostile-looking URLs stay 404 and do not execute input", async ({

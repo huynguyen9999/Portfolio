@@ -386,7 +386,9 @@ svg {
 }
 .section-heading h2,
 .pieces-intro h2,
-.contact h2 {
+.contact h2,
+.research-block h3 {
+  font-family: "Newsreader Variable", Georgia, serif;
   font-size: clamp(44px, 5vw, 60px);
   font-weight: 650;
   letter-spacing: -0.04em;
@@ -1170,6 +1172,37 @@ svg {
   line-height: 1.55;
   margin-top: 8px;
 }
+.research-block {
+  margin-top: 48px;
+  padding-top: 39px;
+  border-top: 1px solid var(--line);
+}
+.research-block h3 {
+  margin-bottom: 28px;
+}
+.research-block h4 {
+  max-width: 36rem;
+  font-family: "Newsreader Variable", Georgia, serif;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 550;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+.research-meta {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.research-block .inline-link {
+  justify-content: flex-start;
+  max-width: 100%;
+  margin-top: 4px;
+  line-height: 1.45;
+  text-align: left;
+  white-space: normal;
+}
 .contact {
   border-top: 1px solid var(--line);
   display: flex;
@@ -1499,7 +1532,8 @@ svg {
   }
   .section-heading h2,
   .pieces-intro h2,
-  .contact h2 {
+  .contact h2,
+  .research-block h3 {
     font-size: 40px;
   }
   .case-body {
@@ -1516,6 +1550,12 @@ svg {
   }
   .roadmap-clear {
     justify-self: start;
+  }
+}
+/* Two columns through iPad width. Wider MacBook windows keep three. */
+@media (max-width: 1024px) {
+  .experience-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 640px) {
@@ -1601,14 +1641,22 @@ svg {
   }
   .section-heading h2,
   .pieces-intro h2,
-  .contact h2 {
+  .contact h2,
+  .research-block h3 {
     font-size: 36px;
+  }
+  .research-block h3 {
+    margin-bottom: 22px;
   }
   .carousel-track .featured-card {
     flex-basis: min(84%, 360px);
   }
   .experience-strip {
     grid-template-columns: 1fr;
+  }
+  .research-block {
+    margin-top: 32px;
+    padding-top: 29px;
   }
   .diagram,
   .tuner {

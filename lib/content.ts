@@ -282,3 +282,24 @@ export const experience: {
       "Unified three backend services for voice access to call history and deployed an AWS proof of concept with 50+ evaluation scenarios.",
   },
 ];
+
+export const research: {
+  project: string;
+  role: string;
+  school: string;
+  lab: string;
+  advisor: string;
+  href: string;
+  summary: string;
+  period?: string;
+} = {
+  project:
+    "Glass Antenna-in-Package for Converged FMCW Radar & Lidar TRX",
+  role: "Undergraduate Researcher",
+  school: "UC Santa Barbara",
+  lab: "RF & Mixed-signal Integrated Systems Lab",
+  advisor: "Professor James F. Buckwalter",
+  href: "https://rfic.ece.ucsb.edu/",
+  summary:
+    "Undergraduate research on a glass antenna-in-package for a transceiver that combines frequency-modulated continuous-wave radar and lidar.",
+};
