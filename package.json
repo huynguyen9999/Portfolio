@@ -20,7 +20,7 @@
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@fontsource-variable/newsreader": "^5.2.8",
     "next": "16.4.2",
-    "react": "19.3.0",
+    "react": "19.3.1",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
