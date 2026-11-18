@@ -42,7 +42,7 @@ export default function Home() {
             <span className="eyebrow-sep" aria-hidden="true">
               ·
             </span>
-            <span>IC design</span>
+            <span>Full Stack Engineer</span>
           </p>
           <h1 id="hero-title">
             Huy Nguyen<span>.</span>

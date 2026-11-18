@@ -61,7 +61,7 @@ test("project content supports unique static routes and complete breakdowns", ()
   assert.ok(experience.length > 0);
 });
 
-test("research names the UCSB lab project without a date range", () => {
+test("research names the UCSB lab project and its packaging dates", () => {
   assert.equal(
     research.project,
     "Glass Antenna-in-Package for Converged FMCW Radar & Lidar TRX",
@@ -75,10 +75,10 @@ test("research names the UCSB lab project without a date range", () => {
   );
   assert.equal(
     research.summary,
-    "Undergraduate research on a glass antenna-in-package for a transceiver that combines frequency-modulated continuous-wave radar and lidar.",
+    "Designing the PCB land pattern for the transceiver and integrating the existing glass antennas so the chip and antennas can be wirebonded into one package.",
   );
   assert.equal(research.href, "https://rfic.ece.ucsb.edu/");
-  assert.equal(research.period, undefined);
+  assert.equal(research.period, "Oct 2026 – present");
 });
 
 test("ECHO leads with source-corpus metrics and distinguishes planned estimates", () => {
@@ -92,6 +92,8 @@ test("ECHO leads with source-corpus metrics and distinguishes planned estimates"
   assert.equal(latest.visual, undefined);
   assert.equal(latest.metric, "5.5M+");
   assert.equal(latest.metricLabel, "reviews in dataset");
+  assert.equal(latest.categoryTags[0], "Hackathon winner");
+  assert.match(latest.summary, /1st place for Best Insights/);
   assert.deepEqual(latest.supportingMetrics, [
     { value: "60", label: "apps" },
     { value: "12", label: "categories" },

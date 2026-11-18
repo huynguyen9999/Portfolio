@@ -28,7 +28,7 @@ export default function Image() {
             color: "#456c8c",
           }}
         >
-          EMBEDDED SOFTWARE SYSTEMS · RFIC · IC DESIGN
+          EMBEDDED SOFTWARE SYSTEMS · RFIC · FULL STACK ENGINEER
         </div>
         <div
           style={{

@@ -14,6 +14,9 @@ test("homepage exposes work, contact, and a working résumé", async ({
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "Huy Nguyen.",
   );
+  await expect(page.locator(".hero .eyebrow")).toContainText(
+    "Full Stack Engineer",
+  );
   await expect(page.locator(".featured-card")).toHaveCount(projects.length);
   await expect(
     page.getByRole("button", { name: "Show previous projects" }),
@@ -80,6 +83,7 @@ test("ECHO leads the homepage and project library with a working breakdown", asy
   await page.goto("/");
   const featured = page.locator(".featured-flagship");
   await expect(featured.getByRole("heading")).toHaveText("ECHO");
+  await expect(featured.locator(".featured-tags")).toContainText("Hackathon winner");
   await expect(featured.locator(".featured-metrics dt")).toHaveText(["5.5M+", "60", "12"]);
   await expect(featured.locator(".featured-metrics")).toContainText("reviews in dataset");
   await expect(

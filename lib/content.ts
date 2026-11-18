@@ -59,10 +59,15 @@ export const projects: Project[] = [
     category: "Machine Learning",
     year: "2026",
     summary:
-      "From messy data to actionable insights. Built for Unwrapathon 2026, ECHO combines a multi-stage NLP pipeline with an interactive explorer to uncover customer pain points in App Store and Google Play reviews, drawing on a dataset of 5.5M+ reviews across 60 apps and 12 categories.",
+      "From messy data to actionable insights. Winner of 1st place for Best Insights at Unwrapathon 2026, ECHO combines a multi-stage NLP pipeline with an interactive explorer to uncover customer pain points in App Store and Google Play reviews, drawing on a dataset of 5.5M+ reviews across 60 apps and 12 categories.",
     cardSummary:
       "Turn App Store and Google Play feedback into clear customer pain points with an NLP pipeline and interactive app explorer.",
-    categoryTags: ["Machine learning", "NLP", "Data engineering"],
+    categoryTags: [
+      "Hackathon winner",
+      "Machine learning",
+      "NLP",
+      "Data engineering",
+    ],
     tags: ["Python", "Sentence Transformers", "NumPy", "HDBSCAN", "SvelteKit", "TypeScript"],
     metric: "5.5M+",
     metricLabel: "reviews in dataset",
@@ -300,6 +305,7 @@ export const research: {
   lab: "RF & Mixed-signal Integrated Systems Lab",
   advisor: "Professor James F. Buckwalter",
   href: "https://rfic.ece.ucsb.edu/",
+  period: "Oct 2026 – present",
   summary:
-    "Undergraduate research on a glass antenna-in-package for a transceiver that combines frequency-modulated continuous-wave radar and lidar.",
+    "Designing the PCB land pattern for the transceiver and integrating the existing glass antennas so the chip and antennas can be wirebonded into one package.",
 };
