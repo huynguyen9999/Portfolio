@@ -5,6 +5,7 @@ allowBuilds:
 # The pinned patch preserves fast-glob's non-recursive literal-root behavior.
 overrides:
   '@next/eslint-plugin-next@16.4.0>fast-glob': npm:tinyglobby@0.2.17
+  minimatch: 11.0.1
 
 patchedDependencies:
   '@next/eslint-plugin-next@16.4.0': patches/@next__eslint-plugin-next@16.4.0.patch
