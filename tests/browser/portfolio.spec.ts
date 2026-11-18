@@ -20,7 +20,7 @@ test("homepage exposes work, contact, and a working résumé", async ({
   await expect(page.locator(".featured-card")).toHaveCount(projects.length);
   const leadership = page.locator("#leadership");
   await expect(
-    leadership.getByRole("heading", { name: "The communities I help build." }),
+    leadership.getByRole("heading", { name: "Leadership & community" }),
   ).toBeVisible();
   const leadershipCards = leadership.locator(".leadership-card");
   await expect(leadershipCards).toHaveCount(2);

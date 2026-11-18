@@ -388,8 +388,7 @@ svg {
 .section-heading h2,
 .pieces-intro h2,
 .contact h2,
-.research-block h3,
-.leadership-heading h2 {
+.research-block h3 {
   font-family: "Newsreader Variable", Georgia, serif;
   font-size: clamp(44px, 5vw, 60px);
   font-weight: 650;
@@ -1208,17 +1207,6 @@ svg {
 .leadership-section {
   padding-bottom: 68px;
 }
-.leadership-heading {
-  margin-bottom: 30px;
-}
-.leadership-heading .eyebrow {
-  color: var(--accent);
-  margin-bottom: 9px;
-}
-.leadership-heading h2 {
-  max-width: 740px;
-  text-wrap: balance;
-}
 .leadership-list {
   display: grid;
   gap: 18px;
@@ -1644,8 +1632,7 @@ svg {
   .section-heading h2,
   .pieces-intro h2,
   .contact h2,
-  .research-block h3,
-  .leadership-heading h2 {
+  .research-block h3 {
     font-size: 40px;
   }
   .case-body {
@@ -1755,8 +1742,7 @@ svg {
   .section-heading h2,
   .pieces-intro h2,
   .contact h2,
-  .research-block h3,
-  .leadership-heading h2 {
+  .research-block h3 {
     font-size: 36px;
   }
   .research-block h3 {
@@ -1771,9 +1757,6 @@ svg {
   .research-block {
     margin-top: 32px;
     padding-top: 29px;
-  }
-  .leadership-heading {
-    margin-bottom: 22px;
   }
   .leadership-card {
     grid-template-columns: 1fr;

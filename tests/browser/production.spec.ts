@@ -193,7 +193,7 @@ test("project details and separate live evidence remain accessible", async ({
   ).toHaveText([
     "Projects",
     "Experience",
-    "The communities I help build.",
+    "Leadership & community",
     "About me",
   ]);
   await expect(

@@ -8,11 +8,8 @@ export function LeadershipSection() {
       className="leadership-section"
       aria-labelledby="leadership-heading"
     >
-      <div className="section-heading leadership-heading">
-        <div>
-          <p className="eyebrow">Leadership &amp; community</p>
-          <h2 id="leadership-heading">The communities I help build.</h2>
-        </div>
+      <div className="section-heading">
+        <h2 id="leadership-heading">Leadership &amp; community</h2>
       </div>
       <div className="leadership-list">
         {leadership.map((entry) => (
