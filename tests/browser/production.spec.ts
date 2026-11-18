@@ -187,8 +187,15 @@ test("project details and separate live evidence remain accessible", async ({
     .poll(() => portrait.evaluate((img: HTMLImageElement) => img.naturalWidth))
     .toBeGreaterThan(0);
   await expect(
-    page.locator("#work-heading, #experience-heading, #about-heading"),
-  ).toHaveText(["Projects", "Experience", "About me"]);
+    page.locator(
+      "#work-heading, #experience-heading, #leadership-heading, #about-heading",
+    ),
+  ).toHaveText([
+    "Projects",
+    "Experience",
+    "The communities I help build.",
+    "About me",
+  ]);
   await expect(
     page.getByRole("heading", { name: "Research", exact: true }),
   ).toBeVisible();
@@ -236,6 +243,29 @@ test("project details and separate live evidence remain accessible", async ({
   expect(experienceType.columns).toBe(
     width <= 640 ? 1 : width <= 1024 ? 2 : 3,
   );
+  const leadershipLayout = await page.locator("#leadership").evaluate((section) => {
+    const cards = [...section.querySelectorAll<HTMLElement>(".leadership-card")];
+    const details = [...section.querySelectorAll<HTMLElement>(".leadership-details")];
+    return {
+      cardColumns: cards.map(
+        (card) =>
+          getComputedStyle(card).gridTemplateColumns
+            .split(" ")
+            .filter(Boolean).length,
+      ),
+      fits: section.scrollWidth <= section.clientWidth + 1,
+      cardsFit: cards.every((card) => card.scrollWidth <= card.clientWidth + 1),
+      detailsFit: details.every(
+        (detail) => detail.scrollWidth <= detail.clientWidth + 1,
+      ),
+    };
+  });
+  expect(leadershipLayout.cardColumns).toEqual(
+    Array(2).fill(width <= 640 ? 1 : 2),
+  );
+  expect(leadershipLayout.fits).toBe(true);
+  expect(leadershipLayout.cardsFit).toBe(true);
+  expect(leadershipLayout.detailsFit).toBe(true);
 });
 
 test("unknown and hostile-looking URLs stay 404 and do not execute input", async ({

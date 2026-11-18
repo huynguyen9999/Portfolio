@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { projects, experience, research } from "../lib/content.ts";
+import { projects, experience, leadership, research } from "../lib/content.ts";
 import { existsSync } from "node:fs";
 import { pieces } from "../components/about/content.ts";
 
@@ -59,6 +59,32 @@ test("project content supports unique static routes and complete breakdowns", ()
       );
   }
   assert.ok(experience.length > 0);
+  assert.ok(leadership.length > 0);
+});
+
+test("leadership content describes each community role with reusable details", () => {
+  assert.deepEqual(leadership[0], {
+    organization: "UCSB Sigma Eta Pi",
+    role: "Vice President & Co-Founder",
+    period: "Nov 2025 – Present",
+    mark: "ΣΗΠ",
+    highlights: [
+      "Co-founded and brought back the largest society of student entrepreneurs on campus, rebuilding a home for aspiring founders at UCSB.",
+      "Lead the chapter as vice president—recruiting members, organizing events, and growing the founder community.",
+    ],
+    tags: ["Leadership", "Community", "Entrepreneurship"],
+  });
+  assert.deepEqual(leadership[1], {
+    organization: "Ascend at UCSB",
+    role: "VP of Professional Development",
+    period: "Present",
+    mark: "A",
+    highlights: [
+      "Shape the chapter’s professional development strategy, creating opportunities for members to build career confidence and practical skills.",
+      "Support a community centered on mentorship, peer learning, and access to professional growth.",
+    ],
+    tags: ["Career Development", "Mentorship", "Community"],
+  });
 });
 
 test("research names the UCSB lab project and its packaging dates", () => {

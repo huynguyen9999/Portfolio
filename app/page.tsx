@@ -5,6 +5,7 @@ import { Arrow } from "@/components/icons";
 import { Contact } from "@/components/chrome";
 import { ExperienceStrip } from "@/components/experience-strip";
 import { FeaturedWork } from "@/components/featured-work";
+import { LeadershipSection } from "@/components/leadership-section";
 import { SignatureSystem } from "@/components/signature-system/signature-system";
 
 export const metadata = { alternates: { canonical: "/" } };
@@ -94,6 +95,7 @@ export default function Home() {
 
       <FeaturedWork />
       <ExperienceStrip />
+      <LeadershipSection />
 
       <AboutMe />
       <Contact />

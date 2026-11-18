@@ -288,6 +288,38 @@ export const experience: {
   },
 ];
 
+export const leadership: {
+  organization: string;
+  role: string;
+  period: string;
+  mark: string;
+  highlights: string[];
+  tags: string[];
+}[] = [
+  {
+    organization: "UCSB Sigma Eta Pi",
+    role: "Vice President & Co-Founder",
+    period: "Nov 2025 – Present",
+    mark: "ΣΗΠ",
+    highlights: [
+      "Co-founded and brought back the largest society of student entrepreneurs on campus, rebuilding a home for aspiring founders at UCSB.",
+      "Lead the chapter as vice president—recruiting members, organizing events, and growing the founder community.",
+    ],
+    tags: ["Leadership", "Community", "Entrepreneurship"],
+  },
+  {
+    organization: "Ascend at UCSB",
+    role: "VP of Professional Development",
+    period: "Present",
+    mark: "A",
+    highlights: [
+      "Shape the chapter’s professional development strategy, creating opportunities for members to build career confidence and practical skills.",
+      "Support a community centered on mentorship, peer learning, and access to professional growth.",
+    ],
+    tags: ["Career Development", "Mentorship", "Community"],
+  },
+];
+
 export const research: {
   project: string;
   role: string;

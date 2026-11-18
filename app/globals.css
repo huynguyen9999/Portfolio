@@ -354,7 +354,8 @@ svg {
   border-color: var(--accent);
 }
 .work-section,
-.experience-section {
+.experience-section,
+.leadership-section {
   border-top: 1px solid var(--line);
   padding: 39px 0 68px;
 }
@@ -387,7 +388,8 @@ svg {
 .section-heading h2,
 .pieces-intro h2,
 .contact h2,
-.research-block h3 {
+.research-block h3,
+.leadership-heading h2 {
   font-family: "Newsreader Variable", Georgia, serif;
   font-size: clamp(44px, 5vw, 60px);
   font-weight: 650;
@@ -1203,6 +1205,109 @@ svg {
   text-align: left;
   white-space: normal;
 }
+.leadership-section {
+  padding-bottom: 68px;
+}
+.leadership-heading {
+  margin-bottom: 30px;
+}
+.leadership-heading .eyebrow {
+  color: var(--accent);
+  margin-bottom: 9px;
+}
+.leadership-heading h2 {
+  max-width: 740px;
+  text-wrap: balance;
+}
+.leadership-list {
+  display: grid;
+  gap: 18px;
+}
+.leadership-card {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.32fr) minmax(0, 1fr);
+  gap: 34px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfbf8;
+}
+.leadership-identity {
+  padding-right: 28px;
+  border-right: 1px solid var(--line);
+}
+.leadership-mark {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "Newsreader Variable", Georgia, serif;
+  font-size: 21px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+.leadership-period {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  margin-top: 20px;
+  text-transform: uppercase;
+}
+.leadership-details h3 {
+  max-width: 560px;
+  font-family: "Newsreader Variable", Georgia, serif;
+  font-size: clamp(34px, 4vw, 48px);
+  font-weight: 580;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+.leadership-organization {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 7px;
+}
+.leadership-highlights {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  margin-top: 24px;
+  max-width: 720px;
+}
+.leadership-highlights li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.leadership-highlights li::before {
+  content: "◆";
+  position: absolute;
+  left: 0;
+  top: 0.22em;
+  color: var(--ink);
+  font-size: 8px;
+}
+.leadership-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  list-style: none;
+  margin-top: 22px;
+}
+.leadership-tags li {
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1;
+}
 .contact {
   border-top: 1px solid var(--line);
   display: flex;
@@ -1533,7 +1638,8 @@ svg {
   .section-heading h2,
   .pieces-intro h2,
   .contact h2,
-  .research-block h3 {
+  .research-block h3,
+  .leadership-heading h2 {
     font-size: 40px;
   }
   .case-body {
@@ -1615,7 +1721,8 @@ svg {
     margin-top: 15px;
   }
   .work-section,
-  .experience-section {
+  .experience-section,
+  .leadership-section {
     padding-top: 29px;
     padding-bottom: 45px;
   }
@@ -1642,7 +1749,8 @@ svg {
   .section-heading h2,
   .pieces-intro h2,
   .contact h2,
-  .research-block h3 {
+  .research-block h3,
+  .leadership-heading h2 {
     font-size: 36px;
   }
   .research-block h3 {
@@ -1657,6 +1765,39 @@ svg {
   .research-block {
     margin-top: 32px;
     padding-top: 29px;
+  }
+  .leadership-heading {
+    margin-bottom: 22px;
+  }
+  .leadership-card {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 22px 20px;
+  }
+  .leadership-identity {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 0 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .leadership-mark {
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    font-size: 19px;
+  }
+  .leadership-period {
+    margin-top: 0;
+    text-align: right;
+  }
+  .leadership-details h3 {
+    font-size: 35px;
+  }
+  .leadership-highlights {
+    margin-top: 20px;
   }
   .diagram,
   .tuner {

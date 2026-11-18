@@ -18,6 +18,32 @@ test("homepage exposes work, contact, and a working résumé", async ({
     "Full Stack Engineer",
   );
   await expect(page.locator(".featured-card")).toHaveCount(projects.length);
+  const leadership = page.locator("#leadership");
+  await expect(
+    leadership.getByRole("heading", { name: "The communities I help build." }),
+  ).toBeVisible();
+  const leadershipCards = leadership.locator(".leadership-card");
+  await expect(leadershipCards).toHaveCount(2);
+  const sigmaEtaPi = leadershipCards.filter({ hasText: "UCSB Sigma Eta Pi" });
+  await expect(
+    sigmaEtaPi.getByRole("heading", { name: "Vice President & Co-Founder" }),
+  ).toBeVisible();
+  await expect(sigmaEtaPi.locator(".leadership-highlights li")).toHaveCount(2);
+  await expect(sigmaEtaPi.locator(".leadership-tags li")).toHaveText([
+    "Leadership",
+    "Community",
+    "Entrepreneurship",
+  ]);
+  const ascend = leadershipCards.filter({ hasText: "Ascend at UCSB" });
+  await expect(
+    ascend.getByRole("heading", { name: "VP of Professional Development" }),
+  ).toBeVisible();
+  await expect(ascend.locator(".leadership-highlights li")).toHaveCount(2);
+  await expect(ascend.locator(".leadership-tags li")).toHaveText([
+    "Career Development",
+    "Mentorship",
+    "Community",
+  ]);
   await expect(
     page.getByRole("button", { name: "Show previous projects" }),
   ).toBeVisible();
