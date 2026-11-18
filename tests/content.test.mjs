@@ -79,6 +79,7 @@ test("leadership content describes each community role with reusable details", (
     role: "VP of Professional Development",
     period: "Present",
     mark: "A",
+    logo: "/logos/ascend-ucsb.png",
     highlights: [
       "Shape the chapter’s professional development strategy, creating opportunities for members to build career confidence and practical skills.",
       "Support a community centered on mentorship, peer learning, and access to professional growth.",

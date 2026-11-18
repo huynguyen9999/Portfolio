@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { leadership } from "@/lib/content";
 
 export function LeadershipSection() {
@@ -21,7 +22,17 @@ export function LeadershipSection() {
           >
             <div className="leadership-identity">
               <span className="leadership-mark" aria-hidden="true">
-                {entry.mark}
+                {entry.logo ? (
+                  <Image
+                    src={entry.logo}
+                    alt=""
+                    width={62}
+                    height={62}
+                    sizes="62px"
+                  />
+                ) : (
+                  entry.mark
+                )}
               </span>
               <p className="leadership-period">{entry.period}</p>
             </div>

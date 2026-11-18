@@ -293,6 +293,7 @@ export const leadership: {
   role: string;
   period: string;
   mark: string;
+  logo?: string;
   highlights: string[];
   tags: string[];
 }[] = [
@@ -312,6 +313,7 @@ export const leadership: {
     role: "VP of Professional Development",
     period: "Present",
     mark: "A",
+    logo: "/logos/ascend-ucsb.png",
     highlights: [
       "Shape the chapter’s professional development strategy, creating opportunities for members to build career confidence and practical skills.",
       "Support a community centered on mentorship, peer learning, and access to professional growth.",
